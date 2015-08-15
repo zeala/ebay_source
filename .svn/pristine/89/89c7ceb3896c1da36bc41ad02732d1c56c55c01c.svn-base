@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:panels="com.ebayproject.style.skins.panels.*" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*" 
+		 xmlns:toolbars1="com.ebayproject.components.toolbars.*"
+		 >
+	<fx:Metadata>
+		[DefaultProperty("defaultContent")]
+	</fx:Metadata>
+
+	<fx:Script>
+		<![CDATA[
+			import mx.core.IVisualElement;
+			
+			[Bindable]
+			public var showBottomBorder : Boolean = true;
+			
+			private var _defaultContent : Array;
+			[ArrayElementType("mx.core.IVisualElement")]
+			public function set defaultContent(val:Array):void
+			{
+				_defaultContent = val;
+				dispatchEvent( new Event("defaultContentChange"));
+				addDefaultContent();
+			}
+			
+			private function addDefaultContent():void
+			{
+				for ( var i : int = 0; i < _defaultContent.length; i++)
+				{
+					defaultContentGroup.addElement(_defaultContent[i] as IVisualElement);
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<toolbars1:ToolbarBackground 
+		width="100%" height="100%"
+		showBottomBorder="{showBottomBorder}"
+		/>
+	<s:Group id="defaultContentGroup" width="100%" verticalCenter="-2">
+		<s:layout>
+			<s:HorizontalLayout  verticalAlign="middle"/>
+		</s:layout>
+	</s:Group>
+	
+</s:Group>

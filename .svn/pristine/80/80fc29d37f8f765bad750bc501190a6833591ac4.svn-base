@@ -1,0 +1,52 @@
+
+
+package ebayApp.services.results
+{
+	import com.ebayproject.services.results.ISearchResults;
+	
+	import flash.events.Event;
+	
+	import mx.collections.ArrayCollection;
+	
+	import ebayApp.services.dto.PaginationOutput;
+	import ebayApp.services.dto.SpellingSuggestion;
+	import ebayApp.services.dto.histograms.AspectHistogramContainer;
+
+
+	public class SearchResults extends EBayResult implements ISearchResults
+	{
+		
+		public var hasMoreResults : Boolean;
+		public var paginationOutput:PaginationOutput;
+		
+		//----------------------------------------
+		// search result items
+		//----------------------------------------
+		
+		[ArrayElementType("SearchResultItem")]
+		private var _searchResultItem : ArrayCollection;
+		[Bindable("searchResultItemsChange")]
+		public function get searchResultItem():ArrayCollection
+		{
+			return _searchResultItem;
+		}
+		public function set searchResultItem(val:ArrayCollection):void
+		{
+			_searchResultItem = val;
+			dispatchEvent( new Event("searchResultItemsChange"));
+		}
+		
+		public var spellingSuggestion:SpellingSuggestion;
+
+		public var aspectHistogramContainer : AspectHistogramContainer;
+		
+		public var categoryHistogramContainer : * ;//CategoryHistogramContainer;
+		
+		public var conditionHistorgramContainer : * ;//ConditionHistogramContainer
+		
+		public function SearchResults()
+		{
+			this.searchResultItem = new ArrayCollection();
+		} 
+	}  
+}  // package

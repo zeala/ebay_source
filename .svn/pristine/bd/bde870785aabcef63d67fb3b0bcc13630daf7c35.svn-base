@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:model="model.*" 
+			   xmlns:view="view.*" 
+			   xmlns:panels="com.ebayproject.components.panels.*" 
+			   xmlns:book="com.pricope.miti.book.*"
+			   xmlns:scrollbars="style.skins.scrollbars.*"
+			   xmlns:panels1="com.ebayproject.style.skins.panels.*"
+			   backgroundColor="0xe8e8e8"
+			   width="100%"
+			   height="100%" xmlns:skins="style.skins.*" 
+			   minWidth="500" minHeight="400" 
+			  
+			   >
+	<fx:Declarations>
+		<model:FindingServicePM id="findingServicePM" />
+	</fx:Declarations>
+	<fx:Style source="style/defaults.css"/>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.events.CategoryEvent;
+			
+			import mx.events.PropertyChangeEvent;
+			
+			import ebayApp.services.CommandManager;
+			import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+			import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+			import ebayApp.services.dto.ShoppingServiceRequestObject;
+			import ebayApp.services.util.codeTypes.IncludeSelectors;
+			import ebayApp.services.util.codeTypes.SiteCodeType;
+			
+			import model.ProductManager;
+			
+		]]>
+	</fx:Script>
+	<fx:Script>
+		<![CDATA[
+			import ebayApp.services.commands.merchandising.GetMostWatchedItemsCommand;
+			import mx.core.FlexGlobals;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.Application;
+			
+		
+			private var _siteId : String = SiteCodeType.EBAY_US;
+			[Bindable("siteIdChange")]
+			public function get siteId () : String
+			{
+				return _siteId;
+			}
+			public function set siteId(val:String):void
+			{
+				if (_siteId == val ) return;
+				_siteId = val;
+				dispatchEvent( new Event("siteIdChange"));
+			}
+
+			private function requestSearchHandler(event:PropertyChangeEvent):void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				//requestObj.siteId = "0";
+				requestObj.queryKeywords = event.newValue.toString();
+				
+				if (siteId )
+				{
+					requestObj.siteId = siteId;
+				}
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+					
+			}
+			
+			private function requestCategoriesHandler(event:CategoryEvent):void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				//requestObj.siteId = "0";
+				requestObj.includeSelector = IncludeSelectors.CHILD_CATEGORIES;
+				requestObj.categoryId = event.categoryId;
+				
+				if (siteId )
+				{
+					requestObj.siteId = siteId;
+				}
+				CommandManager.getInstance()[GetCategoryInfoCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function requestResultsForCategoryHandler( event : CategoryEvent ) : void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.categoryId = event.categoryId;
+				if (siteId )
+				{
+					requestObj.siteId = siteId;
+				}
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function changeDomainHandler(event : PropertyChangeEvent ) : void
+			{	
+				if ( siteId != String(event.newValue))
+				{
+					siteId = event.newValue as String;
+					
+					if ( ProductManager.getInstance().categories )
+					{
+						ProductManager.getInstance().categories.removeAll();	
+						ProductManager.getInstance().categories = null;
+					}
+				}
+			}
+			
+			private function setResizeHandler():void
+			{
+				Application(FlexGlobals.topLevelApplication).addEventListener(
+					ResizeEvent.RESIZE, resizeHandler);
+			}
+			
+			private function resizeHandler( event : ResizeEvent ):void
+			{
+				bookContainer.scaleX = getBookScale();
+				bookContainer.scaleY = getBookScale();
+			}
+			
+			private var bookWidthToHeightRatio : Number = 1.5;
+			
+			private function getBookScale():Number
+			{
+				var yOffset : int = 100;
+				var xOffset  : int = 100;
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var h : Number = app.height - yOffset;
+				var w : Number = app.width - xOffset;
+				var scale : Number;
+				
+				var appWidthToHeightRatio : Number = w/h;
+				
+				if ( appWidthToHeightRatio >= 1.5 )
+				{
+					scale = h / bookContainer.height;
+				}
+				else
+				{
+					scale = w / bookContainer.width;
+				}	
+				return scale;
+			}
+			
+			private function testMerchandisingService():void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				CommandManager.getInstance()[GetMostWatchedItemsCommand.OPERATION_NAME].execute(requestObj);
+			}
+
+		]]>
+	</fx:Script>
+	
+	<s:Group width="{width}" height="{height}">
+		<panels1:TopControlPanelSkin width="100%" left="0" right="0" height="40"/>
+		<s:Group  width="{width}">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="center" />
+			</s:layout>
+			
+			
+			<panels:SearchControls
+				id="searchControls"
+				productManager="{ProductManager.getInstance()}"
+				requestSearch="requestSearchHandler(event)"
+				requestChildCategories="requestCategoriesHandler(event)"
+				requestResultsForCategory="requestResultsForCategoryHandler(event)"
+				changeDomain="changeDomainHandler(event)"
+				horizontalCenter="0"
+				
+				testMerchandisingService="testMerchandisingService()"
+				/>
+		</s:Group>  
+		<s:Group width="{width}" y="40">		
+			
+			
+			<s:HGroup  width="{width}" x="50">
+				<s:Spacer width="50"/>
+				<s:HGroup horizontalAlign="center" width="{width - 100}" >
+					<panels:BookContainer 
+						id="bookContainer"
+						productManager="{ProductManager.getInstance()}" 
+						width="900" height="600"
+						horizontalCenter="0"
+						scaleX="{getBookScale()}" scaleY="{getBookScale()}"
+						creationComplete="setResizeHandler()"
+						/>
+				</s:HGroup>
+				<s:Spacer width="50"/>
+			</s:HGroup>  
+			
+			
+		</s:Group>
+		<s:VGroup id="bottomGroup" bottom="0" >
+			
+			<s:Group width="{width}" left="0" >	
+				<panels1:TopControlPanelSkin width="100%" left="0" right="0" height="8"/>
+			</s:Group>
+		</s:VGroup>  
+	</s:Group>  
+	
+	
+</s:Application>

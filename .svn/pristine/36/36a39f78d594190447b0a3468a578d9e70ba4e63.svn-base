@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"
+				clipAndEnableScrolling="true"
+				currentState="normal"
+				mouseMove="mouseMoveHandler()"
+				mouseOver="mouseOverHandler()"
+				mouseOut="mouseOutHandler()"
+				>
+	<fx:Declarations>
+		<s:Fade id="fade" duration="500" target="{img}"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import flash.net.navigateToURL;
+			
+			import dto.SearchResultItem;
+			
+			[Bindable]
+			public var searchResultItem : SearchResultItem;
+			
+			[Bindable]
+			public var imgWidth : Number;
+			
+			[Bindable]
+			public var imgHeight : Number;
+			
+			override public function set data( val:Object):void
+			{
+				super.data = val;
+				this.searchResultItem = val as SearchResultItem;
+			}
+			
+			private function imageCreationCompleteHandler():void
+			{
+				
+				var ratio : Number;
+				imgWidth = img.sourceWidth;
+				imgHeight = img.sourceHeight;
+				
+				if ( imgContainer.width > imgWidth)
+				{
+					ratio = imgContainer.width/imgWidth;
+					imgWidth *= ratio;
+					imgHeight *= ratio;
+				}
+				if ( imgContainer.height > imgHeight)
+				{
+					ratio = imgContainer.height / imgHeight;
+					imgWidth *= ratio;
+					imgHeight *= ratio;
+				}
+			}
+			
+			
+			private function viewItem():void
+			{
+				var requestURL : URLRequest = new URLRequest();
+				requestURL.url = searchResultItem.viewItemURL;
+				navigateToURL( requestURL );
+			}
+			
+			private function mouseOverHandler():void
+			{
+				this.currentState = "hover";
+			}
+			
+			private function mouseOutHandler():void
+			{
+				this.currentState = "normal";	
+			}
+			
+			private function mouseMoveHandler():void
+			{
+				if ( this.currentState != "hover")
+				{
+					this.currentState = "hover";
+				}
+			
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hover"/>
+	</s:states>
+	
+	<s:Rect 
+		radiusX="2" radiusY="2" width="{this.width-2} "
+		height="{this.height - 2}"
+		x="1" y="1"
+		>
+		<s:stroke>
+			<s:SolidColorStroke color="0x999999"/>
+		</s:stroke>
+	</s:Rect>
+	<s:Group 
+		id="imgContainer" height="{height - 40}" 
+		width="100%" clipAndEnableScrolling="true" 
+		mouseOut="mouseOutHandler()"
+		>
+		<s:Image 
+			id="img"
+			source="{searchResultItem.galleryInfoContainer.largeThumbURL}"
+			width="{imgWidth}" height="{imgHeight}"
+			ready="imageCreationCompleteHandler()"  showEffect="{fade}" 
+			creationCompleteEffect="{fade}" smooth="true" smoothingQuality="high"
+				
+			/>
+	</s:Group>
+	<s:VGroup id="textContainer" paddingLeft="10" paddingRight="10" bottom="2" gap="2">
+		<s:Label text="{searchResultItem.title}" width="120" maxDisplayedLines="1" />
+		<s:Label text="{searchResultItem.sellingStatus.currentPrice + ' ' + searchResultItem.currency}"/>
+		<s:Label color="0x0000ff" text="View on Ebay" click="viewItem()" buttonMode="true"/>
+	</s:VGroup>
+	
+	<s:Group width="{width}" height="{img.height}"
+			 alpha.normal="0"
+			 alpha.hover="1"
+			 x="0" y="0"
+			 >
+		
+		<s:Rect width="{width }" height="{imgContainer.height}">
+			<s:fill>
+				<s:SolidColor color="0xffffff" alpha=".3"/>
+			</s:fill>
+		</s:Rect>
+		
+		<s:Image id="zoomInImg"
+				 y="10" x="10"
+				 source="{Icons.ICON_ZOOM_IN_SMALL}"
+		>
+			<s:filters>
+				<s:DropShadowFilter color="0x333333"/>
+			</s:filters>	
+		</s:Image>
+		
+		<s:Image id="bookmarkImg"
+				 y="5" right="10"
+				 source="{Icons.ADD_BOOKMARK}"
+				 />
+		
+		<s:Group width="{width}"
+				 click="viewItem()"
+				 >
+			<s:Label 
+				y="39" x="1" width="{width}"
+				text="Click to get this&#10;on eBay"
+				fontSize="18" color="0x999999"
+				textAlign="center"
+				/>
+			<s:Label 
+				y="38" width="{width}"
+				text="Click to get this&#10;on eBay"
+				fontSize="18" color="0xffffff"
+				textAlign="center"
+				/>
+			<s:filters>
+				<s:DropShadowFilter color="0x333333"/>
+			</s:filters>
+
+		</s:Group>
+	</s:Group>
+	
+</s:ItemRenderer>

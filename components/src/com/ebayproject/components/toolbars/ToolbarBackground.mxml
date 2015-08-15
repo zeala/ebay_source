@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		  xmlns:s="library://ns.adobe.com/flex/spark" 
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:panels="com.ebayproject.style.skins.panels.*"
+		  gap="-2" 
+		  >
+	<fx:Script>
+		<![CDATA[
+			[Bindable]
+			public var showBottomBorder : Boolean = true;
+		]]>
+	</fx:Script>
+	<panels:ToolbarBackgroundSkin width="100%" height="100%"/>
+	<panels:ToolbarBottomBorder 
+		width="100%" visible="{showBottomBorder}" includeInLayout="{showBottomBorder}"/>
+</s:VGroup>

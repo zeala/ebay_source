@@ -1,0 +1,18 @@
+
+
+package dto
+{
+
+	public class SpellingSuggestion
+	{
+		public var matchingItemCount:int;
+		[ArrayElementType("String")]
+		public var text:Array;
+
+
+		public function SpellingSuggestion()
+		{
+			this.text = new Array();
+		}  // SpellingSuggestion
+	}  // class declaration
+}  // package

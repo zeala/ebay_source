@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:imageScroll="com.ebayproject.components.imageScroll.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.rpc.events.ResultEvent;
+			
+			//---------------------------------------
+			// images
+			//---------------------------------------
+			private var _images : ArrayCollection;
+			[Bindable("imagesChange")]
+			public function get images():ArrayCollection
+			{
+				return _images;
+			}
+			public function set images(val:ArrayCollection):void
+			{
+				_images = val;
+				
+				trace("\n images : " + val);
+				dispatchEvent( new Event("imagesChange"));
+			}
+			
+			
+			private function onLoad( e:ResultEvent = null ):void
+			{
+				/*var component:UIComponent = new UIComponent();
+				nav = new Navigator( images, 10, 300, 600 );
+				nav.width = this.width;
+				nav.height = this.height ;
+				component.addChild( nav )
+				canv.addElement( component )
+				slideContainer.visible = true;
+				*/
+
+
+			}
+			
+            
+            
+            
+
+		]]>
+	</fx:Script>
+    
+    <s:VGroup  
+	 width="100%" height="100%">
+    	
+	   	<s:Group width="{width}" height="{height}">
+		
+				
+				<s:List dataProvider="{ images }" width="450" height="80" >
+					<s:layout>
+						<s:HorizontalLayout columnWidth="100" />
+					</s:layout>
+					
+				</s:List>
+				
+		</s:Group>
+		<s:Line width="{width}">
+			<s:stroke>
+				<s:SolidColorStroke color="0xff0000"/>
+			</s:stroke>
+		</s:Line>
+    </s:VGroup> 
+</s:Group>

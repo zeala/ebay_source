@@ -1,0 +1,33 @@
+package ebayApp.services.dto
+{
+	public class ShoppingServiceRequestObject
+	{
+
+		
+		public static const INCLUDE_SELECTOR_DETAILS : String = "Details";
+		public static const INCLUDE_SELECTOR_DOMAIN_HISTOGRAM : String = "DomainHistogram";
+		public static const INCLUDE_SELECTOR_ITEMS : String = "Items";
+		
+		public static const INCLUDE_SELECTORS : Array = 
+			[
+				INCLUDE_SELECTOR_DETAILS, INCLUDE_SELECTOR_DOMAIN_HISTOGRAM, INCLUDE_SELECTOR_ITEMS
+			];
+		
+		public var productId : String;
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array. QueryKeywords can be used in combination with CategoryID and IncludeChildCategories. 
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		public var pageNumber : int = 1;
+		public var availableItemsOnly : Boolean = false;
+		public var domainName:String;
+		public var hideDuplicateItems : Boolean;
+		public var includeSelector : String;
+		public var productSort : String = ProductSortCodeType.POPULARITY;
+		public var sortOrder : String = SortOrderCodeType.DESCENDING;
+	}
+}

@@ -1,0 +1,14 @@
+package ebayApp.services.dto
+{
+	public class FindingServiceRequestObject implements IEbayServiceRequestObject
+	{
+		public function FindingServiceRequestObject()
+		{
+		}
+		
+		public function createRequestObject():IEbayServiceRequestObject
+		{
+			return null;
+		}
+	}
+}

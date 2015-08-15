@@ -1,0 +1,55 @@
+package ebayApp.services.dto
+{
+	import ebayApp.services.util.codeTypes.ProductSortCodeType;
+	import ebayApp.services.util.codeTypes.SortOrderCodeType;
+
+	public class ShoppingServiceRequestObject
+	{
+
+		
+		public static const INCLUDE_SELECTOR_DETAILS : String = "Details";
+		public static const INCLUDE_SELECTOR_DOMAIN_HISTOGRAM : String = "DomainHistogram";
+		public static const INCLUDE_SELECTOR_ITEMS : String = "Items";
+		public static const INCLUDE_SELECTOR_CHILD_CATEGORIES : String = "ChildCategories"
+		public static const INCLUDE_SELECTOR_DESCRIPTION : String = "Description";
+		public static const INCLUDE_SELECTOR_TEXT_DESCRIPTION : String = "TextDescription";
+		public static const INCLUDE_SELECTOR_ITEM_SPECIFICS : String = "ItemSpecifics";
+		public static const INCLUDE_SELECTOR_VARIATIONS : String = "Variations";
+
+	
+			
+		public var userId : String;
+		public var itemId : String;
+		public var productId : String;
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array. QueryKeywords can be used in combination with CategoryID and IncludeChildCategories. 
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		public var pageNumber : int = 1;
+		public var availableItemsOnly : Boolean = false;
+		public var domainName:String;
+		public var hideDuplicateItems : Boolean;
+		public var includeSelector : String;
+		public var productSort : String = ProductSortCodeType.POPULARITY;
+		public var sortOrder : String = SortOrderCodeType.DESCENDING;
+		
+		//shipping
+		public var destinationCountryCode : String;
+		public var destinationPostalCode : String;
+		public var includeDetails : Boolean = false;
+		public var quantitySold : int = 1;
+		/*
+.  
+		ItemID  string Required The item ID that uniquely identifies the item listing for which to retrieve the data.
+		Max length: 19 (Note: The eBay database specifies 38. Currently, Item IDs are usually 9 to 12 digits).  
+		QuantitySold  int Optional Number of items sold to a single buyer and to be shipped together.
+		Default: 1.  
+
+		*/
+		
+	}
+}

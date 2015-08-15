@@ -1,0 +1,8 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ItemFilterType
+	{
+		public static const AUTHORIZED_SELLERS_ONLY:String = "AuthorizedSellerOnly"; 
+		
+	}
+}

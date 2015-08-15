@@ -1,0 +1,28 @@
+
+package ebayApp.services.dto
+{
+	/**
+	 * Contains a summary of the items the in the MyeBayBuying results.
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 */
+	public class BuyingSummary
+	{
+		public var bestOfferCount:int;
+		public var biddingCount:int;
+		public var totalWinningCost:Number;
+		public var totalWonCost:Number;
+		public var winningCount:int;
+		public var wonCount:int;
+		public var wonDurationInDays:int;
+
+
+		public function BuyingSummary()
+		{
+		}  // BuyingSummary
+	}  // class declaration
+}  // package

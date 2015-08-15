@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Graphic 
+	version="2.0"
+	xmlns:s="http://ns.adobe.com/fxg/2008" 
+	scaleGridTop="10" scaleGridBottom="600"
+	scaleGridLeft="3" scaleGridRight="8"
+	>
+	<!--s:Rect width="1" height="30">
+		<s:fill>
+			<s:SolidColor color="#cacaca"/>
+		</s:fill>
+	</s:Rect-->
+	<!--s:Rect x="1" width="1" height="30">
+		<s:fill>
+			<s:SolidColor color="#ffffff"/>
+		</s:fill>
+	</s:Rect-->
+	
+</s:Graphic>

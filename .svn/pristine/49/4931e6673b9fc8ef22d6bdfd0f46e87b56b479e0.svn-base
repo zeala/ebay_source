@@ -1,0 +1,14 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ListingType
+	{
+		
+		public static const AUCTION : String = "Auction";
+		public static const AUCTION_WITH_BIN : String =  "AuctionWithBIN";
+		public static const CLASSIFIED : String = "Classified";
+		public static const FIXED_PRICE:String = "FixedPrice";
+		public static const STORE_INVENTORY : String = "StoreInventory";
+		public static const ALL : String = "All";
+		
+	}
+}

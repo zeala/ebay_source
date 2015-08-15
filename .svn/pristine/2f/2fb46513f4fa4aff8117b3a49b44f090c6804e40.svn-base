@@ -1,0 +1,92 @@
+
+
+package ebayApp.services.results
+{
+	import com.ebayproject.services.results.ISearchResults;
+	
+	import flash.events.Event;
+	
+	import mx.collections.ArrayCollection;
+	
+	import ebayApp.services.dto.PaginationOutput;
+	import ebayApp.services.dto.SpellingSuggestion;
+	import ebayApp.services.dto.histograms.AspectHistogramContainer;
+
+
+	public class SearchResults extends EBayResult implements ISearchResults
+	{
+		
+		public var hasMoreResults : Boolean;
+		
+		
+		//----------------------------------------
+		// pagination output
+		//----------------------------------------
+		
+		private var _paginationOutput : PaginationOutput;
+		[Bindable("paginationOutputChange")]
+		public function get paginationOutput():PaginationOutput
+		{
+			return _paginationOutput;
+		}
+		public function set paginationOutput(val:PaginationOutput):void
+		{
+			_paginationOutput = val;
+			dispatchEvent( new Event("paginationOutputChange"));
+		}
+		
+		
+		//----------------------------------------
+		// current page number
+		//----------------------------------------
+		public var currentPageNumber : int = 1;
+		
+		//----------------------------------------
+		// search result items
+		//----------------------------------------
+		
+		[ArrayElementType("SearchResultItem")]
+		private var _searchResultItem : ArrayCollection;
+		[Bindable("searchResultItemsChange")]
+		public function get searchResultItem():ArrayCollection
+		{
+			return _searchResultItem;
+		}
+		public function set searchResultItem(val:ArrayCollection):void
+		{
+			_searchResultItem = val;
+			dispatchEvent( new Event("searchResultItemsChange"));
+		}
+		
+		public var spellingSuggestion:SpellingSuggestion;
+
+		public var aspectHistogramContainer : AspectHistogramContainer;
+		
+		public var categoryHistogramContainer : * ;//CategoryHistogramContainer;
+		
+		public var conditionHistorgramContainer : * ;//ConditionHistogramContainer
+		
+		public function SearchResults()
+		{
+			this.searchResultItem = new ArrayCollection();
+		} 
+		
+		
+		public function addSearchResultItems( val : ArrayCollection ) : void
+		{
+			trace("\n items.length before adding : " + searchResultItem.length );
+			trace(" val.length : " + val.length );
+			
+			searchResultItem.disableAutoUpdate();
+			for ( var i : int = 0; i < val.length; i++)
+			{
+				trace("    i : " + i + " val[i] : " + val[i] );
+				searchResultItem.addItem( val[i]);
+				
+			}
+			searchResultItem.enableAutoUpdate();
+			trace("\n items.length after adding : " + searchResultItem.length );
+			dispatchEvent( new Event("searchResultItemsChange"));
+		}
+	}  
+}  // package

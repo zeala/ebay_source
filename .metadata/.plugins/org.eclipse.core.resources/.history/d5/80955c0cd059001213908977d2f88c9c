@@ -1,0 +1,33 @@
+package ebayApp.services.commands
+{
+	import flash.events.EventDispatcher;
+	
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.IEbayService;
+	import ebayApp.services.util.FindingServiceOperationName;
+
+	public class EbayCommand extends EventDispatcher
+	{
+		
+		public var service:HTTPService;
+		
+		public function EbayCommand( service:HTTPService )
+		{
+			this.service = service;
+			this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, serviceResultHandler );
+		}
+		
+		protected function serviceResultHandler(event:ResultEvent):void
+		{
+			
+		}
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

@@ -1,0 +1,38 @@
+package ebayApp.services.util
+{
+	
+
+	public class ShoppingServiceOperationName
+	{
+		
+		public static const FIND_HALF_PRODUCTS:String = "";
+		public static const FIND_POPULAR_ITEMS:String = "";
+		public static const FIND_POPULAR_SEARCHES:String = "";
+		public static const FIND_PRODUCTS:String = "";
+		public static const FIND_REVIEWS_AND_GUIDES:String = "";
+		public static const GET_CATEGORY_INFO:String = "";
+		public static const GET_EBAY_TIME:String = "";
+		public static const GET_ITEM_STATUS:String = "";
+		public static const GET_MULTIPLE_ITEMS:String = "";
+		public static const GET_SHIPPING_COSTS:String = "";
+		public static const GET_SINGLE_ITEM:String = "";
+		public static const GET_USER_PROFILE:String = "";
+		
+		/*
+		Call Summary Samples 
+		FindHalfProducts Searches Half.com for stock product information (stock description and Item Specifics), such as information about a particular kind of DVD or book. Also, retrieves up to 30 Half.com listings associated with a product. view 
+		FindPopularItems Searches for popular items based on a category or keyword. Returns WatchCount in addition to item information. view 
+		FindPopularSearches Finds the words more frequently used by eBay users when searching for listings. If you use keywords, this call returns available alternative keywords in addition to popular related keywords. view 
+		FindProducts Searches for stock product information (stock description and Item Specifics), such as information about a particular kind of DVD or camera. Also, retrieves up to 200 eBay listings associated with a product. view 
+		FindReviewsAndGuides Searches reviews and guides based on product, category, or user. The response provides information about each user or product's reviews and guides. view 
+		GetCategoryInfo This call will give you the ability to retrieve high level Category information, relevant for a buy-side application. view 
+		GeteBayTime Gets the official eBay system time in GMT. view 
+		GetItemStatus Allows you to get the status for a group of items. Returns status information such as ListingStatus and End Time for all items that are listed in the request. Duplicated items are returned as a single item. view 
+		GetMultipleItems Retrieves publicly available data for one or more listings. view 
+		GetShippingCosts Gets shipping costs for an item. view 
+		GetSingleItem Gets publicly visible details about one listing. This gives you most of the data that eBay shows on the View Item page (title, description, price, and other details). view 
+		GetUserProfile Retrieves user information based on the user ID you specify. The response contains detailed information about a user. You can specify the types of user information you want in the response. 
+
+		*/
+	}
+}

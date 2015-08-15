@@ -1,0 +1,14 @@
+package dto
+{
+	public class ItemFilter
+	{
+		public var name : String ;// ItemFilterType;
+		
+		public var paramName : String;
+		
+		public var paramValue : String;
+		
+		public var value : String;
+
+	}
+}

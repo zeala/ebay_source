@@ -1,0 +1,27 @@
+
+
+package ebayApp.services.dto
+{
+
+	public class ProductListingDetails
+	{
+		[ArrayElementType("String")]
+		public var copyright:Array;
+		public var includePrefilledItemInformation:Boolean;
+		public var includeStockPhotoURL:Boolean;
+		public var productID:String;
+		public var stockPhotoURL:String;
+		public var useStockPhotoURLAsGallery:Boolean;
+
+
+		/**
+		 * Constructor for the ProductListingDetails class.
+		 * 
+		 * <p>Creates a new ProductListingDetails object.</p>
+		 */		
+		public function ProductListingDetails()
+		{
+			this.copyright = new Array();
+		}  // ProductListingDetails
+	}  // class declaration
+}  // package

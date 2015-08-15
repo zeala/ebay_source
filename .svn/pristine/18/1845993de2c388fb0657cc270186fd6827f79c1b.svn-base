@@ -1,0 +1,30 @@
+
+
+package ebayApp.services.results
+{
+	import ebayApp.services.dto.PaginationResult;
+	import ebayApp.services.dto.SpellingSuggestion;
+
+
+	public class SearchResults extends EBayResult
+	{
+		public var hasMoreItems:Boolean;
+		public var itemsPerPage:int;
+		public var pageNumber:int;
+		public var paginationResult:PaginationResult;
+		[ArrayElementType("SearchResultItem")]
+		public var searchResultItems:Array;
+		public var spellingSuggestion:SpellingSuggestion;
+
+
+		/**
+		 * Constructor for the SearchResults class.
+		 * 
+		 * <p>Creates a new SearchResults object.</p>
+		 */
+		public function SearchResults()
+		{
+			this.searchResultItems = new Array();
+		}  // SearchResults
+	}  // class declaration
+}  // package

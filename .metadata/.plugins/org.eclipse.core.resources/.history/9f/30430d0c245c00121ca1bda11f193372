@@ -1,0 +1,27 @@
+
+package ebayApp.services.dto
+{
+	import mx.collections.ArrayCollection;
+
+	public class SearchResultItem
+	{
+		[ArrayElementType("ItemAttribute")]
+		public var itemAttributes : Array;
+		
+		public var autoPay : Boolean;
+		
+		public var charityId : String;
+		
+		[ArrayElementType("String")]
+		public var compatibilities : Array
+
+		[ArrayElementType("Condition")]
+		public var conditions:Array;
+		
+		
+		public function SearchResultItem()
+		{
+			//this.searchResultValues = new Array();
+		}  // SearchResultItem
+	}  // class declaration
+}  // package

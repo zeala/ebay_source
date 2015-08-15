@@ -1,0 +1,13 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ProductSortCodeType
+	{
+		
+		public static const POPULARITY : String = "Popularity";
+		public static const CUSTOM_CODE : String = "CustomCode";
+		public static const ITEM_COUNT : String = "ItemCount";
+		public static const RATING : String = "Rating";
+		public static const REVIEW_COUNT : String = "ReviewCount";
+		public static const TITLE : String = "Title";
+	}
+}

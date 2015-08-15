@@ -1,0 +1,16 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ReviewSortCodeTypes
+	{
+		
+		public static const CREATION_TIME : String = "";
+		public static const CUSTOM_CODE : String = "";
+		CreationTime
+		
+		(in) Sorts reviews by creation time, in ascending or descending order.
+			
+			•   CustomCode
+			
+
+	}
+}

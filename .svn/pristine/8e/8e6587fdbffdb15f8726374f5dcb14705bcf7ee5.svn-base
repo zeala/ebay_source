@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="true"
+				height="28"
+				>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import ebayApp.services.dto.SiteObj;
+			
+			[Bindable]
+			private var siteObj : SiteObj;
+			
+			[Bindable]
+			public var imgSource : Class;
+			
+			[Bindable("dataChange")]
+			override public function get data():Object
+			{
+				return super.data;
+			}
+			override public function set data(value:Object):void
+			{
+				super.data = value;
+				siteObj = value as SiteObj;
+				if (siteObj )
+				{
+					imgSource = getFlag( siteObj );
+				}
+			}
+			
+			private function getFlag( dataObj : Object ):Class
+			{
+				var icon : Class = Icons.FLAG_MAP[siteObj.siteName];
+				trace("\n icon : " + icon );
+				return icon;
+			}
+			
+		]]>
+	</fx:Script>
+	<s:BitmapImage source="{imgSource}" width="30" height="24" />
+	<s:Label text="{siteObj.siteName}"/>
+	
+</s:ItemRenderer>

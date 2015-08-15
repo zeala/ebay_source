@@ -1,0 +1,21 @@
+
+
+package com.adobe.webapis.ebay.objects
+{
+
+	public class Category
+	{
+		public var categoryID:String;
+		public var categoryName:String;
+		
+
+		/**
+		 * Constructor for the Category class.
+		 * 
+		 * <p>Creates a new Category object.</p>
+		 */
+		public function Category()
+		{
+		}  // Category
+	}  // class declaration
+}  // package

@@ -1,0 +1,15 @@
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class SellerLevel
+	{
+		public static const BRONZE:String = "Bronze";
+		public static const SILVER:String = "Silver";
+		public static const GOLD:String = "Gold";
+		public static const PLATINUM:String = "Platinum";
+		public static const TITANIUM:String = "Titanium";
+		public static const NONE:String = "None";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

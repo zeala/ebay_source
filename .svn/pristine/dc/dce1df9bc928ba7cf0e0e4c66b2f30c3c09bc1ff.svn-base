@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		
+		 >
+	<fx:Metadata>
+		[Event(name="requestSearch", type="mx.events.PropertyChangeEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import mx.events.PropertyChangeEvent;
+			
+			import ebayApp.services.util.SitesUtil;
+			private function search():void
+			{
+				var searchEvent : PropertyChangeEvent = new  PropertyChangeEvent("requestSearch");
+				searchEvent.newValue = keywordTxt.text;
+				
+				trace("\n searchEvent.newValue  ; " + searchEvent.newValue );
+				dispatchEvent(searchEvent);
+			}
+			
+			private function txtKeyDownHandler(event:KeyboardEvent):void
+			{
+				trace(" event.code : " + event.keyCode );
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout paddingTop="10"/>
+	</s:layout>
+	<s:TextInput
+		id="keywordTxt"
+		width="200"
+		keyDown="txtKeyDownHandler(event)"
+		/>
+	
+	<s:Button
+		id="searchBtn"
+		label="Search"
+		click="search()"
+		enabled="{keywordTxt.text.length > 0}"
+		/>
+	
+	<s:DropDownList
+		id="engSitesDdl"
+		width="220" 
+		labelField="siteName"
+		dataProvider="{SitesUtil.getAllSites()}"/>
+</s:Group>

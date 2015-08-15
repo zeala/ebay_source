@@ -1,0 +1,13 @@
+package dto.histograms
+{
+	public class AspectHistogramContainer
+	{
+		[ArrayElementType("Aspect")]
+		public var aspects : Array;
+		
+		public var domainDisplayName : String;
+		
+		public var domainName : String;
+
+	}
+}

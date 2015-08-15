@@ -1,0 +1,37 @@
+
+
+package ebayApp.services.dto
+{
+
+	public class Seller
+	{
+		public var allowPaymentEdit:Boolean;
+		public var billingCurrency:String;
+		public var charityRegistered:Boolean;
+		public var checkoutEnabled:Boolean;
+		public var cipBankAccountStored:Boolean;
+		public var expressEligible:Boolean;
+		public var expressSellerRequirements:ExpressSellerRequirements;
+		public var expressWallet:Boolean;
+		public var goodStanding:Boolean;
+		public var liveAuctionAuthorized:Boolean;
+		public var merchandizingPref:String;
+		public var paisaPayStatus:int;
+		public var proStorePreference:String;
+		public var qualifiesForB2BVAT:Boolean;
+		public var registeredBusinessSeller:Boolean;
+		public var schedulingInfo:SchedulingInfo;
+		public var sellerBusinessType:String;
+		public var sellerGuaranteeLevel:String;
+		public var sellerLevel:String;
+		public var sellerPaymentAddress:Address;
+		public var storeOwner:Boolean;
+		public var storeURL:String;
+		public var userID:String;
+
+
+		public function Seller()
+		{
+		}  // Seller
+	}  // class declaration
+}  // package

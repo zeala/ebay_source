@@ -1,0 +1,9 @@
+package ebayApp.services.dto
+{
+	public class SortOrderCodeType
+	{
+		public static const ASCENDING : String = "Ascending";
+		public static const CUSTOM_CODE : String = "CustomCode";
+		public static const DESCENDING : String = "Descending";
+	}
+}

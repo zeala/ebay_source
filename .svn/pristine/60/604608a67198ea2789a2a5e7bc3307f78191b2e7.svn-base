@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:List xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx"
+		itemRenderer.tileViewLarge="com.ebayproject.components.searchResultsView.SearchResultViewLargeRenderer"
+		itemRenderer.tileViewSmall="com.ebayproject.components.searchResultsView.SearchResultViewSmallRenderer"
+		itemRenderer.listView="com.ebayproject.components.searchResultsView.SearchResultDetailsViewRenderer"
+		creationComplete="listCreationCompleteHandler()"
+		>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[Event(name="viewItemOnEbay", type="mx.events.PropertyChangeEvent")]
+		[Event(name="fetchMoreItems", type="flash.events.Event")]
+		[Event(name="addToFavorites", type="mx.events.PropertyChangeEvent")]
+		[Event(name="viewItemDetails", type="mx.events.PropertyChangeEvent ")]
+
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			
+			import mx.events.PropertyChangeEvent;
+			
+			//--------------------------------------
+			// product manager
+			//--------------------------------------
+			private var _productManager : IProductManager;
+			[Bindable("productManagerChange")]
+			public function get productManager (): IProductManager
+			{
+				return _productManager;
+			}
+			public function set productManager(val:IProductManager):void
+			{
+				_productManager = val;
+				dispatchEvent(new Event("productManagerChange"));
+				_productManager.addEventListener("itemsSearchResultChange", addItemSearchEventListener );
+			}
+			
+			
+			
+			private var readyToFetch : Boolean = true;
+			private var previousNumItems : int;
+			private var newNumberOfItems : int;
+			private var fetchRequested : Boolean;
+			
+			
+			//--------------------------------------------------------------------------------
+			//
+			// PRIVATE METHODS
+			//
+			//--------------------------------------------------------------------------------
+			
+			private function listCreationCompleteHandler():void
+			{
+
+				this.scroller.verticalScrollBar.addEventListener(Event.CHANGE, 
+					verticalScrollChangeHandler);
+				this.scroller.verticalScrollBar.addEventListener(Event.SCROLL,
+					verticalScrollChangeHandler );
+				this.scroller.addEventListener( Event.SCROLL, resultsListScrollHandler )
+			}
+			
+			private function resultsListScrollHandler(event : Event ) : void
+			{
+				var scrollPos : Number = 
+					this.dataGroup.verticalScrollPosition;
+				
+				var maxScrollPos : Number = 
+					this.dataGroup.height;
+			}
+			
+			private function verticalScrollChangeHandler( event : Event ) : void
+			{
+				var scrollPos : Number = 
+					this.scroller.verticalScrollBar.value;
+				var maxValue : Number = 
+					this.scroller.verticalScrollBar.maximum;
+				
+				if ( maxValue <= scrollPos + 100 )
+				{
+					fetchMore();
+				}
+			}
+			
+
+			private function fetchMore():void
+			{
+				if ( !fetchRequested && readyToFetch )
+				{
+					dispatchEvent(new Event("fetchMoreItems", true));
+					readyToFetch = false;	
+					fetchRequested = true;
+				}
+			}
+			
+			
+			private function addItemSearchEventListener(event : Event):void
+			{
+				if ( productManager.itemsSearchResult )
+				{
+					readyToFetch = true;	
+					fetchRequested = false;
+					productManager.itemsSearchResult.addEventListener(
+						"searchResultItemsChange", itemSearchResultsChangeHandler )
+				}
+			}
+			
+			private function itemSearchResultsChangeHandler(event : Event):void
+			{
+				readyToFetch = true;	
+				fetchRequested = false;
+				if ( ! this.dataProvider ) return;
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="tileViewLarge"/>
+		<s:State name="tileViewSmall"/>
+		<s:State name="listView"/>
+		<s:State name="bookView"/>
+	</s:states>
+	
+	<s:layout.tileViewLarge >
+		<s:TileLayout 
+			columnWidth.tileViewLarge="150" 
+			rowHeight.tileViewLarge="150"
+			horizontalGap="14" verticalGap="14"
+			horizontalAlign="center"
+			/>
+	</s:layout.tileViewLarge>
+	
+	<s:layout.tileViewSmall>
+		<s:TileLayout 
+			columnWidth.tileViewSmall="90" 
+			rowHeight.tileViewSmall="90"
+			rowHeight.listView="50"
+			columnWidth.listView="{this.width - 10}"
+			horizontalGap="14" verticalGap="14"
+			horizontalAlign="center"
+			/>
+	</s:layout.tileViewSmall>
+	<s:layout.listView >
+		<s:VerticalLayout gap="4" />
+	</s:layout.listView>
+</s:List>

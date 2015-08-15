@@ -1,0 +1,30 @@
+
+
+package ebayApp.services.dto
+{
+	/**
+	 * Detailed information about a bid.
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 */
+	public class BiddingDetails
+	{
+		public var convertedMaxBid:Number;
+		public var maxBid:Number;
+		public var quantityBid:int;
+		public var quantityWon:int;
+		
+		/**
+		 * Constructor for the BiddingDetails class.
+		 * 
+		 * <p>Creates a new BiddingDetails object.</p>
+		 */		
+		public function BiddingDetails()
+		{
+		}  // BiddingDetails
+	}  // class declaration
+}  // package

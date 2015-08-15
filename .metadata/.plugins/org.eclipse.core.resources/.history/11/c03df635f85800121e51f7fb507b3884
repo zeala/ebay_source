@@ -1,0 +1,9 @@
+package ebayApp.services.util
+{
+	public class ShoppingServiceOperationName
+	{
+		public function ShoppingServiceOperationName()
+		{
+		}
+	}
+}

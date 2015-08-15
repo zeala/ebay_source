@@ -1,0 +1,37 @@
+package model
+{
+	import flash.events.EventDispatcher;
+	
+	import mx.events.PropertyChangeEvent;
+	
+	import ebayApp.services.CommandManager;
+	import ebayApp.services.ServiceManager;
+	import ebayApp.services.util.FindingServiceOperationName;
+	
+	public class FindingServicePM extends EventDispatcher
+	{
+		public function FindingServicePM()
+		{
+			init();
+		}
+
+		
+		//-----------------------------------
+		// service manager
+		//-----------------------------------
+		public var serviceManager : ServiceManager = new ServiceManager();
+		
+		
+		private function init():void
+		{
+			serviceManager.addEventListener( 
+				FindingServiceOperationName.FIND_COMPLETED_ITEMS, findCompletedItemsResultHandler);
+		}
+		
+		
+		private function findCompletedItemsResultHandler(event:PropertyChangeEvent):void
+		{
+			trace("\n event.newValue ; " + event.newValue );
+		}
+	}
+}

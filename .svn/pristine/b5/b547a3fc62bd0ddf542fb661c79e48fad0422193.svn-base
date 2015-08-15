@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Scroller xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 >
+	<fx:Metadata>
+		[Event(name="openCategoryPicker", type="com.ebayproject.events.CategoryPickerEvent")]
+	</fx:Metadata>
+
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.events.CategoryPickerEvent;
+			
+			import mx.collections.ArrayCollection;
+			
+			import dto.ConditionNamesAndIds;
+			import dto.codeTypes.SortOrderCodeType;
+			
+			
+			public static const LABEL_WIDTH : int = 80;
+
+			public static const SORT_OPTIONS : Array =
+				[
+					{label : "Best Match", data : SortOrderCodeType.BEST_MATCH},
+					{label : "Bid Count Fewest", data : SortOrderCodeType.BID_COUNT_FEWEST},
+					{label : "Bid Count Most", data : SortOrderCodeType.BID_COUNT_MOST},
+					{label : "Price + Shipping Lowest", data : SortOrderCodeType.PRICE_PLUS_SHIPPING_LOWEST},
+					{label : "Price + Shipping Highest", data : SortOrderCodeType.PRICE_PLUS_SHIPPING_HIGHEST},
+					{label : "Current Price Highest", data : SortOrderCodeType.CURRENT_PRICE_HIGHEST}
+				];
+			
+			private function launchCategoryPicker():void
+			{
+				dispatchEvent( new CategoryPickerEvent( 
+					CategoryPickerEvent.OPEN_CATEGORY_PICKER, null ));
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group width="100%" height="100%">
+		<s:Rect 
+			radiusX="2" radiusY="2" width="{this.width-2} "
+			height="{this.height - 6}"
+			x="1" y="5"
+			>
+			<s:stroke>
+				<s:SolidColorStroke color="0x999999"/>
+			</s:stroke>
+		</s:Rect>
+		<s:Group height="100%" clipAndEnableScrolling="true">	
+			<s:layout>
+				<s:VerticalLayout paddingTop="10" paddingLeft="10" gap="12"/>
+			</s:layout>
+			<s:HGroup width="100%"
+					  verticalAlign="middle"
+					  >
+				<s:Label
+					width="{LABEL_WIDTH}"
+					text="Keyword"
+					/>
+				<s:TextInput 
+					id="keyword"
+					width="180"		 
+					/>
+			</s:HGroup>
+			
+			<s:HGroup width="100%" verticalAlign="middle" >
+				<s:Label
+					text="Select Category"
+					width="{LABEL_WIDTH}"
+					/>
+				<s:Button label="Category picker"
+						  click="launchCategoryPicker()"
+						  />
+			</s:HGroup>	
+			
+			<s:HGroup>
+				<s:Label width="{LABEL_WIDTH}"
+						 text="Time Left"
+						 />
+				<s:VGroup width="100%" height="100%" >
+					<s:HGroup width="100%" height="100%" >
+						<s:DropDownList width="100"
+										dataProvider="{new ArrayCollection(['View All', '1 hour', '4 hours', '8 hours', '1 day', '3 days'])}"	
+										selectedIndex="0"
+										enabled="{!customEndDateCb.selected}"
+										/>
+						<s:CheckBox 
+							id="customEndDateCb"
+							label="Customise"
+							/>
+					</s:HGroup>  
+					
+					<s:HGroup gap="3" verticalAlign="middle"
+							  enabled="{customEndDateCb.selected}"
+							  >
+						<s:TextInput
+							width="30"
+							maxChars="2"
+							restrict="0-9"
+							/>
+						<s:Label text="Days"
+								 />
+						<s:Spacer width="3"/>
+						
+						<s:TextInput
+							restrict="0-9"
+							maxChars="2"
+							width="30"
+							/>
+						<s:Label text="Hours"
+								 />
+						<s:Spacer width="3"/>
+						
+						<s:TextInput
+							restrict="0-9"
+							maxChars="2"
+							width="30"
+							/>
+						<s:Label text="Mins"
+								 />
+					</s:HGroup>
+				</s:VGroup>  
+				
+			</s:HGroup>
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label width="{LABEL_WIDTH}"
+						 text="Condition"
+						 />
+				<s:DropDownList 
+					id="conditionDdl"
+					requireSelection="true"
+					dataProvider="{ConditionNamesAndIds.CONDITIONS_MAIN_CATEGORIES_FOR_SEARCH_OPTIONS}"	
+					labelField="name"
+					/>
+			</s:HGroup>	
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label width="{LABEL_WIDTH}"
+						 text="Free Shipping"
+						 />
+				<s:CheckBox id="freeShippingCb"/>
+			</s:HGroup>
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label width="{LABEL_WIDTH}"
+						 text="Top Sellers"
+						 />
+				<s:CheckBox id="topSellersCb"/>
+			</s:HGroup>
+			
+			<s:HGroup verticalAlign="middle">
+				<s:Label width="{LABEL_WIDTH}"
+						 text="Sort Results By:"
+						 />
+				<s:DropDownList
+					width="180"
+					dataProvider="{new ArrayCollection(SORT_OPTIONS)}"
+					selectedIndex="0"
+					/>
+			</s:HGroup>
+		</s:Group>
+	</s:Group>
+	
+</s:Scroller>

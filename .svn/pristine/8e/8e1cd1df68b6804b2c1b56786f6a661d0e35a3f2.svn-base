@@ -1,0 +1,9 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ItemFilterType
+	{
+		public function ItemFilterType()
+		{
+		}
+	}
+}

@@ -1,0 +1,34 @@
+package ebayApp.services
+{
+	import flash.net.URLRequestHeader;
+	
+	import mx.rpc.http.HTTPService;
+	
+	public class ShoppingServiceGET extends HTTPService
+	{
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		public static var apiAuthToken:String = "";
+		public static var endUserIP:String = "";
+		public static var isSandbox:Boolean = true;
+		
+		public static const CONTENT_TYPE:String = "text/xml";
+		public static const API_COM_LEVEL:String = "483";
+		public static const API_SITEID:String = "0";
+		public static const METHOD:String = "POST";
+		public static const NAMESPACE:String = "urn:ebay:apis:eBLBaseComponents";
+		
+		private static var headerDevName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-DEV-NAME", apiDevName);
+		private static var headerAppName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-APP-NAME", apiAppName);
+		private static var headerCertName:URLRequestHeader =  new URLRequestHeader("X-EBAY-API-CERT-NAME", apiCertName);
+		private static var headerContentType:URLRequestHeader = new URLRequestHeader("Content-Type", CONTENT_TYPE);
+		private static var headerComLevel:URLRequestHeader = new URLRequestHeader("X-EBAY-API-COMPATIBILITY-LEVEL", API_COM_LEVEL);
+		private static var headerSiteID:URLRequestHeader = new URLRequestHeader("X-EBAY-API-SITEID", API_SITEID);
+		
+		public function ShoppingServiceGET(rootURL:String=null, destination:String=null)
+		{
+			super(rootURL, destination);
+		}
+	}
+}

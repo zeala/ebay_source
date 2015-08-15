@@ -1,0 +1,19 @@
+package dto
+{
+	public class BuyingGuide
+	{
+		public var categoryID : String;
+		
+		public var creationTime : Date;
+		
+		public var Name : String;
+		
+		public var text : String; 
+		
+		public var title : String;
+		
+		public var url : String;
+		
+		public var userID : String;
+	}
+}

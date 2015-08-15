@@ -1,0 +1,9 @@
+package ebayApp.services.dto.histograms
+{
+	public class CategoryHistogramContainer
+	{
+		
+		[ArrayElementType("CategoryHistogram")]
+		public var categoryHistograms : Array;
+	}
+}

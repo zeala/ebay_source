@@ -1,0 +1,11 @@
+
+package ebayApp.services.dto
+{
+
+	public final class PromotionMethod
+	{
+		public static const CROSS_SELL:String = "CrossSell";
+		public static const UP_SELL:String = "UpSell";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

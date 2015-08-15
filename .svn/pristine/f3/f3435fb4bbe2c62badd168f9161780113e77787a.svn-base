@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 minWidth="240" minHeight="200">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[Event(name="imageReady", type="flash.events.Event")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			private var xPos : Number;
+			private var yPos : Number;
+			
+			[Bindable]
+			public var imgSource : String;
+			
+		
+			private function mouseDownHandler( event : MouseEvent ) : void
+			{
+				event.stopImmediatePropagation();
+				event.target.addEventListener( 
+					MouseEvent.MOUSE_MOVE, mouseMoveHandler, false, 0 ,true );
+				xPos = this.mouseX;
+				yPos = this.mouseY;
+			}
+			
+			private function mouseUpHandler( event : MouseEvent ) : void
+			{
+				event.target.removeEventListener( MouseEvent.MOUSE_MOVE, mouseMoveHandler );
+				event.target.stopDrag();
+				xPos = this.mouseX;
+				yPos = this.mouseY;
+			}
+			
+			private function mouseMoveHandler( event : MouseEvent ) : void
+			{
+				var newXPos : Number = this.mouseX;
+				var newYPos : Number = this.mouseY;
+				
+				var diffX : Number = xPos - newXPos;
+				var diffY : Number = yPos - newYPos;
+				
+				scroller.verticalScrollBar.value += diffY;
+				scroller.horizontalScrollBar.value += diffX;
+				
+				xPos = newXPos;
+				yPos = newYPos;
+			}
+			
+			private function scrollerCreationCompleteHandler():void
+			{
+				scroller.viewport.addEventListener( MouseEvent.MOUSE_DOWN, mouseDownHandler);
+				scroller.viewport.addEventListener( MouseEvent.MOUSE_UP, mouseUpHandler );
+			}
+			
+			private function progressHandler( event:ProgressEvent ) : void
+			{
+				//trace("\n progress ; " + event.bytesLoaded + " total : " + event.bytesTotal );
+				drawProgressBar( event );
+			}
+			
+			private function drawProgressBar( event:ProgressEvent ):void
+			{
+				var g:Graphics = progressBar.graphics;
+				g.clear();
+				
+				if ( event.bytesLoaded < event.bytesTotal )
+				{
+					g.moveTo( 0, 0 );
+					g.beginFill( 0x333333, 1 );
+					g.drawRect( 0, 0, 100, 8 );
+					g.endFill();
+					
+					var barWidth : Number = 98 * (event.bytesLoaded/ event.bytesTotal );
+					//trace(" bar width : " + barWidth);
+					g.moveTo(1, 1 );
+					g.beginFill( 0xdddddd, 1);
+					g.drawRect( 1, 1, barWidth, 6 );
+					g.endFill()
+				}	
+			}
+			
+			private function imageReadyHandler( event : Event = null):void
+			{
+				
+				img.width = img.sourceWidth;
+				img.height = img.sourceHeight;
+				
+				/*if ( stage.width > img.width + 150 )
+				{
+					this.width = img.width + 100;
+				}
+				else
+				{
+					this.width = stage.width - 50;
+				}
+				
+				if ( stage.height > img.height + 150 )
+				{
+					this.height = img.height + 150;
+				}
+				else
+				{
+					this.height = stage.height - 50;
+				}*/
+				dispatchEvent(new Event("imageReady", true));
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout/>
+	</s:layout>
+		
+		<s:Scroller
+			id="scroller"
+			width="{width - 100}" height="{ height - 100 }"
+			creationComplete="scrollerCreationCompleteHandler()"
+			>
+			<s:Group
+				id="imgContainer"
+				left="0" right="0" top="0" bottom="0"
+				clipAndEnableScrolling="true"
+				>
+				<s:Image
+					id="img"
+					width="100%" height="100%"
+					source="{imgSource}"
+					ready="imageReadyHandler(event)"
+					/>
+			</s:Group>
+			
+		
+		</s:Scroller>
+		<mx:UIComponent id="progressBar" 
+					horizontalCenter="0" verticalCenter="0"/>
+</s:Group>

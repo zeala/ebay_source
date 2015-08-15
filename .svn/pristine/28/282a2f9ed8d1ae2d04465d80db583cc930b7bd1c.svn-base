@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Graphic version="2.0"
+		   xmlns:s="http://ns.adobe.com/fxg/2008" 
+		   viewHeight="9" viewWidth="45"
+		   scaleGridTop="3" scaleGridBottom="6"
+		   scaleGridLeft="8" scaleGridRight="40">
+	<s:Path winding="evenOdd"
+		data="M 39 1 C 42 1 44 3 44 6 
+			C 44 9 42 11 39 11 
+			C 39 11 6 11 6 11 
+			C 3 11 1 9 1 5
+			C 1 3 3 1 6 1 
+			C 6 1 39 1 39 1 
+			C 39 1 39 1 39 1 Z 
+			M 39 0 C 39 0 6 0 6 0 
+			C 3 0 0 3 0 6 
+			C 0 10 3 12 6 12 
+			C 42 12 45 10 25 6 
+			C 45 3 42 0 39 0 
+			C 39 0 39 0 39 0 Z " 
+		blendMode="normal" alpha="1"	
+		>
+		<s:fill>
+			<s:SolidColor color="#cbcbcb"/>
+		</s:fill>
+		
+	</s:Path>
+	<s:Path winding="nonZero"
+			data="M 44 6 C 44 9 42 11 39 11 
+			C 39 11 6 11 6 11 
+			C 3 11 1 9 1 5 
+			C 1 6 1 6 1 6 
+			C 1 3 3 1 6 1 
+			C 6 1 39 1 39 1 
+			C 42 1 44 3 44 6 
+			C 44 6 44 6 44 6 Z "
+			blendMode="normal" alpha="1"
+			>
+			
+			<s:fill>
+				<s:LinearGradient x="23" y="7" scaleX="10" rotation="-90">
+					<s:GradientEntry color="#e8e8e8" ratio="0.01" alpha="1"/>
+					<s:GradientEntry color="#f3f3f3" ratio="0.38" alpha="1"/>
+					<s:GradientEntry color="#ffffff" ratio="0.85" alpha="1"/>
+					<s:GradientEntry color="#e8e8e8" ratio="0.99" alpha="1"/>
+					
+				</s:LinearGradient>
+			</s:fill>
+		
+	</s:Path>
+	
+	<s:Path winding="nonZero"
+			data="M 44 6 C 44 9 42 11 39 11 
+			C 39 11 6 11 6 11 
+			C 3 11 1 9 1 5 
+			C 1 6 1 6 1 6 
+			C 1 3 3 1 6 1 
+			C 6 1 39 1 39 1 
+			C 42 1 44 3 44 6 
+			C 44 6 44 6 44 6 Z "
+			blendMode="normal" alpha="1"
+			>
+		
+		<s:fill>
+			<s:LinearGradient x="23" y="7" scaleX="10" rotation="-90">
+				<s:GradientEntry color="#221E1F" ratio="0.01" alpha="0.2"/>
+				<s:GradientEntry color="#221E1F" ratio="0.99" alpha="0"/>
+				
+			</s:LinearGradient>
+		</s:fill>
+		
+	</s:Path>
+	
+	<s:Path winding="nonZero"
+		data="M 44 6 L 1 6 
+		C 1 6 1 6 1 6 
+		C 1 3 3 1 6 1 
+		C 6 1 39 1 39 1 
+		C 42 1 44 3 44 6
+		C 44 6 44 6 44 6 Z"
+		blendMode="normal" alpha="0.5"
+			>
+		<s:fill>
+			<s:SolidColor color="#ffffff"/>
+		</s:fill>
+	</s:Path>
+</s:Graphic>

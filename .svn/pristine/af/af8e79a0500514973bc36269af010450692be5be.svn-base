@@ -1,0 +1,95 @@
+package com.ebayproject.style.assets.icons
+{
+	import flash.utils.Dictionary;
+	
+	import dto.codeTypes.Site;
+
+	public class Icons
+	{
+		
+		//--------------------------------------------------------------------------
+		// Icons
+		//--------------------------------------------------------------------------
+		[Embed(source="zoomIn.png")]
+		public static const ICON_ZOOM_IN : Class;
+		
+		[Embed(source="zoomIn16.png")]
+		public static const ICON_ZOOM_IN_SMALL : Class;
+		
+		[Embed(source="addBookmark.png")]
+		public static const ADD_BOOKMARK : Class;
+		
+		[Embed(source="icon_watching.gif")]
+		public static const ICON_WATCHING : Class;
+		
+		[Embed(source="list_view.jpg")]
+		public static const LIST_VIEW : Class;
+		
+		[Embed(source="book_view.png")]
+		public static const BOOK_VIEW :Class;
+		
+		[Embed(source="large_thumbnail_view.png")]
+		public static const LARGE_THUMBNAIL_VIEW : Class;
+		
+		[Embed(source="small_thumbnail_view.png")]
+		public static const SMALL_THUMBNAIL_VIEW : Class;
+		
+		[Embed(source="close.png")]
+		public static const ICON_CLOSE_SMALL : Class;
+		
+		//--------------------------------------------------------------------------
+		// misc graphics
+		//--------------------------------------------------------------------------
+		[Embed(source="green_bubble.png")]
+		public static const GREEN_BUBBLE : Class;
+		
+		
+		//--------------------------------------------------------------------------
+		// Categories
+		//--------------------------------------------------------------------------
+		[Embed(source="art32.png")]
+		public static const ART_CATEGORY : Class;
+		
+		[Embed(source="baby.jpg")]
+		public static const BABY_CATEGORY : Class;
+		
+		[Embed(source="folder_green.png")]
+		public static const FOLDER_GREEN : Class;
+		
+		//--------------------------------------------------------------------------
+		// Flags
+		//--------------------------------------------------------------------------
+		[Embed(source="Australia.png")]
+		public static const AUSTRALIA_FLAG : Class;
+		
+		[Embed(source="Canada.png")]
+		public static const CANADA_FLAG : Class;
+		
+		[Embed(source="Ireland.png")]
+		public static const IRELAND_FLAG : Class;
+		
+		[Embed(source="UK.png")]
+		public static const UK_FLAG : Class;
+		
+		[Embed(source="USA.png")]
+		public static const USA_FLAG : Class;
+		
+		public static const FLAG_MAP : Dictionary = buildFlagMap();
+		
+		private static function buildFlagMap():Dictionary
+		{
+			trace("\n australia flag : " + AUSTRALIA_FLAG );
+			
+			var map : Dictionary = new Dictionary();
+			
+			map[Site.AUSTRALIA] = AUSTRALIA_FLAG;
+			map[Site.CANADA] = CANADA_FLAG;
+			map[Site.IRELAND] = IRELAND_FLAG;
+			map[Site.UK] = UK_FLAG;
+			map[Site.US] = USA_FLAG;
+			
+			return map;
+		}
+		
+	}
+}

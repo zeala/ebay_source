@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 clipAndEnableScrolling="true"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Metadata>
+		[Event(name="getResultsForCategory", type="mx.events.PropertyChangeEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.events.PropertyChangeEvent;
+			
+			import dto.PaginationOutput;
+			import dto.histograms.CategoryHistogram;
+			import dto.results.SearchResults;
+			
+			[Bindable]
+			public var totalResults : int;
+			
+			[Bindable]
+			public var pageNum : int;
+			
+			[Bindable]
+			public var numPerPage : int;
+			
+			[Bindable]
+			public var resultsToDisplay : int;
+			
+			private var _searchResults : SearchResults
+			[Bindable]
+			public function get searchResults (): SearchResults
+			{
+				return _searchResults;
+			}
+			public function set searchResults(val:SearchResults):void
+			{
+				_searchResults = val;
+				
+				_searchResults.addEventListener(
+					"searchResultItemsChange", searchResultsChangeHandler, false, 0, true );
+				_searchResults.addEventListener(
+					"paginationOutputChange", paginationOutputChangeHandler, false, 0, true );
+				populateHistogramContainer();
+				paginationOutputChangeHandler();
+			}
+			
+			private function searchResultsChangeHandler(event:Event):void
+			{
+				categoryHistogramGroup.removeAllElements();
+				populateHistogramContainer();
+			}
+			
+			private function paginationOutputChangeHandler():void
+			{
+				var pageOutput : PaginationOutput = _searchResults.paginationOutput;
+				totalResults = pageOutput.totalEntries;
+				pageNum = pageOutput.pageNumber;
+				numPerPage = pageOutput.entriesPerPage;
+				
+				resultsToDisplay = (pageNum * numPerPage) < totalResults 
+					? (pageNum * numPerPage) : totalResults;
+			}
+			
+			private function populateHistogramContainer():void
+			{
+				
+				categoryHistogramGroup.removeAllElements();
+				var categoryHistograms:ArrayCollection = searchResults.categoryHistogramContainer.categoryHistograms;
+				for ( var i : int = 0; i < categoryHistograms.length ; i++)
+				{
+					
+					var histGroup : HistogramLabel = new HistogramLabel();
+					histGroup.categoryHistogram = categoryHistograms[i];
+					histGroup.addEventListener( MouseEvent.CLICK, histogramClickHandler, false, 0, true );
+					categoryHistogramGroup.addElement( histGroup );
+					
+				}
+				function histogramClickHandler(event : MouseEvent):void
+				{
+					var propEvent : PropertyChangeEvent = new PropertyChangeEvent("getResultsForCategory");
+					propEvent.newValue = HistogramLabel( event.currentTarget ).categoryHistogram;
+					dispatchEvent( propEvent);
+				}	
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:HorizontalLayout paddingLeft="10" paddingRight="10" paddingTop="2"/>
+	</s:layout>
+	
+	<s:Label text="Displaying { resultsToDisplay } of {totalResults} results"/>
+	
+	<s:HGroup id="categoryHistogramGroup" width="100%"/>
+</s:Group>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Graphic 
+	version="2.0"
+	xmlns:s="http://ns.adobe.com/fxg/2008" 
+	scaleGridTop="10" scaleGridBottom="600"
+	scaleGridLeft="3" scaleGridRight="8"
+	>
+	
+	<s:Path winding="nonZero" x="1" y="1"
+	alpha="0.5"
+		data="M15 0 15 622 0.2 622 0 622 0 0 15 0 Z"
+	>
+			<s:fill>
+				<s:LinearGradient x="15" y="311" scaleX="15" rotation="180">
+					<s:GradientEntry color="#010101" ratio="0" alpha="0.3"/>
+					<s:GradientEntry color="#6d6d6d" ratio="0.26" alpha="0.23"/>
+					<s:GradientEntry color="#bcbcbc" ratio="0.5" alpha="0.15"/>
+					<s:GradientEntry color="#eeeeee" ratio="0.77" alpha="0.1"/>
+					<s:GradientEntry color="#fafafa" ratio="0.89" alpha="0.04"/>
+					<s:GradientEntry color="#ffffff" ratio="1" alpha="0"/>
+					
+				</s:LinearGradient>
+			</s:fill>
+	</s:Path>
+</s:Graphic>

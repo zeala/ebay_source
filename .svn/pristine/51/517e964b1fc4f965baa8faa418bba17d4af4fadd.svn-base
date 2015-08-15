@@ -1,0 +1,15 @@
+
+
+package ebayApp.services.dto
+{
+	
+	public class VerifiedUserRequirements
+	{
+		public var minimumFeedbackScore:int;
+		public var verifiedUser:Boolean;
+
+		public function VerifiedUserRequirements()
+		{
+		}  // VerifiedUserRequirements
+	}  // class declaration
+}  // package

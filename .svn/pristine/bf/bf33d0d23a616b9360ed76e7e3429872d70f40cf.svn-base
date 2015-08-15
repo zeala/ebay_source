@@ -1,0 +1,117 @@
+
+
+package ebayApp.services.results
+{
+	import ebayApp.services.dto.BestOfferDetails;
+	import ebayApp.services.dto.BuyerRequirements;
+	import ebayApp.services.dto.Category;
+	import ebayApp.services.dto.Charity;
+	import ebayApp.services.dto.CrossPromotion;
+	import ebayApp.services.dto.DigitalDeliveryDetails;
+	import ebayApp.services.dto.ListingCheckoutRedirectPreference;
+	import ebayApp.services.dto.ListingDesigner;
+	import ebayApp.services.dto.ListingDetails;
+	import ebayApp.services.dto.PaymentDetails;
+	import ebayApp.services.dto.PictureDetails;
+	import ebayApp.services.dto.ProductListingDetails;
+	
+
+
+	public class EBayItem extends EBayResult
+	{
+		public var applicationData:String;
+		public var autoPay:Boolean;
+		public var bestOfferDetails:BestOfferDetails;
+		public var buyerProtection:String;
+		public var buyerRequirements:BuyerRequirements;
+		public var buyerResponsibleForShipping:Boolean;
+		public var buyItNowPrice:Number;
+		public var charity:Charity;
+		public var country:String;
+		public var crossPromotion:CrossPromotion;
+		public var currency:String;
+		public var description:String;
+		public var digitalDeliveryDetails:DigitalDeliveryDetails;
+		public var disableBuyerRequirements:Boolean;
+		public var dispatchTimeMax:int;
+		public var financeOfferID:String;
+		public var freeAddedCategory:Category;
+		public var getItFast:Boolean;
+		public var giftIcon:int;
+		[ArrayElementType("String")]
+		public var giftServices:Array;
+		public var hitCount:Number;
+		public var hitCounter:String;
+		public var itemID:String;
+		public var listingCheckoutRedirectPreference:ListingCheckoutRedirectPreference;
+		public var listingDesigner:ListingDesigner;
+		public var listingDetails:ListingDetails;
+		public var listingDuration:String;
+		[ArrayElementType("String")]
+		public var listingEnhancement:Array;
+		public var listingSubtype:String;
+		public var listingType:String;
+		public var location:String;
+		public var locationDefaulted:Boolean;
+		public var lotSize:int;
+		public var motorsGermanySearchable:Boolean;
+		public var nowAndNew:Boolean;
+		public var paymentDetails:PaymentDetails;
+		[ArrayElementType("String")]
+		public var paymentMethods:Array;
+		public var payPalEmailAddress:String;
+		public var pictureDetails:PictureDetails;
+		public var postalCode:String;
+		public var primaryCategory:Category;
+		public var privateListing:Boolean;
+		public var productListingDetails:ProductListingDetails;
+		public var proxyItem:Boolean;
+		public var quantity:int;
+		public var regionID:String;
+		public var relisted:Boolean;
+		public var relistLink:Boolean;
+		public var reservePrice:Number;
+		public var reviseStatus:ReviseStatus;
+		public var secondaryCategory:Category;
+		public var seller:EBayUser;
+		public var sellerContactDetails:ContactDetails;
+		public var sellerInventoryID:String;
+		public var sellerVacationNote:String;
+		public var sellingStatus:SellingStatus;
+		public var shippingDetails:ShippingDetails;
+		public var shippingTermsInDescription:Boolean;
+		[ArrayElementType("String")]
+		public var shipToLocations:Array;
+		public var site:String;
+		public var sku:String;
+		[ArrayElementType("String")]
+		public var skypeContactOption:Array;
+		public var skypeEnabled:Boolean;
+		public var skypeID:String;
+		public var startPrice:Number;
+		public var storeFront:StoreFront;
+		public var subTitle:String;
+		public var thirdPartyCheckout:Boolean;
+		public var thirdPartyCheckoutIntegration:Boolean;
+		public var timeLeft:String;
+		public var title:String;
+		public var uuID:String;
+		public var vatDetails:VATDetails;
+		public var watchCount:Number;
+		
+
+		/**
+		 * Constructor for the EBayItem class.
+		 * 
+		 * <p>Creates a new EbayItem object.</p>
+		 */
+		public function EBayItem()
+		{
+			this.giftServices = new Array();
+			this.listingEnhancement = new Array();
+			this.paymentMethods = new Array();
+			this.shipToLocations = new Array();
+			this.skypeContactOption = new Array();
+		}  // EBayItem
+	}  // class declaration
+}  // package

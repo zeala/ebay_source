@@ -1,0 +1,36 @@
+
+
+package ebayApp.services.dto
+{
+	/**
+	 * Provides constants for the FeedbackRatingStarCodeType simple type.
+	 * 
+	 * <p>This class identifies the code types that eBay could use to identify 
+	 * the color of the feedback score star of a user.  The color of a feedback 
+	 * score star visually denotes the range in which the user's summary feedback
+	 * score falls.</p>
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 * 
+	 * @see http://developer.ebay.com/DevZone/SOAP/docs/WSDL/xsd/1/simpletype/FeedbackRatingStarCodeType.htm
+	 */	
+	public final class FeedbackRatingStar
+	{
+		public static const NONE:String = "None";
+		public static const YELLOW:String = "Yellow";
+		public static const BLUE:String = "Blue";
+		public static const TURQUOISE:String = "Turquoise";
+		public static const PURPLE:String = "Purple";
+		public static const RED:String = "Red";
+		public static const GREEN:String = "Green";
+		public static const YELLOW_SHOOTING:String = "YellowShooting";
+		public static const TURQUOISE_SHOOTING:String = "TurquoiseShooting";
+		public static const PURPLE_SHOOTING:String = "PurpleShooting";
+		public static const RED_SHOOTING:String = "RedShooting";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

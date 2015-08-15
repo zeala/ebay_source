@@ -1,0 +1,14 @@
+package ebayApp.services.commands.finding
+{
+	import ebayApp.services.commands.EbayCommand;
+	
+	import mx.rpc.http.HTTPService;
+	
+	public class FindItemsAdvancedCommand extends EbayCommand
+	{
+		public function FindItemsAdvancedCommand(service:HTTPService)
+		{
+			super(service);
+		}
+	}
+}

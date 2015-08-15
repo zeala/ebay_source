@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="ebayApp.services.commands.finding.FindingServiceOperationName"/>
+    <classEntry path="ebayApp.services.ShoppingServiceGET"/>
+    <classEntry path="ebayApp.services.commands.shopping.ShoppingServiceOperationName"/>
+    <classEntry path="ebayApp.services.commands.finding.FindCompletedItemsCommand"/>
+    <classEntry path="ebayApp.services.commands.EbayCommand"/>
+    <classEntry path="ebayApp.services.IEbayService"/>
+    <classEntry path="ebayApp.services.commands.finding.FindItemsAdvancedCommand"/>
+    <classEntry path="ebayApp.services.commands.shopping.GetSingleItemCommand"/>
+    <classEntry path="ebayApp.services.EbayServiceAbstract"/>
+    <classEntry path="ebayApp.services.commands.shopping.FindProductsCommand"/>
+    <classEntry path="ebayApp.services.commands.shopping.GetUserProfileCommand"/>
+    <classEntry path="ebayApp.services.util.parsers.FeedbackParser"/>
+    <classEntry path="ebayApp.services.commands.shopping.FindPopularSearchesCommand"/>
+    <classEntry path="ebayApp.services.commands.finding.FindItemsByImageCommand"/>
+    <classEntry path="ebayApp.services.util.parsers.HistogramParser"/>
+    <classEntry path="ebayApp.services.commands.shopping.GetCategoryInfoCommand"/>
+    <classEntry path="ebayApp.services.commands.shopping.FindReviewsAndGuidesCommand"/>
+    <classEntry path="ebayApp.services.commands.trading.GetSessionIDCommand"/>
+    <classEntry path="ebayApp.services.commands.trading.TradingServiceOperationName"/>
+    <classEntry path="ebayApp.services.util.SitesUtil"/>
+    <classEntry path="ebayApp.services.util.parsers.ShoppingServiceParser"/>
+    <classEntry path="ebayApp.services.MerchandisingServiceGet"/>
+    <classEntry path="ebayApp.services.commands.merchandising.GetMostWatchedItemsCommand"/>
+    <classEntry path="ebayApp.services.commands.merchandising.MerchandisingServiceOperationName"/>
+    <classEntry path="ebayApp.services.commands.merchandising.GetSimilarItems"/>
+    <classEntry path="ebayApp.services.commands.merchandising.GetTopSellingProducts"/>
+    <classEntry path="ebayApp.services.commands.shopping.FindPopularItemsCommand"/>
+    <classEntry path="ebayApp.services.commands.finding.FetchMoreResults"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

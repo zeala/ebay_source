@@ -1,0 +1,12 @@
+
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class ErrorClassification
+	{
+		public static const REQUEST_ERROR:String = "RequestError";
+		public static const SYSTEM_ERROR:String = "SystemError";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

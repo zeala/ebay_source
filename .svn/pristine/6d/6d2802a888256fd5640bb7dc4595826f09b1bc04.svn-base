@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 mouseChildren="true"
+		 click="clickHandler(event)"
+		 >
+	
+	<fx:Metadata>
+		[Event(name="zoomIn", type="flash.events.Event")]
+		[Event(name="zoomOut", type="flash.events.Event")]
+		[Event(name="addToFavorites", type="flash.events.Event")]
+		[Event(name="viewItemDetails", type="flash.events.Event")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import mx.events.PropertyChangeEvent;
+			
+			private function zoomIn():void
+			{
+				dispatchEvent( new Event("zoomIn"));
+			}
+			
+			private function zoomOut():void
+			{
+				dispatchEvent( new Event("zoomOut"));
+			}
+			
+			private function addToFavorites(event:MouseEvent):void
+			{
+				event.stopImmediatePropagation();
+				dispatchEvent( new Event("addToFavorites"));
+			}
+			
+			private function viewItemDetails(event:MouseEvent):void
+			{
+				event.stopImmediatePropagation();
+				dispatchEvent(new Event("viewItemDetails"));
+			}
+			
+			private function clickHandler(event:MouseEvent ) : void
+			{
+				event.stopImmediatePropagation();
+			}
+		]]>
+	</fx:Script>
+	<s:Rect width="{width}" height="30">
+		<s:fill>
+			<s:SolidColor color="0xffffff" alpha=".9"/>
+		</s:fill>
+	</s:Rect>
+	<s:VGroup y="3" x="4" horizontalAlign="center" gap="0"
+			  mouseOver="zoomIn()"
+			  mouseOut="zoomOut()"
+			  >
+		<s:Image 
+			id="zoomInImg"
+			source="{Icons.ICON_SEARCH}"
+			
+			>
+			<s:filters>
+				<s:DropShadowFilter color="0x333333" distance="2"/>
+			</s:filters>	
+		</s:Image>
+		<s:Label text="Zoom" fontSize="9"/>
+	</s:VGroup>  
+	
+	<s:VGroup 
+		y="2" 
+		gap="0" right="24" 
+		horizontalAlign="center"
+		click="viewItemDetails( event )">
+		<s:Image id="infoImg"
+				 right="10"
+				 source="{Icons.ICON_INFO}"
+				 >
+			<s:filters>
+				<s:DropShadowFilter color="0x333333" distance="2"/>
+			</s:filters>	
+		</s:Image>
+		<s:Label text="Details" fontSize="9"/>
+		
+	</s:VGroup>  	
+	<s:VGroup 
+		y="2"
+		gap="0" right="4" 
+		horizontalAlign="center" 
+		click="addToFavorites( event)"
+		>
+		<s:Image id="bookmarkImg"
+				 source="{Icons.ICON_FAVORITE}"
+				 >
+			<s:filters>
+				<s:DropShadowFilter color="0x333333" distance="2"/>
+			</s:filters>	
+		</s:Image>
+		<s:Label text="Add" fontSize="9"/>
+		
+	</s:VGroup>  		
+</s:Group>

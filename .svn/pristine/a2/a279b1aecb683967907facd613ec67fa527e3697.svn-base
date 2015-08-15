@@ -1,0 +1,9 @@
+package ebayApp.services.dto.histograms
+{
+	public class AspectValueHistogram
+	{
+		
+		public var count : Number;
+		public var valueName : String;
+	}
+}

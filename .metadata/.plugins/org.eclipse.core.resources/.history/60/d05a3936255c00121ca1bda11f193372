@@ -1,0 +1,70 @@
+
+package ebayApp.services.dto
+{
+	import mx.collections.ArrayCollection;
+
+	public class SearchResultItem
+	{
+		[ArrayElementType("ItemAttribute")]
+		public var itemAttributes : Array;
+		
+		public var autoPay : Boolean;
+		
+		public var charityId : String;
+		
+		[ArrayElementType("String")]
+		public var compatibilities : Array
+
+		[ArrayElementType("Condition")]
+		public var conditions:Array;
+		
+		[ArrayElementType("String")]
+		public var countries:Array;
+		
+		public var discountPriceInfo : DiscountedPriceInfo;
+		
+		public var distance : Distance;
+		
+		public var galleryInfoContainer : * ;//GalleryInfoContainer 
+		
+		[ArrayElementType("String")]
+		public var galleryPlusPictureURLs:Array;
+		
+		public var galleryURL:String;
+		
+		public var globalId : String; // in other APIs - site Id
+		
+		public var isMultiVariationListing:Boolean;
+		
+		public var itemId : String;
+		
+		public var listingInfo : * ;// ListingInfo
+		
+		public var location : String;
+		
+		[ArrayElementType("String")]
+		public var paymentMethods : Array;
+		
+		public var pictureURLLarge : String;
+		
+		public var pictureURLSuperSize : String;
+		
+		public var postalCode : String;
+		
+		public var primaryCategory : Category;
+		
+		public var productId : String; // ProductId
+		
+		public var returnsAccepted : Boolean;
+		
+		public var secondaryCategory : Category;
+		
+		
+		
+		
+		public function SearchResultItem()
+		{
+			//this.searchResultValues = new Array();
+		}  // SearchResultItem
+	}  // class declaration
+}  // package

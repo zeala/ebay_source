@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" minHeight="600"
+			   >
+	
+	<fx:Script>
+		<![CDATA[
+			import ebayApp.services.FindingServiceGET;
+			import ebayApp.services.ShoppingServiceGET;
+			import ebayApp.services.commands.finding.FindCompletedItems;
+			import ebayApp.services.util.FindingServiceOperationName;
+			import ebayApp.services.util.ShoppingServiceOperationName;
+			
+			private var findCompletedItemsCommand:FindCompletedItems = new FindCompletedItems();
+			//private var findingService:FindingServiceGET = new FindingServiceGET();
+			private var shoppingService:ShoppingServiceGET = new ShoppingServiceGET();
+			
+			private function testFind():void
+			{
+				var keyword:String = keywordTxt.text;
+				FindingServiceGET.getInstance().callOperation( 
+					FindingServiceOperationName.FIND_COMPLETED_ITEMS );
+					//findOperationsDdl.selectedItem.value, [keyword] )
+				
+			}
+			
+			private function testGet():void
+			{
+				FindingServiceGET.getInstance().callOperation(
+					getOperationsDdl.selectedItem.value );
+			}
+			
+			private function testGetCategoryInfo():void
+			{
+				shoppingService.callOperation();
+			}
+			
+			private function testGetPopularItems():void
+			{
+				shoppingService.callOperation(ShoppingServiceOperationName.FIND_POPULAR_ITEMS );
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingTop="20" paddingLeft="20"/>
+	</s:layout>
+	
+	
+	<s:HGroup>
+		<s:DropDownList 
+			id="findOperationsDdl"
+			width="180"
+			dataProvider="{FindingServiceOperationName.FINDING_SERVICE_OPERATIONS_FIND}"	
+			requireSelection="false"
+			prompt="Select option"
+			/>
+		<s:DropDownList
+			id="getOperationsDdl"
+			width="180"
+			dataProvider="{FindingServiceOperationName.FINDING_SERVICE_OPERATIONS_GET}"
+			requireSelection="false"
+			prompt="Select option to get data"
+			/>
+	</s:HGroup>
+	<s:HGroup>
+		<s:TextInput id="keywordTxt" width="180" />
+		<s:Button 
+			id="testFindBtn"
+			label="Test finding service - find" 
+			click="testFind()"
+			enabled="{findOperationsDdl.selectedItem != null}"
+			/>
+	</s:HGroup>
+	
+	<s:HGroup>
+		<!--<s:TextInput id="keywordTxt" width="180" />-->
+		<s:Button 
+			id="testGetBtn"
+			label="Test Get data" 
+			click="testGet()"
+			enabled="{getOperationsDdl.selectedItem != null}"
+			/>
+	</s:HGroup>
+	
+	<s:HGroup>
+		<s:Label text="Test get categories info" width="180" />
+		<s:Button 
+			id="testCategoryBtn"
+			label="Test category info" 
+			click="testGetCategoryInfo()"
+			
+			/>
+	</s:HGroup>
+	
+	<s:HGroup>
+		<s:Label text="Get popular items" width="180" />
+		<s:Button 
+			id="testPopularItemsBtn"
+			label="Get popular items" 
+			click="testGetPopularItems()"
+			
+			/>
+	</s:HGroup>
+</s:Application>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 >
+	<fx:Declarations>
+		<s:Fade duration="2500" id="longFade"/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.core.UIComponent;
+			
+			private var nav : Navigator;
+			
+			private var _searchItems : ArrayCollection;
+			[Bindable("imageSourcesChange")]
+			public function get searchItems (): ArrayCollection
+			{
+				return _searchItems;
+			}
+			public function set searchItems ( val : ArrayCollection ) : void
+			{
+				_searchItems = val;
+				dispatchEvent( new Event ("imageSourcesChange"));
+				setImageSourcesHandler();
+			}
+			
+			private function setImageSourcesHandler():void
+			{
+				var component : UIComponent = new UIComponent();
+				nav = new Navigator (searchItems, 10, canv.width/2, canv.width);
+				component.addChild( nav );
+				canv.addChild( component );
+				slideContainer.visible = true;
+			}
+			
+			private function playBtnClickHandler():void
+			{
+				playBtn.source = "assets/control_play_blue.png";
+				stopBtn.source = "assets/control_stop.png";
+				nav.startSlideshow()
+			}
+			
+			private function stopBtnClickHandler():void
+			{
+				playBtn.source = "assets/control_play.png";
+				stopBtn.source = "assets/control_stop_blue.png";
+				nav.stopSlideshow();
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	<s:VGroup
+		id="slideContainer"
+		visible="false"
+		width="100%" height="100%"
+		showEffect="longFade" addedEffect="longFade"
+		>
+		<s:HGroup width="{width}" horizontalAlign="right">
+			<s:Image id="playBtn" height="16" width="16"
+					 buttonMode="true" source="assets/control_play.png"
+					 click="playBtnClickHandler()"
+					 />
+			<s:Image id="stopBtn" height="16" width="16"
+					 buttonMode="true" source="assets/control_stop_blue.png"
+					 click="stopBtnClickHandler()"/>
+		</s:HGroup>
+		
+		<mx:Canvas>
+			<mx:Canvas 
+				id="canv"
+				width="{width}" maxWidth="{maxWidth}" height="85"
+				clipContent="true"
+				backgroundAlpha="1" mask="{canv_mask}"
+				backgroundColor="0x666666"
+				/>
+			<mx:Canvas
+				id="canv_mask"
+				x="{canv.x}" y="{canv.y}"
+				width="{canv.width}" height="{canv.height}"
+				backgroundColor="0xffffff" backgroundAlpha="1"
+				
+				/>
+		</mx:Canvas>
+	</s:VGroup>
+</s:Group>

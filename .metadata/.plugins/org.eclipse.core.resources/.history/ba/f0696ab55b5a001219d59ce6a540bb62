@@ -1,0 +1,26 @@
+package model
+{
+	import flash.events.EventDispatcher;
+	
+	import ebayApp.services.ServiceManager;
+	
+	public class FindingServicePM extends EventDispatcher
+	{
+		
+		private var _serviceManager:ServiceManager;
+		public function get serviceManager():ServiceManager
+		{
+			return _serviceManager;
+		}
+		public function set serviceManager(val:ServiceManager):void
+		{
+			_serviceManager = val;
+			setupServiceManagerListeners();
+		}
+		
+		private function setupServiceManagerListeners():void
+		{
+			serviceManager.findCompletedItems.addEventListener(
+		}
+	}
+}

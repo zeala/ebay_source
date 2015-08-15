@@ -1,0 +1,18 @@
+
+package ebayApp.services.dto
+{
+
+	public class SearchResultItem
+	{
+		public var item:Item;
+		public var itemSpecific:ItemSpecific;
+		[ArrayElementType("String")]
+		public var searchResultValues:Array;
+		
+
+		public function SearchResultItem()
+		{
+			this.searchResultValues = new Array();
+		}  // SearchResultItem
+	}  // class declaration
+}  // package

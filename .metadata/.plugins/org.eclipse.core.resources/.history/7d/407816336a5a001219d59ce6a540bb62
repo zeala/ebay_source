@@ -1,0 +1,22 @@
+
+
+package ebayApp.services.dto
+{
+
+	public class ListingDesigner
+	{
+		public var layoutID:int;
+		public var optimalPictureSize:Boolean;
+		public var themeID:int;
+
+
+		/**
+		 * Constructor for the Category class.
+		 * 
+		 * <p>Creates a new Category object.</p>
+		 */
+		public function ListingDesigner()
+		{
+		}  // ListingDesigner
+	}  // class declaration
+}  // package

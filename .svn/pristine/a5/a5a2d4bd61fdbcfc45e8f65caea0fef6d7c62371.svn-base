@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*" 
+		 xmlns:panels="com.ebayproject.components.panels.*" xmlns:searchBuilder="com.ebayproject.components.searchBuilder.*" xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*">
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.controllers.ISearchBuilderController;
+			import com.ebayproject.style.assets.icons.Icons;
+			import com.ebayproject.util.LayoutKind;
+			
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			public var topBarHeight : int = 40;
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			[Bindable]
+			public var searchBuilderController : ISearchBuilderController;
+
+			
+			private function changeView(viewStyle : String ) : void
+			{
+				switch ( viewStyle )
+				{
+					case LayoutKind.BOOK_VIEW :
+						resultsList.currentState = "bookView";
+						break;
+					
+					case LayoutKind.LARGE_THUMBNAIL_VIEW:
+						
+						resultsList.currentState = "tileViewLarge";
+						break;
+					case LayoutKind.SMALL_THUMBNAIL_VIEW:
+						resultsList.currentState = "tileViewSmall";
+						break;
+					
+					case LayoutKind.LIST_VIEW:
+						
+						resultsList.currentState = "tileViewLarge";
+						break;
+				}
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<panels:CategoriesBrowserWindow 
+			id="categoriesBrowserWindow" close="PopUpManager.removePopUp(categoriesBrowserWindow)" 
+			productManager="{productManager}"
+			/>
+		
+		<searchBuilder:SearchBuilder
+			id="searchBuilderWindow" close="PopUpManager.removePopUp(searchBuilderWindow)"
+			searchBuilderController="{searchBuilderController}"
+			/>
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	
+	<s:Group width="100%">
+		
+		<toolbars:ToolbarBackground id="cMenu" width="100%" height="{topBarHeight}"/>
+		<panels:SearchControls
+			id="searchControls"
+			productManager="{productManager}"
+			horizontalCenter="0"
+			/>
+	</s:Group>
+	<panels:Toolbar width="100%" height="40">
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  verticalAlign="middle"
+				  click="changeView(LayoutKind.LARGE_THUMBNAIL_VIEW)">
+			<s:Image source="{Icons.LARGE_THUMBNAIL_VIEW}" width="16"/>
+			<s:Label text="Large&#10;thumbnails"/>
+		</s:HGroup>  
+		
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  verticalAlign="middle"
+				  click="changeView(LayoutKind.SMALL_THUMBNAIL_VIEW)">
+			<s:Image source="{Icons.SMALL_THUMBNAIL_VIEW}"
+					 width="16"
+					 />
+			<s:Label text="Small&#10;thumbnails"/>
+		</s:HGroup>
+		
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  verticalAlign="middle"
+				  click="changeView(LayoutKind.LIST_VIEW)">
+			<s:Image source="{Icons.LIST_VIEW}"
+					 width="16"
+					 />
+			<s:Label text="List&#10;view"/>
+		</s:HGroup>
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  verticalAlign="middle"
+				  click="changeView(LayoutKind.BOOK_VIEW)">
+			<s:Image source="{Icons.BOOK_VIEW}"
+					 width="16"
+					 />
+			<s:Label text="Book&#10;view"/>
+		</s:HGroup>
+	</panels:Toolbar>
+	
+	<searchResultsView:SearchResultsViewer
+		id="resultsList"
+		productManager="{productManager}"
+		left="0" right="0" width="400"  height="400"
+		/>
+	
+	<s:Spacer height="100"/>
+</s:Group>

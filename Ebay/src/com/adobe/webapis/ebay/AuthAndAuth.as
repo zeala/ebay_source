@@ -1,0 +1,115 @@
+
+
+package com.adobe.webapis.ebay
+{
+	import flash.net.URLRequest;
+	import flash.net.URLRequestHeader;
+
+
+	public final class AuthAndAuth
+	{
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		public static var apiAuthToken:String = "";
+		public static var endUserIP:String = "";
+		public static var isSandbox:Boolean = true;
+		
+		public static const CONTENT_TYPE:String = "text/xml";
+		public static const API_COM_LEVEL:String = "483";
+		public static const API_SITEID:String = "0";
+		public static const METHOD:String = "POST";
+		public static const NAMESPACE:String = "urn:ebay:apis:eBLBaseComponents";
+		
+		private static var headerDevName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-DEV-NAME", apiDevName);
+		private static var headerAppName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-APP-NAME", apiAppName);
+		private static var headerCertName:URLRequestHeader =  new URLRequestHeader("X-EBAY-API-CERT-NAME", apiCertName);
+		private static var headerContentType:URLRequestHeader = new URLRequestHeader("Content-Type", CONTENT_TYPE);
+		private static var headerComLevel:URLRequestHeader = new URLRequestHeader("X-EBAY-API-COMPATIBILITY-LEVEL", API_COM_LEVEL);
+		private static var headerSiteID:URLRequestHeader = new URLRequestHeader("X-EBAY-API-SITEID", API_SITEID);
+
+
+		/**
+		 * Write-only property containing developers DevID.
+		 */
+		public function set apiDevName(apiDevName:String):void
+		{
+			this.apiDevName = apiDevName;
+		}  // apiDevName property
+		
+
+		/**
+		 * Write-only property containing developers AppID.
+		 */
+		public function set apiAppName(apiAppName:String):void
+		{
+			this.apiAppName = apiAppName;
+		}  // apiAppName property
+		
+
+		/**
+		 * Write-only property containing developers CertID.
+		 */
+		public function set apiCertName(apiCertName:String):void
+		{
+			this.apiCertName = apiCertName;
+		}  // apiCertName property
+		
+
+		/**
+		 * Write-only property containing developers Authentication Token.
+		 */
+		public function set apiAuthToken(apiAuthToken:String):void
+		{
+			this.apiAuthToken = apiAuthToken;
+		}  // apiAuthToken property
+		
+		/**
+		 * Write-only property containing developers End-User IP address.
+		 * 
+		 * <p>Necessary for PlaceOffer API call</p>
+		 */		
+		public function set endUserIP(endUserIP:String):void
+		{
+			this.endUserIP = endUserIP;
+		}  // endUserIP property
+		
+		
+		/**
+		 * Write-only property indicating whether given AuthAndAuth keys are
+		 * for the eBay Sandbox or Production servers.
+		 */		
+		public function set isSandbox(isSandbox:Boolean):void
+		{
+			this.isSandbox = isSandbox;
+		}  // isSandbox property
+		
+		
+		/**
+		 * Read-only property for the URLRequest of the API call.
+		 */		
+		public static function get request():URLRequest
+		{
+			var request:URLRequest;
+			
+			if (isSandbox)
+			{
+				request = new URLRequest("https://api.sandbox.ebay.com/ws/api.dll");
+			}  // if statement
+			else
+			{
+				request = new URLRequest("https://api.ebay.com/ws/api.dll");
+			}  // else statement
+
+			request.requestHeaders.push(headerDevName);
+			request.requestHeaders.push(headerAppName);
+			request.requestHeaders.push(headerCertName);
+			request.requestHeaders.push(headerContentType);
+			request.requestHeaders.push(headerComLevel);
+			request.requestHeaders.push(headerSiteID);
+			request.method = METHOD;
+
+			return request;
+		}  // request property
+	}  // class declaration
+}  // package

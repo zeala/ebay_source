@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.ebayproject.components.panels.ItemContainer"/>
+    <classEntry path="com.ebayproject.components.panels.ImageContainer"/>
+    <classEntry path="com.ebayproject.components.panels.PageItemContainer"/>
+    <classEntry path="com.ebayproject.components.panels.SearchControls"/>
+    <classEntry path="com.ebayproject.components.panels.CategoriesBrowserWindow"/>
+    <classEntry path="com.ebayproject.components.panels.renderers.SiteDomainListItemRenderer"/>
+    <classEntry path="com.ebayproject.style.assets.icons.Icons"/>
+    <classEntry path="com.ebayproject.components.panels.renderers.TopLevenCategoriesListItemRenderer"/>
+    <classEntry path="com.ebayproject.components.panels.BookContainer"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

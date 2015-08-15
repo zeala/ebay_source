@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
+    xmlns:fb="http://ns.adobe.com/flashbuilder/2009" blendMode="normal" mouseEnabled="false"
+    minWidth="76" minHeight="76" alpha.disabled="0.5" alpha.disabledWithControlBar="0.5">
+    <fx:Metadata>[HostComponent("com.ebayproject.components.panels.CustomTitleWindow")]</fx:Metadata>
+    
+   <fx:Script>
+	   <![CDATA[
+		   [Bindable]
+		   public var cornerHandleSize:Number = 8;
+		   
+		   [Bindable]
+		   public var edgeHandleSize:Number = 4;
+	   ]]>
+   </fx:Script>
+    <s:states>
+        <s:State name="normal" />
+        <s:State name="inactive" stateGroups="inactiveGroup" />
+        <s:State name="disabled" />
+        <s:State name="normalWithControlBar" stateGroups="withControls" />
+        <s:State name="inactiveWithControlBar" stateGroups="withControls, inactiveGroup" />
+        <s:State name="disabledWithControlBar" stateGroups="withControls" />
+    </s:states>
+    
+    <s:RectangularDropShadow id="dropShadow" blurX="20" blurY="20" alpha="0.32" 
+                             alpha.inactiveGroup="0.22" distance="11"  distance.inactiveGroup="7"
+                             angle="90" color="0x000000" left="0" top="0" right="0" bottom="0"/>
+    
+   
+    <s:Group left="0" right="0" top="0" bottom="0">
+        
+       
+        <!--- layer 1: border @private -->
+        <s:Rect id="border" left="0" right="0" top="0" bottom="0" 
+				bottomLeftRadiusX="2" bottomRightRadiusX="2"
+				topLeftRadiusX="2" topRightRadiusX="2"
+				>
+            <s:stroke>
+                <s:SolidColorStroke id="borderStroke" weight="1" color="0x777777" />
+            </s:stroke>
+        </s:Rect>
+        
+        <!-- layer 2: background fill -->
+        <!--- Defines the appearance of the TitleWindowSkin class's background. -->
+        <s:Rect id="background" left="1" top="1" right="1" bottom="1"
+				bottomLeftRadiusX="2" bottomRightRadiusX="2"
+				topLeftRadiusX="2" topRightRadiusX="2"
+				>
+            <s:fill>
+                <!--- Defines the TitleWindowSkin class's background fill. The default color is 0xFFFFFF. -->
+                <s:SolidColor id="backgroundFill" color="0xf5f5f5"/>
+            </s:fill>
+        </s:Rect>
+        
+        <!-- layer 3: contents -->
+        <!--- Contains the vertical stack of title bar content and control bar. -->
+        <s:Group left="1" right="1" top="1" bottom="1" id="contents">
+            <s:layout>
+                <s:VerticalLayout gap="0" horizontalAlign="justify" />
+            </s:layout>
+            <!--- @private -->
+            <s:Group id="topGroup" >
+                
+                <!--- layer 0: title bar fill @private -->
+                <s:Rect id="tbFill" left="2" right="2" top="1" bottom="1">
+                    <s:fill>
+                        <s:LinearGradient rotation="90">
+                            <s:GradientEntry color="0x828FBA"
+                                             color.inactiveGroup="0x898989"/>
+                            <s:GradientEntry color="0x828FBA"
+                                             color.inactiveGroup="0x898989"/>
+                        </s:LinearGradient>
+                    </s:fill>
+                </s:Rect>
+                
+				<s:Rect id="tbHilite" left="0" right="0" top="1" bottom="1">
+					<s:stroke>
+						<s:LinearGradientStroke rotation="90" weight="1">
+							<s:GradientEntry color="0xE6E6E6" />
+							<s:GradientEntry color="0xFFFFFF" alpha="0.22"/>
+						</s:LinearGradientStroke>
+					</s:stroke>
+					<s:fill>
+						<s:LinearGradient rotation="90">
+							<s:GradientEntry color="0xFFFFFF" alpha="0.15" />
+							<s:GradientEntry color="0xFFFFFF" alpha="0.15" ratio="0.44"/>
+							<s:GradientEntry color="0xFFFFFF" alpha="0" ratio="0.4401"/>
+						</s:LinearGradient>
+					</s:fill>
+				</s:Rect>
+				
+                <!--- layer 2: title bar divider @private -->
+                <s:Rect id="tbDiv" left="2" right="2" height="1" bottom="0">
+                    <s:fill>
+                        <s:SolidColor color="0x777777" alpha=".8" />
+                    </s:fill>
+                </s:Rect>
+                
+                <!-- layer 3: text -->
+                <!--- @copy spark.components.Panel#titleDisplay -->
+                <s:Label id="titleDisplay" maxDisplayedLines="1"
+                         left="9" right="36" top="1" bottom="0" minHeight="24"
+                         verticalAlign="middle" fontWeight="bold" />
+                
+                <!-- layer 4: moveArea -->
+                <!--- @copy spark.components.TitleWindow#moveArea -->
+                <s:Group id="moveArea" left="0" right="0" top="0" bottom="0" />
+                
+				<s:Group id="interactiveTitleElements"
+						 left="0" right="25" top="0" bottom="0"
+						 >
+					<s:layout>
+						<s:HorizontalLayout verticalAlign="middle" paddingLeft="0"/>
+					</s:layout>
+				</s:Group>
+				
+                <!--- @copy spark.components.TitleWindow#closeButton -->
+                <s:Button id="closeButton" skinClass="spark.skins.spark.TitleWindowCloseButtonSkin"
+                          width="15" height="15" right="4" top="4" />
+            </s:Group>
+            
+            <!--
+                Note: setting the minimum size to 0 here so that changes to the host component's
+                size will not be thwarted by this skin part's minimum size.   This is a compromise,
+                more about it here: http://bugs.adobe.com/jira/browse/SDK-21143
+            -->
+            <!--- @copy spark.components.SkinnableContainer#contentGroup -->
+            <s:Group id="contentGroup" width="100%" height="100%" minWidth="0" minHeight="0">
+            </s:Group>
+            
+           
+        </s:Group>
+		
+		
+		<s:Group id="resizeHandles" left="0" right="0" top="0" bottom="0">
+			<!--resize handles -->
+			<s:Button id="resizeHandleTop" 
+					  left="{cornerHandleSize * .5}"
+					  right="{cornerHandleSize * .5}"
+					  top="{-(edgeHandleSize * .5)}"
+					  height="{edgeHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleRight"
+					  width="{edgeHandleSize}"
+					  right="{-(edgeHandleSize * .5)}"
+					  top="{cornerHandleSize * .5}"
+					  bottom="{cornerHandleSize * .5}" 
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleBottom"
+					  left="{cornerHandleSize * .5}"
+					  right="{cornerHandleSize * .5}"
+					  bottom="{-(edgeHandleSize * .5)}"
+					  height="{edgeHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleLeft"
+					  width="{edgeHandleSize}"
+					  left="{-(edgeHandleSize * .5)}"
+					  top="{cornerHandleSize * .5}"
+					  bottom="{cornerHandleSize * .5}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleTL"
+					  left="{-(cornerHandleSize * .5)}"
+					  top="{-(cornerHandleSize * .5)}"
+					  width="{cornerHandleSize}"
+					  height="{cornerHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleTR"
+					  right="{-(cornerHandleSize * .5)}"
+					  top="{-(cornerHandleSize * .5)}"
+					  width="{cornerHandleSize}"
+					  height="{cornerHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleBR"
+					  right="{-(cornerHandleSize * .5)}"
+					  bottom="{-(cornerHandleSize * .5)}"
+					  width="{cornerHandleSize}"
+					  height="{cornerHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+			
+			<s:Button id="resizeHandleBL"
+					  left="{-(cornerHandleSize * .5)}"
+					  bottom="{-(cornerHandleSize * .5)}"
+					  width="{cornerHandleSize}"
+					  height="{cornerHandleSize}"
+					  alpha="0"
+					  focusEnabled="false"
+					  skinClass="spark.skins.spark.ButtonSkin"
+					  />
+		</s:Group>
+		
+    </s:Group>
+</s:SparkSkin>

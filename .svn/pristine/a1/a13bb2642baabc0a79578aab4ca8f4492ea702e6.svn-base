@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchResultsView:SearchResultsViewRendererAbstract 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*" 
+				>
+
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import mx.core.UIComponent;
+			
+
+			
+			override public function getEffectTarget():Image
+			{
+				return img;
+			}
+			
+			override public function getOverlayTarget():UIComponent
+			{
+				return overlayGroup as UIComponent;
+			}
+		]]>
+	</fx:Script>
+	
+
+	<searchResultsView:states>
+		<s:State name="normal"/>
+		<s:State name="hover"/>
+	</searchResultsView:states>
+
+	<s:Rect 
+		radiusX="2" radiusY="2" width="{this.width-2} "
+		height="{this.height - 2}"
+		x="1" y="1"
+		>
+		<s:stroke>
+			<s:SolidColorStroke color="0x999999"/>
+		</s:stroke>
+	</s:Rect>
+	<s:Group 
+		id="imgContainer" height="{height - 40}" 
+		width="100%" clipAndEnableScrolling="true" 
+		
+		>
+		<s:Image 
+			id="img"
+			source="{searchResultItem.galleryInfoContainer.largeThumbURL}"
+			width="{imgWidth}" height="{imgHeight}"
+			ready="imageCreationCompleteHandler(img, imgContainer)"  showEffect="{fade}" 
+			creationCompleteEffect="{fade}" smooth="true" smoothingQuality="high"
+				
+			/>
+	</s:Group>
+	<s:VGroup id="textContainer" paddingLeft="10" paddingRight="10" bottom="2" gap="2">
+		<s:Label text="{searchResultItem.title}" width="120" maxDisplayedLines="1" />
+		<s:Label text="{searchResultItem.sellingStatus.currentPrice + ' ' + searchResultItem.currency}"/>
+		<s:Label color="0x0000ff" text="View on Ebay" click="viewItem()" buttonMode="true"/>
+	</s:VGroup>
+	
+	<s:Group 
+		id="overlayGroup"
+		width="{width}" height="{img.height}"
+			 alpha.normal="0"
+			 alpha.hover="1"
+			 x="0" y="0"
+			 >
+		<s:Rect width="{width}" height="30">
+			<s:fill>
+				<s:SolidColor color="0xffffff" alpha=".9"/>
+			</s:fill>
+		</s:Rect>
+		<s:VGroup y="3" x="4" horizontalAlign="center" gap="0" >
+			<s:Image 
+				id="zoomInImg"
+				
+				source="{Icons.ICON_SEARCH}"
+				mouseOver="zoomIn()"
+				mouseOut="zoomOut()"
+				>
+				<s:filters>
+					<s:DropShadowFilter color="0x333333" distance="2"/>
+				</s:filters>	
+			</s:Image>
+			<s:Label text="Zoom" fontSize="9"/>
+		</s:VGroup>  
+		
+		<s:VGroup y="2" horizontalAlign="center" gap="0" right="24" >
+			<s:Image id="infoImg"
+					 right="10"
+					 source="{Icons.ICON_INFO}"
+					 >
+				<s:filters>
+					<s:DropShadowFilter color="0x333333" distance="2"/>
+				</s:filters>	
+			</s:Image>
+			<s:Label text="Details" fontSize="9"/>
+			
+		</s:VGroup>  	
+		<s:VGroup y="2" horizontalAlign="center" gap="0" right="4"  >
+			<s:Image id="bookmarkImg"
+					 
+					 source="{Icons.ICON_FAVORITE}"
+					 >
+				<s:filters>
+					<s:DropShadowFilter color="0x333333" distance="2"/>
+				</s:filters>	
+			</s:Image>
+			<s:Label text="Add" fontSize="9"/>
+			
+		</s:VGroup>  		
+		
+		
+		
+		
+
+	</s:Group>
+	
+	<s:Rect width="{width }" height="{height}" alpha.hover="1" alpha="0">
+		<s:stroke>
+			<s:SolidColorStroke color="0x555555" weight="2" />
+		</s:stroke>
+		
+	</s:Rect>
+	
+</searchResultsView:SearchResultsViewRendererAbstract>

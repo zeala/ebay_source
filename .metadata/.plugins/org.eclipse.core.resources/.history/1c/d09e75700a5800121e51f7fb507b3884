@@ -1,0 +1,17 @@
+package ebayApp.services.util
+{
+	public class FindingServiceOperationName
+	{
+		public static const FIND_COMPLETED_ITEMS:String = "findCompletedItems";
+		public static const FIND_ITEMS_ADVANCED:String = "findItemsAdvanced";
+		public static const FIND_ITEMS_BY_CATEGORY:String = "findItemsByCategory";
+		public static const FIND_ITEMS_BY_IMAGE:String = "findItemsByImage";
+		public static const FIND_ITEMS_BY_KEYWORDS:String = "findItemsByKeywords";
+		public static const FIND_ITEMS_BY_PRODUCT:String = "findItemsByProduct";
+		public static const FIND_ITEMS_IN_EBAY_STORES:String = "findItemsIneBayStores";
+		public static const GET_HISTOGRAMS:String = "getHistograms";
+		public static const GET_SEARCH_KEYWORDS_RECOMMENDATION:String = "getSearchKeywordsRecommendation";
+		public static const GET_VERSION:String = "getVersion";
+		
+	}
+}

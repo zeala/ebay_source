@@ -1,0 +1,152 @@
+package model
+{
+	import com.ebayproject.dto.IShoppingServiceRequestObject;
+	import com.ebayproject.events.CategoryEvent;
+	import com.ebayproject.model.IEbayMainViewPM;
+	import com.ebayproject.services.results.ISearchResults;
+	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	
+	import mx.events.PropertyChangeEvent;
+	
+	import ebayApp.services.CommandManager;
+	import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+	import ebayApp.services.commands.merchandising.GetMostWatchedItemsCommand;
+	import ebayApp.services.commands.merchandising.GetSimilarItems;
+	import ebayApp.services.commands.shopping.FindPopularItemsCommand;
+	import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+	import ebayApp.services.dto.ShoppingServiceRequestObject;
+	import ebayApp.services.results.SearchResults;
+	import ebayApp.services.util.codeTypes.IncludeSelectors;
+	import ebayApp.services.util.codeTypes.SiteCodeType;
+
+	public class EbayMainViewPM extends EventDispatcher implements IEbayMainViewPM
+	{
+		
+		private static var instance : EbayMainViewPM;
+		
+		public static function getInstance():EbayMainViewPM
+		{
+			if ( !instance ) 
+			{
+				instance = new EbayMainViewPM();
+			}
+			return instance;
+		}
+		
+		private var _siteId : String = SiteCodeType.EBAY_US;
+		[Bindable("siteIdChange")]
+		public function get siteId () : String
+		{
+			return _siteId;
+		}
+		public function set siteId(val:String):void
+		{
+			if (_siteId == val ) return;
+			_siteId = val;
+			dispatchEvent( new Event("siteIdChange"));
+		}
+		
+		
+		
+		//-------------------------------------------------------------------------------------
+		//
+		// PUBLIC METHODS
+		//
+		//-------------------------------------------------------------------------------------
+		
+		public function fetchMoreItemsHandler (event : Event ):void
+		{
+			var requestObj : IShoppingServiceRequestObject 
+				= SearchManager.getInstance().storedSearchRequestObj;
+				
+			var resultObj : ISearchResults = ProductManager.getInstance().itemsSearchResult;
+			
+			requestObj.pageNumber ++;
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function requestSearchHandler(event:PropertyChangeEvent):void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			//requestObj.siteId = "0";
+			requestObj.queryKeywords = event.newValue.toString();
+			
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			ProductManager.getInstance().itemsSearchResult = null;
+			SearchManager.getInstance().storedSearchRequestObj = requestObj;
+			
+		}
+		
+		
+		public function requestCategoriesHandler(event:CategoryEvent):void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			//requestObj.siteId = "0";
+			requestObj.includeSelector = IncludeSelectors.CHILD_CATEGORIES;
+			requestObj.categoryId = event.categoryId;
+			
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[GetCategoryInfoCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function requestResultsForCategoryHandler( event : CategoryEvent ) : void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			requestObj.categoryId = event.categoryId;
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function changeDomainHandler(event : PropertyChangeEvent ) : void
+		{	
+			if ( siteId != String(event.newValue))
+			{
+				siteId = event.newValue as String;
+				
+				if ( ProductManager.getInstance().categories )
+				{
+					ProductManager.getInstance().categories.removeAll();	
+					ProductManager.getInstance().categories = null;
+				}
+			}
+		}
+		
+		public function requestSimilarItemsForCategoryHandler(event:CategoryEvent):void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			requestObj.categoryId = event.categoryId;
+			requestObj.itemId = event.itemId;
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[GetSimilarItems.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function testMerchandisingService():void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			CommandManager.getInstance()[GetMostWatchedItemsCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function testFindPopularItems():void
+		{
+			var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+			CommandManager.getInstance()[FindPopularItemsCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+
+	}
+}

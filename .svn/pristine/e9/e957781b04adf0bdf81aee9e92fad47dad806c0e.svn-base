@@ -1,0 +1,71 @@
+package com.ebayproject.style.assets.icons
+{
+	import flash.utils.Dictionary;
+	
+	import ebayApp.services.util.codeTypes.Site;
+
+	public class Icons
+	{
+		
+		//--------------------------------------------------------------------------
+		// Icons
+		//--------------------------------------------------------------------------
+		[Embed(source="icon_watching.gif")]
+		public static const ICON_WATCHING : Class;
+		
+		//--------------------------------------------------------------------------
+		// misc graphics
+		//--------------------------------------------------------------------------
+		[Embed(source="green_bubble.png")]
+		public static const GREEN_BUBBLE : Class;
+		
+		
+		//--------------------------------------------------------------------------
+		// Categories
+		//--------------------------------------------------------------------------
+		[Embed(source="art32.png")]
+		public static const ART_CATEGORY : Class;
+		
+		[Embed(source="baby.jpg")]
+		public static const BABY_CATEGORY : Class;
+		
+		[Embed(source="folder_green.png")]
+		public static const FOLDER_GREEN : Class;
+		
+		//--------------------------------------------------------------------------
+		// Flags
+		//--------------------------------------------------------------------------
+		[Embed(source="Australia.png")]
+		public static const AUSTRALIA_FLAG : Class;
+		
+		[Embed(source="Canada.png")]
+		public static const CANADA_FLAG : Class;
+		
+		[Embed(source="Ireland.png")]
+		public static const IRELAND_FLAG : Class;
+		
+		[Embed(source="UK.png")]
+		public static const UK_FLAG : Class;
+		
+		[Embed(source="USA.png")]
+		public static const USA_FLAG : Class;
+		
+		public static const FLAG_MAP : Dictionary = buildFlagMap();
+		
+		private static function buildFlagMap():Dictionary
+		{
+			trace("\n australia flag : " + AUSTRALIA_FLAG );
+			
+			var map : Dictionary = new Dictionary();
+			
+			map[Site.AUSTRALIA] = AUSTRALIA_FLAG;
+			map[Site.CANADA] = CANADA_FLAG;
+			map[Site.IRELAND] = IRELAND_FLAG;
+			map[Site.UK] = UK_FLAG;
+			map[Site.US] = USA_FLAG;
+			
+			return map;
+		}
+		
+	}
+}

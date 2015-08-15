@@ -1,0 +1,25 @@
+package ebayApp.services
+{
+	import flash.events.EventDispatcher;
+	
+	import ebayApp.services.commands.finding.FindCompletedItemsCommand;
+	
+	[Event(name="findCompletedItems", type="mx.events.PropertyChangeEvent")]
+	
+	public class ServiceManager extends EventDispatcher
+	{
+		public var findCompletedItems:FindCompletedItemsCommand 
+			= new FindCompletedItemsCommand ( FindingServiceGET.getInstance() );
+		
+		private static var instance:ServiceManager
+		
+		public static function getInstance():ServiceManager
+		{
+			if ( !instance )
+			{
+				instance = new ServiceManager();
+			}
+			return instance;
+		}
+	}
+}

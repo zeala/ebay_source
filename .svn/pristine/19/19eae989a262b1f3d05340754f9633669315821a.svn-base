@@ -1,0 +1,14 @@
+package dto
+{
+	public class ShippingCostSummary
+	{
+		public var importCharge : Number ;
+		public var insuranceCost : Number;
+		public var insuranceOption : String; //InsuranceOptionCodeType
+		public var listedShippingServiceCost : Number;
+		public var localPickup : Boolean;
+		public var shippingServiceCost : Boolean;
+		public var shippingServiceName : String;
+		public var shippingType : String ; // ShippingTypeCodeType
+	}
+}

@@ -1,0 +1,59 @@
+package ebayApp.services
+{
+	public class ShoppingServiceGET extends EbayServiceAbstract implements IEbayService
+	{
+		
+		public static var apiAuthToken:String = "";
+
+		//http://open.api.ebay.com/Shopping?
+		//callname=GetCategoryInfo
+		//&appid=EAMMedia-50ad-454a-96af-c15d6395d9b4
+		//&version=677&siteid=0
+		//&CategoryID=-1&IncludeSelector=ChildCategories
+		
+		public static const SHOPPING_URL:String = "http://open.api.ebay.com/Shopping?";
+
+		public static var version:String = "677";
+		
+		public static var siteId:String = "0";
+		
+		public static var categoryId : String = "-1";
+		
+		public static var includeSelector : String = "ChildCategories";
+		
+		private static var instance : ShoppingServiceGET;
+		
+		
+		public static function getInstance():ShoppingServiceGET
+		{
+			if ( !instance )
+			{
+				instance = new ShoppingServiceGET()
+			}
+			return instance;
+		}
+		
+		public function ShoppingServiceGET()
+		{
+			initService()
+		}
+
+		
+		override protected function initService():void
+		{
+			this.method = "GET";
+			this.resultFormat = "e4x";
+			
+			super.initService();
+		}
+		
+		override protected function isFailed(resultObj:XML):Boolean
+		{
+			
+			var result : Boolean;
+			
+			return result;
+		}
+
+	}
+}

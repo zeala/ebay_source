@@ -1,0 +1,80 @@
+package ebayApp.services
+{
+	import mx.rpc.Fault;
+	import mx.rpc.events.FaultEvent;
+	
+
+	public class FindingServiceGET extends EbayServiceAbstract implements IEbayService
+	{
+		public static const SEARCH_URL:String = "http://svcs.ebay.com/services/search/FindingService/v1";
+
+		
+		private static var instance : FindingServiceGET;
+		
+		public static function getInstance():FindingServiceGET
+		{
+			if (! instance )
+			{
+				instance = new  FindingServiceGET();
+			}
+			return instance
+		}
+		
+		public function FindingServiceGET()
+		{
+			initService();
+		}
+		
+		override protected function initService():void
+		{
+			this.method = "GET";
+			this.resultFormat = "e4x";
+			super.initService();
+			
+		}
+
+		//--------------------------------------------------------------------------
+		//
+		// Properties
+		//
+		//--------------------------------------------------------------------------
+
+		//--------------------------------------------------------------------------
+		//
+		// EVENT HANDLERS
+		//
+		//--------------------------------------------------------------------------
+		override protected function faultHandler(event:FaultEvent):void
+		{
+			var faultObj : Fault = event.fault;
+			var content: XML = faultObj.content as XML;
+			
+			trace("\n content : " + content );
+		}
+		
+		override protected function isFailed(resultXML:XML):Boolean
+		{
+			var failed : Boolean;
+			
+			trace("\n isFailed resultobj : " + resultXML );
+			/*
+			<findItemsAdvancedResponse xmlns="http://www.ebay.com/marketplace/search/v1/services">
+			<ack>Failure</ack>
+			<errorMessage>
+			<error>
+			<errorId>6</errorId>
+			<domain>Marketplace</domain>
+			<severity>Error</severity>
+			<category>Request</category>
+			<message>Keyword or category ID are required.</message>
+			<subdomain>Search</subdomain>
+			</error>
+			</errorMessage>
+			<version>1.12.0</version>
+			<timestamp>2013-01-31T21:13:02.910Z</timestamp>
+			</findItemsAdvancedResponse>
+			*/
+			return failed
+		}
+	}
+}

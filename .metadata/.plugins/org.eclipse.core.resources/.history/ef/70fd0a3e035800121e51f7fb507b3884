@@ -1,0 +1,18 @@
+package ebayApp.services
+{
+	import mx.rpc.http.HTTPService;
+
+	public class FindingServiceGET extends HTTPService
+	{
+		public function FindingServiceGET()
+		{
+			initService();
+		}
+		
+		private function initService():void
+		{
+			this.method = "GET";
+			
+		}
+	}
+}

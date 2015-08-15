@@ -1,0 +1,51 @@
+package ebayApp.services.commands.shopping
+{
+	import ebayApp.services.EbayServiceAbstract;
+	import ebayApp.services.IEbayService;
+	import ebayApp.services.ShoppingServiceGET;
+	import ebayApp.services.commands.EbayCommand;
+	import ebayApp.services.dto.ShoppingServiceRequestObject;
+	import ebayApp.services.util.ShoppingServiceOperationName;
+	
+	public class GetCategoryInfoCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = ShoppingServiceOperationName.GET_CATEGORY_INFO;
+		public static const RESPONSE_EVENT_NAME : String = "GetCategoryInfoResponse";
+
+		public function GetCategoryInfoCommand(service:IEbayService)
+		{
+			super(service);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// OVERRIDES
+		//
+		//--------------------------------------------------------------------------
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}		
+		
+		override protected function getFullUrl( requestObj : ShoppingServiceRequestObject = null ):String
+		{
+			var url : String;
+			trace("\n site id : " + requestObj.siteId );
+			
+			url = ShoppingServiceGET.SHOPPING_URL;
+			url += "callname=" + OPERATION_NAME;
+			url += "&version=" + ShoppingServiceGET.version;
+			url += "&appid=" + EbayServiceAbstract.apiAppName;
+			url += "&siteid=" + requestObj.siteId;
+			url += "&CategoryId=" + requestObj.categoryId;
+			url += "&IncludeSelector=" + requestObj.includeSelector;
+			url += "&MessageID=" + "getCategoryInfo request";
+			
+			trace("\n getFullURL : " + url );
+			return url;
+		}
+	}
+	
+	
+}

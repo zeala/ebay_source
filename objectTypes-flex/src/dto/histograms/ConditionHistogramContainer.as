@@ -1,0 +1,8 @@
+package dto.histograms
+{
+	public class ConditionHistogramContainer
+	{
+		[ArrayElementType("ConditionHistogram")]
+		public var conditionHistograms : Array;
+	}
+}

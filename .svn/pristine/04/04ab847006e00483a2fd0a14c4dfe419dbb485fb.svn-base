@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 buttonMode="true"
+		 buttonMode.disabled="false"
+		 mouseOver.enabled="mouseOverHandler()"
+		 mouseOut.enabled="mouseOutHandler()"
+		 click.enabled="clickHandler()"
+		 width="200"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.components.imageScroll.tween.TweenLite;
+			
+			import ebayApp.services.dto.SearchResultItem;
+			
+			public static const EVENT_CLICKED : String = "NavItem_Event_Clicked";
+			[Bindable]
+			public var searchItem : SearchResultItem;
+			
+			[Bindable]
+			public var title : String;
+			
+			public var index : int;
+			
+			private var fade : Number = 0.3;
+			
+			public function disable():void
+			{
+				tweenAlpha( 0.6, 1 );
+				this.currentState = "disabled";
+			}
+			
+			public function enable():void
+			{
+				tweenAlpha( 0.6, fade );
+				this.currentState = "enabled";
+			}
+			
+			private function mouseOutHandler ( event : MouseEvent = null ) : void
+			{
+				tweenAlpha( 0.6, fade );
+			}
+			
+			private function mouseOverHandler ( event : MouseEvent = null ) : void
+			{
+				tweenAlpha( 0.6, 1 );
+			}
+			
+			private function clickHandler( event : MouseEvent = null ) : void
+			{
+				dispatchEvent( new Event (EVENT_CLICKED ));
+			}
+			
+			private function tweenAlpha( duration:Number, alpha:Number ) : void
+			{
+				TweenLite.to( this, duration, {alpha : alpha });
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="enabled"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect width="{width}" height="{height}">
+		<s:fill>
+			<s:SolidColor color="0xcccccc"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Image maxWidth="{width}" source="{searchItem.imageURL}"/>
+	<s:Rect radiusX="2" radiusY="2" x="85" y="2" width="112" height="60" >
+		<s:fill>
+			<s:SolidColor color="0xffffff" alpha=".6" />
+		</s:fill>
+	</s:Rect>
+	<s:Label 
+		id="titleTxt"
+		width="110"
+		top="8" right="10"
+		textAlign="right"
+		text="{searchItem.title}"
+		maxDisplayedLines="2"
+		fontSize="9"
+		/>
+
+	<s:HGroup verticalAlign="middle" width="130"
+			  y="35" horizontalAlign="right"
+			  right="10" gap="12"
+			  >
+		<s:Label  width="100%" text="Watch &#10;count:" textAlign="right" />
+			<s:Label
+				id="watchTxt"
+				textAlign="right"
+				fontSize="14"
+				text="{searchItem.watchCount} "
+				/>
+	</s:HGroup>
+	
+</s:Group>

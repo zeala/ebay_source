@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   minWidth="955" minHeight="600" xmlns:model="model.*" 
+			   xmlns:view="view.*" 
+			   xmlns:panels="com.ebayproject.components.panels.*" 
+			   xmlns:book="com.pricope.miti.book.*"
+			   creationComplete="creationCompleteHandler()"
+			   backgroundColor="0xcccccc"
+			   width="100%"
+			   height="100%" xmlns:skins="style.skins.*" xmlns:scrollbars="style.skins.scrollbars.*"
+			   
+			   >
+	<fx:Declarations>
+		<model:FindingServicePM id="findingServicePM" />
+	</fx:Declarations>
+	<fx:Style source="style/defaults.css"/>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.components.panels.PageItemContainer;
+			import com.pricope.miti.book.LargeBook;
+			import com.rubenswieringa.book.Page;
+			
+			import mx.collections.ArrayCollection;
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			
+			import spark.components.Label;
+			
+			import ebayApp.services.CommandManager;
+			import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+			import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+			import ebayApp.services.dto.SearchResultItem;
+			import ebayApp.services.dto.ShoppingServiceRequestObject;
+			import ebayApp.services.util.codeTypes.IncludeSelectors;
+			
+			import model.ProductManager;
+			
+		]]>
+	</fx:Script>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.events.CategoryEvent;
+			
+			[Bindable]
+			public var bookWidth : Number = 600;
+			
+			[Bindable]
+			public var bookHeight : Number = 400;
+		
+			private function creationCompleteHandler():void
+			{
+				
+				ProductManager.getInstance().addEventListener(
+					ProductManager.ITEM_SEARCH_RESULT_CHANGE, itemSearchResultHandler);
+				FlexGlobals.topLevelApplication.addEventListener( KeyboardEvent.KEY_UP, sysstemManagerKeyDownHandler );
+				
+				this.setFocus();
+				
+			}
+			
+			private function sysstemManagerKeyDownHandler( event : KeyboardEvent ) : void
+			{
+				trace("\n event.keyCode : " + event.keyCode );
+				
+				if (!myBook ) return;
+				var currentPageIndex : int = myBook.currentIndex;
+				
+				
+				if ( event.keyCode == Keyboard.RIGHT )
+				{
+					myBook.jumpToPage( currentPageIndex + 1 )	
+				}
+				else if ( event.keyCode == Keyboard.LEFT )
+				{
+					myBook.jumpToPage( currentPageIndex - 1);
+				}
+			}
+			
+
+			
+			private function getBookMeasurements():void
+			{
+				//find the screen resolution
+				var screenWidth : Number = Capabilities.screenResolutionX;
+				var screenHeight : Number = Capabilities.screenResolutionY;
+			
+				myBook.maxWidth = bookHeight * 1.5;
+				
+				
+				myBook.width = bookWidth;
+				myBook.height = bookHeight;
+
+			}
+			
+			private function itemSearchResultHandler( event : Event ) : void
+			{
+
+				var items : ArrayCollection = ProductManager.getInstance().itemsSearchResult.searchResultItems;
+				
+				//var len : int  = Math.min (myBook.pages.length, items.length );
+				
+				var len : int = items.length;
+				var remainingSetsRequired : int = Math.ceil((items.length ) /4 );
+					
+					trace("\n remainingSetsRequired : " + remainingSetsRequired );
+				
+				if (!myBook )
+				{
+					createBook( remainingSetsRequired );
+				}
+			
+				init(  remainingSetsRequired );
+				
+				for ( var i:int = 0; i < len ; i++)
+				{
+					var item : SearchResultItem = items[i];
+					var page : Page = myBook.pages[i];
+					if ( item && page )
+					{
+						addImage( item, page )
+					}
+				}
+			}
+			
+			private function addImage( item : SearchResultItem, page : Page ) : void
+			{
+				
+				
+				/*var image : Image = new Image();*/
+				var sourceUrl : String = item.pictureURLLarge;
+				if ( !sourceUrl || sourceUrl.toString().length == 0 )
+				{
+					sourceUrl = item.galleryURL;
+				}
+				
+				var pageContainer : PageItemContainer = new PageItemContainer();
+				pageContainer.imageSource = sourceUrl;
+				pageContainer.pageHeight = page.height;
+				pageContainer.pageWidth = page.width;
+				pageContainer.pageIndex = page.pageIndex;
+				pageContainer.id = "imageContainer";
+				pageContainer.searchResultItem = item;
+				page.container.addChild( pageContainer );
+	
+				page.drawFoldGradient();
+				myBook.initiateDragCorner();
+			}
+			
+
+			
+			private function pageAddedHandler(event:PropertyChangeEvent ) : void
+			{
+				var page:Page = event.newValue as Page;
+				if ( !page ) return;
+				
+				if (! ProductManager.getInstance().itemsSearchResult ) return;
+				var items : ArrayCollection = ProductManager.getInstance().itemsSearchResult.searchResultItems;
+				if ( items.length > page.pageIndex )
+				{
+					var item : SearchResultItem = items[ page.pageIndex];
+					if ( !item ) return
+					addImage( item, page );
+					
+					page.getBitmapData();
+				}
+			}
+			
+			private function pageRemovedHandler( event : PropertyChangeEvent ) : void
+			{
+				var page:Page = event.newValue as Page;
+				if ( !page ) return;
+				for ( var i : int = page.container.numChildren; i >= 0; i--)
+				{
+					page.container.removeChildAt(i);
+					trace("     removed child at i : " +i );
+				}
+				
+			}
+			
+			private function createBook( numPageSets : int ):void
+			{
+				if ( !myBook )
+				{
+					myBook = new LargeBook();
+					this.addElement( myBook );
+					with (myBook )
+					{
+						id = "myBook";
+						openAt = 0;
+						autoFlipDuration = 600;
+						easing = 0.7;
+						regionSize = 150;
+						sideFlip = true;
+						hardCover= false ;
+						hover= true;
+						snap= false;
+						flipOnClick= true;
+						height = 300;
+						y= 15; 
+						width= 500 ;
+						x= 15;
+						
+						
+					}
+					myBook.addEventListener( "initialise", initialiseHandler );
+					myBook.addEventListener("pageAdded", pageAddedHandler );
+					myBook.addEventListener("pageRemoved" , pageRemovedHandler);
+					
+					
+					
+					function initialiseHandler ( event : Event ) : void
+					{
+						init (  numPageSets );
+					}
+				}
+			}
+			
+			private function requestSearchHandler(event:PropertyChangeEvent):void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				requestObj.queryKeywords = event.newValue.toString();
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+					
+			}
+			
+			private function requestCategoriesHandler(event:CategoryEvent):void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				requestObj.includeSelector = IncludeSelectors.CHILD_CATEGORIES;
+				requestObj.categoryId = event.categoryId;
+				CommandManager.getInstance()[GetCategoryInfoCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function requestResultsForCategoryHandler( event : CategoryEvent ) : void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				requestObj.categoryId = event.categoryId;
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function init(numPageSets: int):void {
+				
+			//	this.addChild( myBook as DisplayObject );
+				var existingPages : int = myBook.pages.length;
+				if ( existingPages == 0 )
+				{
+					getBookMeasurements();
+				}
+				trace ( "\n\n existing pages : " + existingPages );
+				var tmPage:Page;
+				var tmText:Label;
+				var startPageIndex : int = existingPages/4;
+				for (var i:Number = 0; i < numPageSets;i++) {
+					tmPage= new Page();
+					tmPage.setStyle("backgroundColor", 0xf9dc93);
+					
+					tmText = new Label();
+					tmText.text = String(i*4 + 1);
+					tmText.setStyle("backgroundColor", 0xcccccc);
+					tmPage.name = tmText.text;
+					tmPage.pageIndex = existingPages + i * 4 + 1;
+					tmPage.addChild(tmText);
+					myBook.addChild(tmPage);
+					
+					tmPage = new Page();
+					tmPage.setStyle("backgroundColor", 0xf9dc93);
+					
+					tmText = new Label();
+					tmText.text = String(i*4 + 2);
+					tmText.setStyle("backgroundColor",0xc0d3f6);
+					tmPage.name = tmText.text;
+					tmPage.pageIndex = existingPages + i * 4 + 2;
+					tmPage.addChild(tmText);
+					myBook.addChild(tmPage);
+					
+					tmPage = new Page();
+					tmText = new Label();
+					tmText.text = String(i*4 + 3);
+					tmText.setStyle("backgroundColor",0xcccccc);
+					tmPage.name = tmText.text;
+					tmPage.pageIndex = existingPages + i * 4 + 3;
+					tmPage.addChild(tmText);
+					myBook.addChild(tmPage);
+					
+					tmPage = new Page();
+					tmPage.setStyle("backgroundColor", 0xf9dc93);
+					tmText = new Label();
+					tmText.text = String(i*4 + 4);
+					tmText.setStyle("backgroundColor",0xcccccc);
+					tmPage.name = tmText.text;
+					tmPage.pageIndex = existingPages + i * 4 + 4;
+					tmPage.addChild(tmText);
+					myBook.addChild(tmPage);
+				}
+				trace( "mmy book . pages.length : " + myBook.pages.length );
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout paddingLeft="20"/>
+	</s:layout>
+	
+	<s:Group  >
+		<s:layout>
+			<s:HorizontalLayout />
+		</s:layout>
+		
+
+		<panels:SearchControls
+			id="searchControls"
+			productManager="{ProductManager.getInstance()}"
+			requestSearch="requestSearchHandler(event)"
+			requestChildCategories="requestCategoriesHandler(event)"
+			requestResultsForCategory="requestResultsForCategoryHandler(event)"
+			/>
+	</s:Group>  
+	
+	<book:LargeBook
+		id="myBook" openAt="0" autoFlipDuration="600" easing="0.7" regionSize="150" 
+		sideFlip="true" hardCover="false" hover="true" snap="false" 
+		flipOnClick="true" height="{bookHeight}" y="15" width="{bookWidth}" x="15"
+		initialize="init(2)"
+		pageAdded="pageAddedHandler(event)"
+		pageRemoved="pageRemovedHandler(event)"
+		keyDown="sysstemManagerKeyDownHandler(event)"
+		/>
+	
+</s:Application>

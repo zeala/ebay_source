@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="removeParameter", type="mx.events.PropertyChangeEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import mx.events.PropertyChangeEvent;
+			[Bindable]
+			public var paramName : String;
+			
+			[Bindable]
+			public var paramObj : Object;
+			
+			public var labelField : String;
+			
+			private function removeParameter():void
+			{
+				var e:PropertyChangeEvent = new PropertyChangeEvent("removeParameter");
+				e.newValue = paramObj;
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:HorizontalLayout verticalAlign="top" gap="2"/>
+	</s:layout>
+	
+	<s:Label text="{labelField ? paramObj[labelField] : paramObj.toString()}"/>
+	<s:Image source="{Icons.ICON_CLOSE_SMALL}" click="removeParameter()"/>
+</s:Group>

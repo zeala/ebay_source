@@ -1,0 +1,28 @@
+package ebayApp.services.dto
+{
+	public class ShoppingServiceRequestObject
+	{
+		 /*
+		MaxKeywords  int Optional The maximum number of keywords to be retrieved per category for this call.
+		Min: 1. Max: 100. Default: 20.  
+		MaxResultsPerPage  int Optional Specifies the maximum number of PopularSearchResults per page in the returned list. If not specified, the default returns 20 results per page.
+		Default: 20.  
+		PageNumber  int Optional Specifies the number of the page of data to return in the current call. Specify a positive value equal to or lower than the number of pages available (which you determine by examining the results of your initial request).
+		Default: 1.  
+		QueryKeywords  
+
+		*/
+		
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		public var pageNumber : int = 1;
+
+		
+	}
+}

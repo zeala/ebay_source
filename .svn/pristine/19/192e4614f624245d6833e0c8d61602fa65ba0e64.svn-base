@@ -1,0 +1,27 @@
+
+
+package ebayApp.services.dto
+{
+	/**
+	 * Provides constants for the AckCodeType simple type.
+	 * 
+	 * <p>This class identifies the code types that eBay could use 
+	 * to indicate the status of a current API call to an application.</p>
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 * 
+	 * @see http://developer.ebay.com/DevZone/SOAP/docs/WSDL/xsd/1/simpletype/AckCodeType.htm
+	 */	
+	public final class Ack
+	{
+		public static const SUCCESS:String = "Success";
+		public static const FAILURE:String = "Failure";
+		public static const WARNING:String = "Warning";
+		public static const PARTIAL_FAILURE:String = "PartialFailure";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

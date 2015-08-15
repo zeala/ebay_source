@@ -1,0 +1,32 @@
+package model
+{
+	import com.ebayproject.dto.IShoppingServiceRequestObject;
+	import com.ebayproject.model.ISearchManager;
+	
+	import flash.events.EventDispatcher;
+	
+	public class SearchManager extends EventDispatcher implements ISearchManager
+	{
+		private static var instance : SearchManager;
+		
+		public static function getInstance():SearchManager
+		{
+			if ( !instance)
+			{
+				instance = new SearchManager();
+			}
+			return instance;
+		}
+		
+		// storedSearchRequestObj
+		private var _storedSearchRequestObj : IShoppingServiceRequestObject;
+		public function get storedSearchRequestObj() : IShoppingServiceRequestObject
+		{
+			return _storedSearchRequestObj;
+		}
+		public function set storedSearchRequestObj(val:IShoppingServiceRequestObject):void
+		{
+			_storedSearchRequestObj = val;
+		}
+	}
+}

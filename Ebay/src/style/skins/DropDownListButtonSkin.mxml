@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		xmlns:mx="library://ns.adobe.com/flex/mx">
+	<!-- host component -->
+	<fx:Metadata>
+		[HostComponent("spark.components.Button")]
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			[Embed(source="../assets/botones/combo.png",  
+					scaleGridTop="6", scaleGridBottom="8", 
+					scaleGridLeft="3", scaleGridRight="68")]
+			[Bindable]
+			public var button_up : Class;
+			
+			[Embed(source="../assets/botones/combo1.png",  
+					scaleGridTop="6", scaleGridBottom="8", 
+					scaleGridLeft="3", scaleGridRight="68")]
+			[Bindable]
+			public var button_over : Class;
+			
+			[Embed(source="../assets/botones/combo2.png",  
+					scaleGridTop="6", scaleGridBottom="8", 
+					scaleGridLeft="3", scaleGridRight="68")]
+			[Bindable]
+			public var button_down : Class;
+			
+			
+		]]>
+	</fx:Script>
+	
+	<!-- states -->
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="down" />
+		<s:State name="over" />
+		<s:State name="up" />
+	</s:states>
+
+	<s:Image source="{button_up}" width="{width}" includeIn="up, disabled"/>
+	<s:Image source="{button_over}" width="{width}" includeIn="over"/>
+	<s:Image source="{button_down}" width="{width}" includeIn="down"/>
+</s:Skin>

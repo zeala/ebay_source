@@ -1,0 +1,32 @@
+
+package dto
+{
+
+	public class ExpressItemRequirements
+	{
+		public var combinedShippingDiscount:Boolean;
+		public var domesticShippingCost:Boolean;
+		public var eligibleCheckout:Boolean;
+		public var eligibleItemCondition:Boolean;
+		public var eligiblePayPalAccount:Boolean;
+		public var eligibleReturnPolicy:Boolean;
+		public var expressApproved:Boolean;
+		public var expressEligibleListingType:Boolean;
+		public var expressEnabledCategory:Boolean;
+		public var expressOptOut:Boolean;
+		public var noCharity:Boolean;
+		public var noDigitalDelivery:Boolean;
+		public var noPreapprovedBidderList:Boolean;
+		public var payPalAccountAcceptsUnconfirmedAddress:Boolean;
+		public var picture:Boolean;
+		public var priceAboveMinimum:Boolean;
+		public var priceBelowMaximum:Boolean;
+		public var sellerExpressEligible:Boolean;
+		public var shipFromEligibleCountry:Boolean;
+
+
+		public function ExpressItemRequirements()
+		{
+		}  // ExpressItemRequirements
+	}  // class declaration
+}  // package

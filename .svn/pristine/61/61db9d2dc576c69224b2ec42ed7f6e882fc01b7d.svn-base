@@ -1,0 +1,14 @@
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class SellerPaymentMethod
+	{
+		public static const NOTHING_ON_FILE:String = "NothingOnFile";
+		public static const CREDIT_CARD:String = "CreditCard";
+		public static const DIRECT_DEBIT:String = "DirectDebit";
+		public static const DIRECT_DEBIT_PENDING_SIGNATURE_MANDATE:String = "DirectDebitPendingSignatureMandate";
+		public static const EBAY_DIRECT_PAY:String = "eBayDirectPay";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

@@ -1,0 +1,12 @@
+package ebayApp.services
+{
+	import mx.rpc.http.HTTPService;
+	
+	public class ShoppingService extends HTTPService
+	{
+		public function ShoppingService(rootURL:String=null, destination:String=null)
+		{
+			super(rootURL, destination);
+		}
+	}
+}

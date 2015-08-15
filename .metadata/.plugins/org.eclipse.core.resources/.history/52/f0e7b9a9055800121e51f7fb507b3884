@@ -1,0 +1,32 @@
+package ebayApp.services.dto
+{
+	public class PaginationOutput
+	{
+		public var entriesPerPage:int;
+		public var pageNumber:int;
+		public var totalEntries:int;
+		public var totalPages:int;
+		
+		/*
+		entriesPerPage ( int ) [0..1]
+		The maximum number of items that can be returned in the response. This number is always equal to the value input for paginationInput.entriesPerPage. 
+		
+		The end of the result set has been reached if the number specified for entriesPerPage is greater than the number of items found on the specified pageNumber. In this case, there will be fewer items returned than the number specified in entriesPerPage. This can be determined by comparing the entriesPerPage value with the value returned in the count attribute for the searchResult field.
+		See the Field Index to learn which calls use entriesPerPage.
+		
+		pageNumber ( int ) [0..1]
+		The subset of item data returned in the current response. Search results are divided into sets, or "pages," of item data. The number of pages is equal to the total number of items matching the search criteria divided by the value specified for entriesPerPage in the request. The response for a request contains one "page" of item data. 
+		
+		This returned value indicates the page number of item data returned (a subset of the complete result set). If this field contains 1, the response contains the first page of item data (the default). If the value returned in totalEntries is less than the value for entriesPerPage, pageNumber returns 1 and the response contains the entire result set. 
+		
+		The value of pageNumber is normally equal to the value input for paginationInput.pageNumber. However, if the number input for pageNumber is greater than the total possible pages of output, eBay returns the last page of item data in the result set, and the value for pageNumber is set to the respective (last) page number.
+		See the Field Index to learn which calls use pageNumber.
+		
+		totalEntries ( int ) [0..1]
+		The total number of items found that match the search criteria in your request. Depending on the input value for entriesPerPage, the response might include only a portion (a page) of the entire result set. A value of "0" is returned if eBay does not find any items that match the search criteria.
+		See the Field Index to learn which calls use totalEntries.
+		
+		totalPages ( int ) [0..1]
+		*/
+	}
+}

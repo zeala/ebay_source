@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Graphic 
+	version="2.0"
+	xmlns:s="http://ns.adobe.com/fxg/2008" 
+	scaleGridTop="5" scaleGridBottom="30"
+	scaleGridLeft="3" scaleGridRight="22"
+	>
+	<s:Path winding="nonZero" data="M 0 38 23 38 23 0 0 0 0 38 Z">
+		<s:fill>
+			<s:SolidColor color="#cacaca"/>
+		</s:fill>
+	</s:Path>
+	
+	<s:Path winding="nonZero" x="1" y="1"
+		data="M0 32 21 32 21 0 0 0 0 32 Z"
+	>
+			<s:fill>
+				<s:LinearGradient x="10.5" y="32" scaleX="32" rotation="270">
+					<s:GradientEntry color="#e9e9e9" ratio="0" alpha="1"/>
+					<s:GradientEntry color="#f2f2f2" ratio="0.14" alpha="1"/>
+					<s:GradientEntry color="#f4f4f4" ratio="0.38" alpha="1"/>
+					<s:GradientEntry color="#ffffff" ratio="0.86" alpha="1"/>
+					<s:GradientEntry color="#fafafa" ratio="0.94" alpha="1"/>
+					<s:GradientEntry color="#e9e9e9" ratio="1" alpha="1"/>
+					
+				</s:LinearGradient>
+			</s:fill>
+	</s:Path>
+	<s:Path winding="nonZero" x="1" y="33" data="M0 1 21 1 21 0 0 0 0 1 Z">
+		<s:fill>
+			<s:SolidColor color="#cacaca"/>
+		</s:fill>
+	</s:Path>
+	<s:Path winding="nonZero" x="1" y="34" data="M0 1 21 1 21 0 0 0 0 1 Z">
+		<s:fill>
+			<s:SolidColor color="#ffffff"/>
+		</s:fill>
+	</s:Path>
+	<s:Path winding="nonZero" x="1" y="33" data="M21 2 0 2 0 0 21 0 21 2 Z">
+		<s:fill>
+			<s:SolidColor color="#e6d6e5"/>
+		</s:fill>
+	</s:Path>
+	
+</s:Graphic>

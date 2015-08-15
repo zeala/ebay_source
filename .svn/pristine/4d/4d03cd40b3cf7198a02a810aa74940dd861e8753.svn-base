@@ -1,0 +1,24 @@
+
+package ebayApp.services.dto
+{
+	/**
+	 * A container for scheduling limits for the user.
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 */
+	public class SchedulingInfo
+	{
+		public var maxScheduledItems:int;
+		public var maxScheduledMinutes:int;
+		public var minScheduledMinutes:int;
+
+
+		public function SchedulingInfo()
+		{
+		}  // SchedulingInfo
+	}  // class declaration
+}  // package

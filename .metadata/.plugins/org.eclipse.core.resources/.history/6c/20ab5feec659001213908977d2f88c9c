@@ -1,0 +1,11 @@
+package ebayApp.services.commands
+{
+	public class OperationName
+	{
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

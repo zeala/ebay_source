@@ -1,0 +1,21 @@
+package ebayApp.services.dto
+{
+	public class ListingInfo
+	{
+		public var bestOfferEnabled : Boolean;
+		
+		public var buyItNowAvailable : Boolean;
+		
+		public var buyItNowPrice : Number;
+		
+		public var convertedBuyItNowPrice : Number;
+		
+		public var endTime : Date; //YYYY-MM- DDTHH:MM:SS.SSSZ
+		
+		public var gift : Boolean;
+		
+		public var listingType : String; //ListingType
+		
+		public var startTime : Date;
+	}
+}

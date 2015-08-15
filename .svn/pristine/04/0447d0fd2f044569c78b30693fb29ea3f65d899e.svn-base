@@ -1,0 +1,25 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ListingType
+	{
+		
+		public static const AUCTION : String = "Auction";
+		public static const AUCTION_WITH_BIN : String =  "AuctionWithBIN";
+		public static const CLASSIFIED : String = "Classified";
+		public static const FIXED_PRICE:String = "FixedPrice";
+		public static const STORE_INVENTORY : String = "StoreInventory";
+		public static const ALL : String = "All";
+		public static const UNKNOWN:String = "Unknown";
+		public static const CHINESE:String = "Chinese";
+		public static const DUTCH:String = "Dutch";
+		public static const LIVE:String = "Live";
+		public static const AD_TYPE:String = "AdType";
+		public static const STORES_FIXED_PRICE:String = "StoresFixedPrice";
+		public static const PERSONAL_OFFER:String = "PersonalOffer";
+		public static const FIXED_PRICE_ITEM:String = "FixedPriceItem";
+		public static const HALF:String = "Half";
+		public static const LEAD_GENERATION:String = "LeadGeneration";
+		public static const EXPRESS:String = "Express";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}
+}

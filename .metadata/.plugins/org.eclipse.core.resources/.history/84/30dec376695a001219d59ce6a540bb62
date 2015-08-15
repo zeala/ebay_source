@@ -1,0 +1,21 @@
+
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class FeedbackRatingStar
+	{
+		public static const NONE:String = "None";
+		public static const YELLOW:String = "Yellow";
+		public static const BLUE:String = "Blue";
+		public static const TURQUOISE:String = "Turquoise";
+		public static const PURPLE:String = "Purple";
+		public static const RED:String = "Red";
+		public static const GREEN:String = "Green";
+		public static const YELLOW_SHOOTING:String = "YellowShooting";
+		public static const TURQUOISE_SHOOTING:String = "TurquoiseShooting";
+		public static const PURPLE_SHOOTING:String = "PurpleShooting";
+		public static const RED_SHOOTING:String = "RedShooting";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

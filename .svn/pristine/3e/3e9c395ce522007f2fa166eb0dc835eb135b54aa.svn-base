@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 currentState="tileViewLarge" 
+		 xmlns:panels="com.ebayproject.components.panels.*" 
+		 xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*"
+		 >
+	<fx:Metadata>
+		[Event(name="fetchMoreItems", type="flash.events.Event")]
+		[Event(name="viewItemOnEbay", type="mx.events.PropertyChangeEvent")]
+		[Event(name="addToFavorites", type="mx.events.PropertyChangeEvent")]
+
+	</fx:Metadata>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.Application;
+			
+			
+			private var _productManager : IProductManager;
+			[Bindable("productManagerChange")]
+			public function get productManager (): IProductManager
+			{
+				return _productManager;
+			}
+			public function set productManager(val:IProductManager):void
+			{
+				_productManager = val;
+				dispatchEvent(new Event("productManagerChange"));
+			}
+			
+			
+			private function setResizeHandler():void
+			{
+				Application(FlexGlobals.topLevelApplication).addEventListener(
+					ResizeEvent.RESIZE, resizeHandler);
+			}
+			
+			private function resizeHandler( event : ResizeEvent ):void
+			{
+				bookContainer.scaleX = getBookScale();
+				bookContainer.scaleY = getBookScale();
+			}
+			
+			private var bookWidthToHeightRatio : Number = 1.5;
+			
+			private function getBookScale():Number
+			{
+				var yOffset : int = 140;
+				var xOffset  : int = 100;
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var h : Number = app.height - yOffset;
+				var w : Number = app.width - xOffset;
+				var scale : Number;
+				
+				var appWidthToHeightRatio : Number = w/h;
+				
+				if ( appWidthToHeightRatio >= 1.5 )
+				{
+					scale = h / bookContainer.height;
+				}
+				else
+				{
+					scale = w / bookContainer.width;
+				}	
+				return scale;
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="tileViewLarge"/>
+		<s:State name="tileViewSmall"/>
+		<s:State name="listView"/>
+		<s:State name="bookView"/>
+	</s:states>
+	
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+	</s:layout>
+	
+	<searchResultsView:ResultsList
+		id="resultsList"
+		left="0" right="0" width="100%" height="{height}"
+		dataProvider="{productManager.itemsSearchResult.searchResultItem}"	
+		excludeFrom="bookView"
+		useVirtualLayout="true"
+		currentState="{currentState}"
+		productManager="{productManager}"
+		/>
+		
+	<panels:BookContainer
+		id="bookContainer"
+		productManager="{productManager}" 
+		width="900" height="600"
+		horizontalCenter="0"
+		scaleX="{getBookScale()}" scaleY="{getBookScale()}"
+		creationComplete="setResizeHandler()"
+		includeIn="bookView"
+		/>
+</s:Group>

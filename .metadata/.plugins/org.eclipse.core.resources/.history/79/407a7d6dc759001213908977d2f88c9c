@@ -1,0 +1,18 @@
+package ebayApp.services.commands
+{
+	public class EbayCommand
+	{
+		
+		public var service:IEbayService;
+		
+		public function EbayCommand( service:IEbayService )
+		{
+			this.service = service;
+		}
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

@@ -1,0 +1,19 @@
+package dto.errors
+{
+	public class Error
+	{
+		public var errorClassification : String ;// ( ErrorClassificationCodeType ) 
+
+		public var errorCode : String ;//( token ) 
+		
+		[ArrayElementType("ErrorParameter")]
+		public var errorParameters : Array;// ( ErrorParameterType ) 
+		
+		public var longMessage : String ;// ( string ) 
+		
+		public var severityCode : String ;// ( SeverityCodeType ) 
+		
+		public var shortMessage : String;
+		
+	}
+}

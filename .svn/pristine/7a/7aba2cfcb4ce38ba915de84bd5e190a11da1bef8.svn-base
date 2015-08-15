@@ -1,0 +1,60 @@
+package ebayApp.services
+{
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.events.EbayServiceResultEvent;
+	
+	public class EbayServiceAbstract extends HTTPService implements IEbayService
+	{
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		
+		public function EbayServiceAbstract(rootURL:String=null, destination:String=null)
+		{
+			super(rootURL, destination);
+		}
+		
+		public function callService( urlWithParam:String ) : void
+		{
+			this.url = urlWithParam;
+			this.send();
+		}
+		
+		protected function initService():void
+		{
+			this.resultFormat = "e4x";
+			this.showBusyCursor = true;
+			this.addEventListener( FaultEvent.FAULT, faultHandler );
+			this.addEventListener( ResultEvent.RESULT, resultHandler );
+			
+		}
+		
+		
+		protected function faultHandler(event:FaultEvent):void
+		{
+			//trace("\n fault : " + event.fault );	
+		}
+		
+		
+		protected function resultHandler(event:ResultEvent):void
+		{
+			var result:XML = event.result as XML;
+			
+			if ( isFailed( result ))
+			{
+				return
+			}
+			var commandResultEvent:EbayServiceResultEvent = new EbayServiceResultEvent( result.localName());
+			commandResultEvent.resultObj = event.result;
+			dispatchEvent( commandResultEvent );
+		}
+		
+		protected function isFailed( resultObj : XML ) : Boolean
+		{
+			throw new Error(" Abstract method" );
+		}
+	}
+}

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*" 
+		 xmlns:panels="com.ebayproject.components.panels.*" 
+		 xmlns:searchBuilder="com.ebayproject.components.searchBuilder.*" 
+		 xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*"
+		 keyDown="itemDetailsPopup.keyDownEventHandler(event)" 
+		 xmlns:toolbars1="com.ebayproject.components.toolbars.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.controllers.ISearchBuilderController;
+			import com.ebayproject.events.AlertEvent;
+			import com.ebayproject.events.CategoryPickerEvent;
+			import com.ebayproject.model.IEbayMainViewPM;
+			import com.ebayproject.model.ISearchManager;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			import mx.managers.PopUpManager;
+			
+			import dto.SearchResultItem;
+			
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			[Bindable]
+			public var searchBuilderController : ISearchBuilderController;
+			
+			[Bindable]
+			public var searchManager : ISearchManager;
+
+			[Bindable]
+			public var ebayMainViewPM : IEbayMainViewPM;
+			
+			
+			
+			
+			private function openItemDetailsPopup(event:PropertyChangeEvent):void
+			{
+				PopUpManager.addPopUp( itemDetailsPopup, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp( itemDetailsPopup );
+				itemDetailsPopup.searchItem = event.newValue as SearchResultItem;
+				
+			}
+			
+			private function getPreviousItem():void
+			{
+				var currentItem:SearchResultItem = itemDetailsPopup.searchItem;
+				var newItem : SearchResultItem = productManager.getPreviousItem ( currentItem);
+				itemDetailsPopup.searchItem = newItem;
+			}
+			
+			private function getNextItem():void
+			{
+				var currentItem:SearchResultItem = itemDetailsPopup.searchItem;
+				var newItem : SearchResultItem = productManager.getNextItem ( currentItem );
+				itemDetailsPopup.searchItem = newItem;
+			}
+			
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<panels:ItemDetailsPopup
+			id="itemDetailsPopup"
+			imageReady="PopUpManager.centerPopUp(itemDetailsPopup)"
+			closeWindow="PopUpManager.removePopUp(itemDetailsPopup)"
+			getPreviousItem="getPreviousItem()"
+			getNextItem="getNextItem()"
+			/>
+		
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	
+	<toolbars1:CentralPanelToolbars 
+		resultsList="{resultsList}" width="100%"
+		productManager="{productManager}"
+		ebayMainViewPM="{ebayMainViewPM}"
+		searchBuilderController="{searchBuilderController}"
+		/>
+	
+	<searchResultsView:SearchResultsViewer
+		id="resultsList"
+		productManager="{productManager}"
+		left="0" right="0" width="100%"  height="{height - 200}"
+		fetchMoreItems="ebayMainViewPM.fetchMoreItemsHandler(event)"
+		viewItemOnEbay="ebayMainViewPM.viewItemOnEbay(event)"
+		addToFavorites="ebayMainViewPM.addToFavorites(event)"
+		viewItemDetails="openItemDetailsPopup(event)"
+		/>
+	
+	<s:Spacer height="50"/>
+</s:Group>

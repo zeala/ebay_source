@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workingSetManager>
+<workingSet editPageId="org.eclipse.ui.resourceWorkingSetPage" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1357464842765_2" label="ebay" name="ebay">
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/Ebay" type="4"/>
+<item factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/services" type="4"/>
+</workingSet>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1357388537485_0" label="Window Working Set" name="Aggregate for window 1357388537485"/>
+<workingSet aggregate="true" factoryID="org.eclipse.ui.internal.WorkingSetFactory" id="1357464494218_1" label="Window Working Set" name="Aggregate for window 1357464494218"/>
+</workingSetManager>

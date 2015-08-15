@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:panels="com.ebayproject.components.panels.*"
+		 minWidth="160" minHeight="160"
+		 
+		 >
+	<fx:Declarations>
+		<s:Resize 
+			id="resizeEffect" 
+			duration="5000"
+			widthFrom="140" heightFrom="140"
+			widthTo="{img.sourceWidth + 20}" heightTo="{img.sourceHeight + 20}"
+			target="{this}"
+			>
+				
+		</s:Resize>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import dto.SearchResultItem;
+			[Bindable]
+			public var searchItem : SearchResultItem;
+			
+			private function progressHandler( event:ProgressEvent ) : void
+			{
+				//trace("\n progress ; " + event.bytesLoaded + " total : " + event.bytesTotal );
+				drawProgressBar( event );
+			}
+			
+			private function drawProgressBar( event:ProgressEvent ):void
+			{
+				var g:Graphics = progressBar.graphics;
+				g.clear();
+				
+				if ( event.bytesLoaded < event.bytesTotal )
+				{
+					g.moveTo( 0, 0 );
+					g.beginFill( 0x333333, 1 );
+					g.drawRect( 0, 0, 100, 8 );
+					g.endFill();
+					
+					var barWidth : Number = 98 * (event.bytesLoaded/ event.bytesTotal );
+					//trace(" bar width : " + barWidth);
+					g.moveTo(1, 1 );
+					g.beginFill( 0xdddddd, 1);
+					g.drawRect( 1, 1, barWidth, 6 );
+					g.endFill()
+				}
+				
+				
+				
+			}
+			
+			private function imageReadyHandler():void
+			{
+				//resizeEffect.stop();
+				//resizeEffect.play();
+				trace ("\n img.sourceWidth ; " + img.sourceWidth + " height ; " + img.sourceHeight );
+				
+				img.width = img.sourceWidth;
+				img.height = img.sourceHeight;
+			}
+		]]>
+	</fx:Script>
+	
+
+	
+	<s:Rect width="{img.width + 60}" height="{img.height + 60}"
+			radiusX="6" radiusY="6" >
+		<s:stroke >
+			<s:SolidColorStroke color="0x333333"/>
+		</s:stroke>
+		<s:fill>
+			<s:SolidColor color="0xffffff" alpha="0.4"/>
+		</s:fill>
+		
+		<s:filters>
+			<s:DropShadowFilter color="0x555555" distance="4"/>
+		</s:filters>
+	</s:Rect>
+	
+	<s:Rect
+		x="20" y="20"
+		width="{img.width + 20}" height="{img.height + 20}" 
+		radiusX="6" radiusY="6"
+		> 
+		<s:fill >
+			<s:SolidColor color="0xffffff"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Group
+		horizontalCenter="0" verticalCenter="0"
+		
+		>
+		<s:layout>
+			<s:VerticalLayout 
+				paddingBottom="30" paddingTop="30" 
+				paddingLeft="30" paddingRight="30"
+				/>
+		</s:layout>
+		
+		<s:Image 
+			id="img" source="{searchItem.pictureURLLarge}"
+			minWidth="100" minHeight="100"	
+			progress="progressHandler(event)"
+			ready="imageReadyHandler()"
+			horizontalCenter="0" verticalCenter="0"
+			/>
+	</s:Group>
+	
+	<mx:UIComponent id="progressBar" 
+				x="10" verticalCenter="0"/>
+</s:Group>

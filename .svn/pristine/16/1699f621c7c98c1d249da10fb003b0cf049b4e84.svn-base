@@ -1,0 +1,210 @@
+package model
+{
+	import flash.events.EventDispatcher;
+	
+	import mx.events.PropertyChangeEvent;
+	
+	import ebayApp.services.CommandManager;
+	import ebayApp.services.ServiceManager;
+	import ebayApp.services.commands.finding.FindCompletedItemsCommand;
+	import ebayApp.services.util.FindingServiceOperationName;
+	
+	public class FindingServicePM extends EventDispatcher
+	{
+		public function FindingServicePM()
+		{
+			init();
+		}
+
+		
+		//-----------------------------------
+		// service manager
+		//-----------------------------------
+		public var serviceManager : ServiceManager = new ServiceManager();
+		
+		
+		private function init():void
+		{
+			serviceManager.addEventListener( 
+				FindCompletedItemsCommand.RESPONSE_EVENT_NAME, findCompletedItemsResultHandler);
+		}
+		
+		
+		private function findCompletedItemsResultHandler(event:PropertyChangeEvent):void
+		{
+			trace("\n event.newValue ; " + event.newValue );
+		}
+	}
+	
+	/*
+	<findCompletedItemsResponse xmlns="http://www.ebay.com/marketplace/search/v1/services">
+	<ack>Success</ack>
+	<version>1.12.0</version>
+	<timestamp>2013-01-09T13:31:15.421Z</timestamp>
+	<searchResult count="4">
+	<item>
+	<itemId>250816031310</itemId>
+	<title>MWDC_TEST ITEM - DO NOT BUY - Mobile web</title>
+	<globalId>EBAY-US</globalId>
+	<primaryCategory>
+	<categoryId>30120</categoryId>
+	<categoryName>eBay Use Only</categoryName>
+	</primaryCategory>
+	<viewItemURL>http://www.ebay.com/itm/MWDC-TEST-ITEM-DO-NOT-BUY-Mobile-web-/250816031310?pt=LH_DefaultDomain_0</viewItemURL>
+	<paymentMethod>PayPal</paymentMethod>
+	<autoPay>false</autoPay>
+	<postalCode>95125</postalCode>
+	<location>San Jose,CA,USA</location>
+	<country>US</country>
+	<shippingInfo>
+	<shippingServiceCost currencyId="USD">0.0</shippingServiceCost>
+	<shippingType>Free</shippingType>
+	<shipToLocations>US</shipToLocations>
+	<expeditedShipping>false</expeditedShipping>
+	<oneDayShippingAvailable>false</oneDayShippingAvailable>
+	<handlingTime>1</handlingTime>
+	</shippingInfo>
+	<sellingStatus>
+	<currentPrice currencyId="USD">0.99</currentPrice>
+	<convertedCurrentPrice currencyId="USD">0.99</convertedCurrentPrice>
+	<sellingState>EndedWithoutSales</sellingState>
+	</sellingStatus>
+	<listingInfo>
+	<bestOfferEnabled>false</bestOfferEnabled>
+	<buyItNowAvailable>false</buyItNowAvailable>
+	<startTime>2011-05-06T21:50:08.000Z</startTime>
+	<endTime>2013-05-13T21:50:08.000Z</endTime>
+	<listingType>FixedPrice</listingType>
+	<gift>false</gift>
+	</listingInfo>
+	<returnsAccepted>true</returnsAccepted>
+	<isMultiVariationListing>false</isMultiVariationListing>
+	<topRatedListing>false</topRatedListing>
+	</item>
+	<item>
+	<itemId>250816031285</itemId>
+	<title>MWDC_TEST ITEM - DO NOT BUY - Mobile web</title>
+	<globalId>EBAY-US</globalId>
+	<primaryCategory>
+	<categoryId>30120</categoryId>
+	<categoryName>eBay Use Only</categoryName>
+	</primaryCategory>
+	<viewItemURL>http://www.ebay.com/itm/MWDC-TEST-ITEM-DO-NOT-BUY-Mobile-web-/250816031285?pt=LH_DefaultDomain_0</viewItemURL>
+	<paymentMethod>PayPal</paymentMethod>
+	<autoPay>false</autoPay>
+	<postalCode>95125</postalCode>
+	<location>San Jose,CA,USA</location>
+	<country>US</country>
+	<shippingInfo>
+	<shippingServiceCost currencyId="USD">0.0</shippingServiceCost>
+	<shippingType>Free</shippingType>
+	<shipToLocations>US</shipToLocations>
+	<expeditedShipping>false</expeditedShipping>
+	<oneDayShippingAvailable>false</oneDayShippingAvailable>
+	<handlingTime>1</handlingTime>
+	</shippingInfo>
+	<sellingStatus>
+	<currentPrice currencyId="USD">0.99</currentPrice>
+	<convertedCurrentPrice currencyId="USD">0.99</convertedCurrentPrice>
+	<sellingState>EndedWithoutSales</sellingState>
+	</sellingStatus>
+	<listingInfo>
+	<bestOfferEnabled>false</bestOfferEnabled>
+	<buyItNowAvailable>false</buyItNowAvailable>
+	<startTime>2011-05-06T21:50:04.000Z</startTime>
+	<endTime>2013-05-13T21:50:04.000Z</endTime>
+	<listingType>FixedPrice</listingType>
+	<gift>false</gift>
+	</listingInfo>
+	<returnsAccepted>true</returnsAccepted>
+	<isMultiVariationListing>false</isMultiVariationListing>
+	<topRatedListing>false</topRatedListing>
+	</item>
+	<item>
+	<itemId>250816031269</itemId>
+	<title>MWDC_TEST ITEM - DO NOT BUY - Mobile web</title>
+	<globalId>EBAY-US</globalId>
+	<primaryCategory>
+	<categoryId>30120</categoryId>
+	<categoryName>eBay Use Only</categoryName>
+	</primaryCategory>
+	<viewItemURL>http://www.ebay.com/itm/MWDC-TEST-ITEM-DO-NOT-BUY-Mobile-web-/250816031269?pt=LH_DefaultDomain_0</viewItemURL>
+	<paymentMethod>PayPal</paymentMethod>
+	<autoPay>false</autoPay>
+	<postalCode>95125</postalCode>
+	<location>San Jose,CA,USA</location>
+	<country>US</country>
+	<shippingInfo>
+	<shippingServiceCost currencyId="USD">0.0</shippingServiceCost>
+	<shippingType>Free</shippingType>
+	<shipToLocations>US</shipToLocations>
+	<expeditedShipping>false</expeditedShipping>
+	<oneDayShippingAvailable>false</oneDayShippingAvailable>
+	<handlingTime>1</handlingTime>
+	</shippingInfo>
+	<sellingStatus>
+	<currentPrice currencyId="USD">0.99</currentPrice>
+	<convertedCurrentPrice currencyId="USD">0.99</convertedCurrentPrice>
+	<sellingState>EndedWithoutSales</sellingState>
+	</sellingStatus>
+	<listingInfo>
+	<bestOfferEnabled>false</bestOfferEnabled>
+	<buyItNowAvailable>false</buyItNowAvailable>
+	<startTime>2011-05-06T21:50:02.000Z</startTime>
+	<endTime>2013-05-13T21:50:02.000Z</endTime>
+	<listingType>FixedPrice</listingType>
+	<gift>false</gift>
+	</listingInfo>
+	<returnsAccepted>true</returnsAccepted>
+	<isMultiVariationListing>false</isMultiVariationListing>
+	<topRatedListing>false</topRatedListing>
+	</item>
+	<item>
+	<itemId>250816031250</itemId>
+	<title>MWDC_TEST ITEM - DO NOT BUY - Mobile web</title>
+	<globalId>EBAY-US</globalId>
+	<primaryCategory>
+	<categoryId>30120</categoryId>
+	<categoryName>eBay Use Only</categoryName>
+	</primaryCategory>
+	<viewItemURL>http://www.ebay.com/itm/MWDC-TEST-ITEM-DO-NOT-BUY-Mobile-web-/250816031250?pt=LH_DefaultDomain_0</viewItemURL>
+	<paymentMethod>PayPal</paymentMethod>
+	<autoPay>false</autoPay>
+	<postalCode>95125</postalCode>
+	<location>San Jose,CA,USA</location>
+	<country>US</country>
+	<shippingInfo>
+	<shippingServiceCost currencyId="USD">0.0</shippingServiceCost>
+	<shippingType>Free</shippingType>
+	<shipToLocations>US</shipToLocations>
+	<expeditedShipping>false</expeditedShipping>
+	<oneDayShippingAvailable>false</oneDayShippingAvailable>
+	<handlingTime>1</handlingTime>
+	</shippingInfo>
+	<sellingStatus>
+	<currentPrice currencyId="USD">0.99</currentPrice>
+	<convertedCurrentPrice currencyId="USD">0.99</convertedCurrentPrice>
+	<sellingState>EndedWithoutSales</sellingState>
+	</sellingStatus>
+	<listingInfo>
+	<bestOfferEnabled>false</bestOfferEnabled>
+	<buyItNowAvailable>false</buyItNowAvailable>
+	<startTime>2011-05-06T21:49:59.000Z</startTime>
+	<endTime>2013-05-13T21:49:59.000Z</endTime>
+	<listingType>FixedPrice</listingType>
+	<gift>false</gift>
+	</listingInfo>
+	<returnsAccepted>true</returnsAccepted>
+	<isMultiVariationListing>false</isMultiVariationListing>
+	<topRatedListing>false</topRatedListing>
+	</item>
+	</searchResult>
+	<paginationOutput>
+	<totalPages>34153</totalPages>
+	<totalEntries>136609</totalEntries>
+	<pageNumber>1</pageNumber>
+	<entriesPerPage>4</entriesPerPage>
+	</paginationOutput>
+	</findCompletedItemsResponse>
+	*/
+}

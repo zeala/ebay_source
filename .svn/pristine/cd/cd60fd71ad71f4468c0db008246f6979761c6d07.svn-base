@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<panels:CustomTitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+						  xmlns:s="library://ns.adobe.com/flex/spark" 
+						  xmlns:mx="library://ns.adobe.com/flex/mx" 
+						  xmlns:panels="com.ebayproject.components.panels.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			
+			
+			/*override protected function partAdded(partName:String, instance:Object):void
+			{
+				super.partAdded(partName, instance );
+				
+				if ( instance == interactiveTitleElements )
+				{
+					var tabbar : TabBar = new TabBar();
+					tabbar.dataProvider = new ArrayCollection(["Quick Search", "Advanced Search"]);
+					interactiveTitleElements.addElement( tabbar );
+				}
+			}*/
+		]]>
+	</fx:Script>
+</panels:CustomTitleWindow>

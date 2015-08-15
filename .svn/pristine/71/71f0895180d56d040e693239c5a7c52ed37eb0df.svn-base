@@ -1,0 +1,10 @@
+package dto
+{
+	public class Aspect
+	{
+		[ArrayElementType("AspectValueHistogram")]
+		public var valueHistogram: Array;
+		
+		public var name : String;
+	}
+}

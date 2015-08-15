@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:panels="com.ebayproject.components.panels.*"
+		 width="{pageWidth}"
+		 height="{pageHeight}"
+		 >
+	
+	<fx:Script>
+		<![CDATA[
+			import ebayApp.services.dto.SearchResultItem;
+			
+			[Bindable]
+			public var imageSource : String;
+			
+			[Bindable]
+			public var pageWidth : Number;
+			
+			[Bindable]
+			public var pageHeight : Number;
+			
+			[Bindable]
+			public var pageIndex : int;
+			
+			[Bindable]
+			public var searchResultItem : SearchResultItem;
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:HorizontalLayout gap="0" />
+	</s:layout>
+	<s:VGroup width="{pageWidth/2}">
+		<panels:ImageContainer
+			width="{pageWidth/2}"
+			maxWidth="{pageWidth/2}"
+			maxHeight="{pageHeight/2}"
+			sourceURL="{imageSource}"
+			pageIndex="{pageIndex}"
+			/>
+	</s:VGroup>  
+	<s:VGroup width="{pageWidth/2}">
+		<s:Label text="{pageIndex}" width="{width/2}" textAlign="{ pageIndex % 2 == 1 ? 'right' : 'left'}"/>
+
+		<s:Label 
+			width="{pageWidth/2}"
+			text="{searchResultItem.title}"
+			fontSize="14"
+			/>
+	</s:VGroup>
+
+</s:Group>

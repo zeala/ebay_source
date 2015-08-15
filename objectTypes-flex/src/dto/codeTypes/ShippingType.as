@@ -1,0 +1,18 @@
+
+
+package dto.codeTypes
+{
+
+	public final class ShippingType
+	{
+		public static const FLAT:String = "Flat";
+		public static const CALCULATED:String = "Calculated";
+		public static const FREIGHT:String = "Freight";
+		public static const FREIGHT_FLAT:String = "FreightFlat";
+		public static const FREE:String = "Free";
+		public static const NOT_SPECIFIED:String = "NotSpecified";
+		public static const FLAT_DOMESTIC_CALCULATED_INTERNATIONAL:String = "FlatDomesticCalculatedInternational";
+		public static const CALCULATED_DOMESTIC_FLAT_INTERNATIONAL:String = "CalculatedDomesticFlatInternational";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

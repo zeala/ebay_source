@@ -1,0 +1,9 @@
+package ebayApp.services.dto
+{
+	public class ProductSortCodeType
+	{
+		public function ProductSortCodeType()
+		{
+		}
+	}
+}

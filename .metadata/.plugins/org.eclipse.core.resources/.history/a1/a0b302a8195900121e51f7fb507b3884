@@ -1,0 +1,127 @@
+package ebayApp.services.dto
+{
+	public class ShoppingServiceRequestObject
+	{
+		 /*
+	
+		HideDuplicateItems  boolean Optional Specifies whether or not to remove duplicate items from search results. When set to true, and there are duplicate items for an item in the search results, the subsequent duplicates will not appear in the results. Item listings are considered duplicates in the following conditions: 
+		
+		Items are listed by the same seller 
+		Items have exactly the same item title 
+		Items have similar listing formats 
+		Auctions: Auction Items, Auction BIN items, Multi-Quantity Auctions, and Multi-Quantity Auctions BIN items 
+		Fixed Price: Fixed Price, Multi-quantity Fixed Price, Fixed Price with Best Offer, and Store Inventory Format items 
+		Classified Ads 
+		
+		For Auctions, items must also have the same price and number of bids to be considered duplicates. 
+		Filtering of duplicate item listings is not supported on all sites. For FindProducts, this filter only works when IncludeSelector is set to Items or Details.
+		Default: false.  
+		IncludeSelector  string Optional Defines standard subsets of fields to return within the response.
+		
+		If you don't specify this field, the call returns a default set of fields, focusing on product details only (see the "Detail Controls" link below). If you specify this field, the additional fields you retrieve can affect the call's response time (performance).
+		
+		Applicable values: 
+		•   Details
+		
+		Include all available item fields in the response. Only applicable when you are searching by ProductID. Not applicable with QueryKeywords.
+		
+		•   DomainHistogram
+		
+		Include the DomainHistogram in the response. The histogram lists the number of matching products found and the domains in which they were found. (A domain is like a high-level category.) When many matching products are found, you may see significantly slower response times when you include the histogram.
+		
+		•   Items
+		
+		Include a brief set of item fields in the response. Only applicable when you are searching by ProductID. Not applicable with QueryKeywords.
+		
+		
+		
+		Use a comma to specify multiple values. (In this case, the results are cumulative.) See "FindProducts Samples" for an example of how to use this field.
+		
+		See "Detail Controls" for a complete list of fields that can be returned for each selector.  
+		MaxEntries  int Optional Specifies the maximum number of products to return per page in a single call. This is mostly only useful with QueryKeywords. (When you use ProductID, eBay usually only returns one product, and up to 200 items for that product.)
+		Min: 1. Max: 20. Default: 1.  
+		PageNumber  int Optional Specifies which page of data to return in the current call. Specify a positive value equal to or lower than the number of pages available (which you determine by examining the results of your initial request).
+		Min: 1. Max: 2000. Default: 1.  
+		ProductID  ProductIDType (string) Conditional Use this to retrieve product details for one specific product. Specify the ID as a string, and use the type attribute to indicate the nature of the ID you are specifying. 
+		
+		The request requires a single one of these three elements: QueryKeywords, ProductID, or CategoryID, and can only include one of the three.
+		Max length: 4000.  
+		ProductID
+		[ attribute type ] ProductIDCodeType Conditional The nature of identifier being used. For FindHalfProducts, FindProducts, and FindReviewsAndGuides, only Reference, ISBN, UPC, and EAN are supported. Required when ProductID is specified.
+		
+		For a list of possible enumeration values, see ProductIDCodeType.  
+		ProductSort  ProductSortCodeType Optional Sorts the list of products returned. This is mostly only useful with QueryKeywords. (When you use ProductID, eBay usually only returns one product.) Also see SortOrder. If ProductSort and SortOrder are not specified, products are sorted by popularity in descending order.
+		Default: Popularity. 
+		
+		Applicable values: 
+		•   CustomCode
+		
+		(in) Reserved for values that are not available in the version of the schema you are using. If eBay adds a new value to this code type as of a newer version, we return CustomCode instead when you specify a lower request version.
+		
+		•   ItemCount
+		
+		(in) Sort by the number of active items listed with this product.
+		
+		•   Popularity
+		
+		(in) Sort by product popularity (as determined by eBay). (This is the default sort order.)
+		
+		•   Rating
+		
+		(in) Sort by average rating.
+		
+		•   ReviewCount
+		
+		(in) Sort by the number of reviews on eBay.
+		
+		•   Title
+		
+		(in) Sort by the product title.
+		
+		
+		QueryKeywords  string Conditional One or more keywords to search for. When you use a keyword search, eBay searches the product catalogs for matching words in the product title, description, and/or Item Specifics, and it returns a list of matching products, with no items. To retrieve items, use ProductID instead. (If you don't already have a product ID, you can get product IDs from the response after conducting a keyword search.)
+		
+		If specified, you must pass in at least 3 alphanumeric characters.
+		
+		The words "and" and "or" are treated like any other word. Only use "and", "or", or "the" if you are searching for products containing these words. To use AND or OR logic, use eBay's standard search string modifiers. Wildcards (+, -, or *) are also supported. Be careful when using spaces before or after modifiers and wildcards.
+		
+		Some keyword queries can result in response times of 30 seconds or longer. If more than 2000 matches are found, the call fails with an error. If this kind of error occurs, refine the search by passing in more keywords and/or by using DomainName to restrict the search to certain domains (such as DVDs). If you are searching for a particular book, DVD, CD, or video game and you already know its ISBN or EAN (for a book) or UPC, consider using ProductID instead to retrieve more precise results. 
+		
+		The request requires a single one of these three elements: QueryKeywords, ProductID, or CategoryID, and can only include one of the three.
+		Max length: 350.  
+		SortOrder  SortOrderCodeType Optional Sorts search results in ascending or descending order. Only applicable with ProductSort. If you specify ProductSort without SortOrder, the order defaults to Descending for all criteria except Title (which defaults to Ascending).
+		Default: Descending. 
+		
+		Applicable values: 
+		•   Ascending
+		
+		(in) Sorts results in ascending (low to high) order.
+		
+		•   CustomCode
+		
+		(in) Placeholder value. See token.
+		
+		•   Descending
+		
+		(in) Sorts results in descending (high to low) order.
+		
+		
+
+
+		*/
+		
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array. QueryKeywords can be used in combination with CategoryID and IncludeChildCategories. 
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		public var pageNumber : int = 1;
+		public var availableItemsOnly : Boolean = false;
+		public var domainName:String;
+		public var hideDuplicateItems : Boolean;
+		
+	}
+}

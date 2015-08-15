@@ -1,0 +1,23 @@
+package ebayApp.services.util
+{
+	public class FindingServiceOperationName
+	{
+		public static const FIND_COMPLETED_ITEMS:String = "findCompletedItems";
+		public static const FIND_ITEMS_ADVANCED:String = "findItemsAdvanced";
+		public static const FIND_ITEMS_BY_CATEGORY:String = "findItemsByCategory";
+		public static const FIND_ITEMS_BY_IMAGE:String = "findItemsByImage";
+		
+		/*
+		
+		Call	Summary	Samples
+		findItemsByCategory	Finds items in a specific category. Results can be filtered and sorted.	view
+		findItemsByImage	Find items based on their image similarity to the specified item.	view
+		findItemsByKeywords	Finds items on eBay based upon a keyword query and returns details for matching items.	view
+		findItemsByProduct	Finds items based upon a product ID, such as an ISBN, UPC, EAN, or ePID.	view
+		findItemsIneBayStores	Finds items in eBay stores. Can search a specific store or can search all stores with a keyword query.	view
+		getHistograms	Gets category and/or aspect metadata for the specified category.	view
+		getSearchKeywordsRecommendation	Checks specified keywords and returns correctly spelled keywords for best search results.	view
+		getVersion
+		*/
+	}
+}

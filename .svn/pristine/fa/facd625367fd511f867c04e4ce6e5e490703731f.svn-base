@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width.normal="140"
+		 width.minimised="50"
+		 height="100%"
+		 currentState="normal" 
+		 xmlns:panels="com.ebayproject.style.skins.panels.*" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			
+			
+			[Bindable]
+			public var normalWidth : Number = 140;
+			
+			[Bindable]
+			public var topBarHeight : int = 40;
+			
+			private function toggleState():void
+			{
+				this.currentState = this.currentState == "normal" ? "minimised" : "normal";
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="minimised" />
+	</s:states>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0" horizontalAlign="right"/>
+	</s:layout>
+	
+	<s:transitions>
+		<s:Transition fromState="minimised" toState="normal" autoReverse="true">
+			<s:Resize duration="700" target="{this}"/>
+		</s:Transition>
+	</s:transitions>
+	
+	<s:Group id="panelGroup">
+		<toolbars:ToolbarBackground id="cMenu" width="{width}" height="{topBarHeight}"/>
+		<panels:ToolbarSeparator right="0" top="1" height="{cMenu.height - 5}"/>
+	</s:Group>
+	<panels:Shadow_right height="100%" rotation="0"/>
+</s:Group>

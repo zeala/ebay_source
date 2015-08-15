@@ -1,0 +1,17 @@
+
+
+package dto
+{
+
+	public class VATDetails
+	{
+		public var VATID : String;
+		public var VATSite : String;
+		public var vatPercent:Number;
+
+
+		public function VATDetails()
+		{
+		}  // VATDetails
+	}  // class declaration
+}  // package

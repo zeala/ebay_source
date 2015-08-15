@@ -1,0 +1,49 @@
+
+package ebayApp.services.dto
+{
+
+	import ebayApp.services.results.EBayUser;
+
+	/**
+	 * Various details about the current status of the listing, such as the current
+	 * number of bids and the current high bidder.
+	 * 
+	 * <p>Contains the following additional objects:
+	 * 	<ul>
+	 *		<li><code>EBayUser</code></li>
+	 * 	</ul>
+	 * </p>
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 * 
+	 * @see com.adobe.webapis.ebay.results.EBayUser
+	 */
+	public class SellingStatus
+	{
+		public var bidCount:int;
+		public var bidIncrement:Number;
+		public var convertedCurrentPrice:Number;
+		public var currentPrice:Number;
+		public var highBidder:EBayUser;
+		public var leadCount:int;
+		public var listingStatus:String;
+		public var minimumToBid:Number;
+		public var quantitySold:int;
+		public var reserveMet:Boolean;
+		public var secondChanceEligible:Boolean;
+
+
+		/**
+		 * Constructor for the SellingStatus class.
+		 * 
+		 * <p>Creates a new SellingStatus object.</p>
+		 */
+		public function SellingStatus()
+		{
+		}  // SellingStatus
+	}  // class declaration
+}  // package

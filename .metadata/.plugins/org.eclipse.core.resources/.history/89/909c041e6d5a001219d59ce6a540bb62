@@ -1,0 +1,23 @@
+
+
+package ebayApp.services.dto
+{
+
+	public class SpellingSuggestion
+	{
+		public var matchingItemCount:int;
+		[ArrayElementType("String")]
+		public var text:Array;
+
+
+		/**
+		 * Constructor for the SpellingSuggestion class.
+		 * 
+		 * <p>Creates a new SpellingSuggestion object.</p>
+		 */
+		public function SpellingSuggestion()
+		{
+			this.text = new Array();
+		}  // SpellingSuggestion
+	}  // class declaration
+}  // package

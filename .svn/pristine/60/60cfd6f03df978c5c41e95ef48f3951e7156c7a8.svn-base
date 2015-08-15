@@ -1,0 +1,31 @@
+package ebayApp.services.dto
+{
+
+	public class FindingServiceRequestObject implements IEbayServiceRequestObject
+	{
+		public function FindingServiceRequestObject()
+		{
+		}
+		
+		private var _aspectFilter:AspectFilter;
+		public function get aspectFilter():AspectFilter
+		{
+			return _aspectFilter;
+		}
+		public function set aspectFilter(val:AspectFilter):void
+		{
+			_aspectFilter = val;
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// Methods
+		//
+		//--------------------------------------------------------------------------
+		public function createRequestObject():IEbayServiceRequestObject
+		{
+			var obj:IEbayServiceRequestObject = new FindingServiceRequestObject();
+			return obj;
+		}
+	}
+}

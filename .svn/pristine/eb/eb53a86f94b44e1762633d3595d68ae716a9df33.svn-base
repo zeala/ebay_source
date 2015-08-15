@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="ebayApp.services.dto.PaginationInput"/>
+    <classEntry path="ebayApp.services.util.FindingServiceOperationName"/>
+    <classEntry path="ebayApp.services.dto.PaginationOutput"/>
+    <classEntry path="ebayApp.services.ShoppingServiceGET"/>
+    <classEntry path="ebayApp.services.util.ShoppingServiceOperationName"/>
+    <classEntry path="ebayApp.services.dto.ShoppingServiceRequestObject"/>
+    <classEntry path="ebayApp.services.util.codeTypes.ProductIdType"/>
+    <classEntry path="ebayApp.services.util.codeTypes.ProductSortCodeType"/>
+    <classEntry path="ebayApp.services.util.codeTypes.SortOrderCodeType"/>
+    <classEntry path="ebayApp.services.util.codeTypes.ReviewSortCodeTypes"/>
+    <classEntry path="ebayApp.services.commands.finding.FindCompletedItemsCommand"/>
+    <classEntry path="ebayApp.services.commands.EbayCommand"/>
+    <classEntry path="ebayApp.services.IEbayService"/>
+    <classEntry path="ebayApp.services.dto.IEbayServiceRequestObject"/>
+    <classEntry path="ebayApp.services.dto.FindingServiceRequestObject"/>
+    <classEntry path="ebayApp.services.util.codeTypes.IncludeSelectors"/>
+    <classEntry path="ebayApp.services.dto.AspectFilter"/>
+    <classEntry path="ebayApp.services.dto.DomainFilter"/>
+    <classEntry path="ebayApp.services.dto.ItemFilter"/>
+    <classEntry path="ebayApp.services.util.codeTypes.ItemFilterType"/>
+    <classEntry path="ebayApp.services.dto.ConditionNamesAndIds"/>
+    <classEntry path="ebayApp.services.util.codeTypes.ListingType"/>
+    <classEntry path="ebayApp.services.dto.Affiliate"/>
+    <classEntry path="ebayApp.services.dto.GiftServices"/>
+    <classEntry path="ebayApp.services.dto.DigitalDeliveryMethod"/>
+    <classEntry path="ebayApp.services.dto.BuyerProtection"/>
+    <classEntry path="ebayApp.services.dto.PromotionScheme"/>
+    <classEntry path="ebayApp.services.dto.GalleryType"/>
+    <classEntry path="ebayApp.services.dto.PayPalAccountType"/>
+    <classEntry path="ebayApp.services.dto.EBaySubscriptionType"/>
+    <classEntry path="ebayApp.services.dto.PictureSource"/>
+    <classEntry path="ebayApp.services.dto.PromotionMethod"/>
+    <classEntry path="ebayApp.services.dto.Ack"/>
+    <classEntry path="ebayApp.services.dto.SkypeContactOption"/>
+    <classEntry path="ebayApp.services.dto.ShippingType"/>
+    <classEntry path="ebayApp.services.dto.PhotoDisplay"/>
+    <classEntry path="ebayApp.services.dto.SellerGuaranteeLevel"/>
+    <classEntry path="ebayApp.services.dto.ListingEnhancements"/>
+    <classEntry path="ebayApp.services.dto.Severity"/>
+    <classEntry path="ebayApp.services.dto.CharityStatus"/>
+    <classEntry path="ebayApp.services.dto.PayPalAccountStatus"/>
+    <classEntry path="ebayApp.services.dto.PromotionItemPriceType"/>
+    <classEntry path="ebayApp.services.dto.SellerBusiness"/>
+    <classEntry path="ebayApp.services.dto.ErrorClassification"/>
+    <classEntry path="ebayApp.services.dto.Currency"/>
+    <classEntry path="ebayApp.services.dto.PromotionItemSelection"/>
+    <classEntry path="ebayApp.services.dto.VATStatus"/>
+    <classEntry path="ebayApp.services.dto.HitCounter"/>
+    <classEntry path="ebayApp.services.dto.PayPalAccountLevel"/>
+    <classEntry path="ebayApp.services.dto.SellerLevel"/>
+    <classEntry path="ebayApp.services.dto.SearchResultValues"/>
+    <classEntry path="ebayApp.services.dto.ListingType"/>
+    <classEntry path="ebayApp.services.dto.Country"/>
+    <classEntry path="ebayApp.services.dto.InsuranceOption"/>
+    <classEntry path="ebayApp.services.dto.BuyerPaymentMethod"/>
+    <classEntry path="ebayApp.services.dto.ListingStatus"/>
+    <classEntry path="ebayApp.services.dto.ShippingRateType"/>
+    <classEntry path="ebayApp.services.dto.Site"/>
+    <classEntry path="ebayApp.services.dto.FeedbackRatingStar"/>
+    <classEntry path="ebayApp.services.dto.SellerPaymentMethod"/>
+    <classEntry path="ebayApp.services.dto.UserStatus"/>
+    <classEntry path="ebayApp.services.dto.MerchandizingPref"/>
+    <classEntry path="ebayApp.services.dto.ShippingPackage"/>
+    <classEntry path="ebayApp.services.dto.Category"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

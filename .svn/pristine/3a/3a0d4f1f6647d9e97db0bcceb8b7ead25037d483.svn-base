@@ -1,0 +1,9 @@
+package ebayApp.services.dto
+{
+	public class ConditionNamesAndIds
+	{
+		public function ConditionNamesAndIds()
+		{
+		}
+	}
+}

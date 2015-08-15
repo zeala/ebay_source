@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<flexLibProperties includeAllClasses="true" useMultiPlatformConfig="false" version="3">
+  <includeClasses>
+    <classEntry path="com.ebayproject.components.panels.ItemContainer"/>
+    <classEntry path="com.ebayproject.components.panels.ImageContainer"/>
+    <classEntry path="com.ebayproject.components.panels.PageItemContainer"/>
+    <classEntry path="com.ebayproject.components.panels.SearchControls"/>
+    <classEntry path="com.ebayproject.components.panels.CategoriesBrowserWindow"/>
+    <classEntry path="com.ebayproject.components.panels.renderers.SiteDomainListItemRenderer"/>
+    <classEntry path="com.ebayproject.style.assets.icons.Icons"/>
+    <classEntry path="com.ebayproject.components.panels.renderers.TopLevenCategoriesListItemRenderer"/>
+    <classEntry path="com.ebayproject.components.panels.BookContainer"/>
+    <classEntry path="com.ebayproject.style.skins.panels.scrollbars.VScrollBarThumbSkin"/>
+    <classEntry path="com.ebayproject.style.skins.panels.scrollbars.HScrollBarThumbSkin"/>
+    <classEntry path="com.ebayproject.style.skins.panels.scrollbars.HScrollBarSkin"/>
+    <classEntry path="com.ebayproject.style.skins.panels.scrollbars.VScrollBarSkin"/>
+    <classEntry path="com.ebayproject.style.skins.panels.scrollbars.HScrollBarTrackSkin"/>
+    <classEntry path="com.ebayproject.components.imageScroll.ImageScrollContainer"/>
+    <classEntry path="com.ebayproject.components.imageScroll.NavItemMXML"/>
+    <classEntry path="com.ebayproject.components.panels.PopupBackgroundImg"/>
+    <classEntry path="com.ebayproject.components.panels.PanelBg"/>
+    <classEntry path="com.ebayproject.components.panels.ImagePreviewPopup"/>
+    <classEntry path="com.ebayproject.events.PopupEvent"/>
+    <classEntry path="com.ebayproject.events.ItemEvent"/>
+    <classEntry path="com.ebayproject.components.searchBuilder.SearchBuilder"/>
+    <classEntry path="com.ebayproject.events.CategoryPickerEvent"/>
+    <classEntry path="com.ebayproject.components.searchBuilder.SeachBuilderOptions"/>
+    <classEntry path="com.ebayproject.components.searchBuilder.SelectedSearchParametersContainer"/>
+  </includeClasses>
+  <includeResources/>
+  <namespaceManifests/>
+</flexLibProperties>

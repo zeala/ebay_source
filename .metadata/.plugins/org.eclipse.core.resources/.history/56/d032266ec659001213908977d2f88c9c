@@ -1,0 +1,9 @@
+package ebayApp.services.commands.finding
+{
+	public class FindingCompletedItems
+	{
+		public function FindingCompletedItems()
+		{
+		}
+	}
+}

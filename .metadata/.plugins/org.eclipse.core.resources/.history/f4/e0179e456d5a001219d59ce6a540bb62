@@ -1,0 +1,30 @@
+
+
+package ebayApp.services.dto
+{
+	/**
+	 * Container for eBay's VAT features.
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 */
+	public class VATDetails
+	{
+		public var businessSeller:Boolean;
+		public var restrictedToBusiness:Boolean;
+		public var vatPercent:Number;
+
+
+		/**
+		 * Constructor for the VATDetails class.
+		 * 
+		 * <p>Creates a new VATDetails object.</p>
+		 */
+		public function VATDetails()
+		{
+		}  // VATDetails
+	}  // class declaration
+}  // package

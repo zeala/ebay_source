@@ -1,0 +1,21 @@
+package ebayApp.services.controller
+{
+	import flash.events.EventDispatcher;
+	
+	public class ServiceManager extends EventDispatcher
+	{
+	
+		
+		
+		private static var instance:ServiceManager
+		
+		public static function getInstance():ServiceManager
+		{
+			if ( !instance )
+			{
+				instance = new ServiceManager();
+			}
+			return instance;
+		}
+	}
+}

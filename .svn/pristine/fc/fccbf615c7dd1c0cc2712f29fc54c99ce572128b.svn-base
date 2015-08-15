@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:SparkButtonSkin xmlns:fx="http://ns.adobe.com/mxml/2009" 
+             xmlns:s="library://ns.adobe.com/flex/spark" 
+             xmlns:fb="http://ns.adobe.com/flashbuilder/2009"
+             minWidth="6" minHeight="6" 
+             alpha.disabled="0.5"
+			 height="30"
+			 >
+     <fx:Script>
+		 <![CDATA[
+			 import spark.components.ButtonBarButton;
+			 [Embed(source="../../assets/botones/last_toggle.png",  
+				scaleGridTop="6", scaleGridBottom="14", 
+                scaleGridLeft="6", scaleGridRight="14")]
+			 [Bindable]
+			 public var button_up : Class;
+			 
+			 [Embed(source="../../assets/botones/last_toggle1.png",  
+				scaleGridTop="6", scaleGridBottom="14", 
+                scaleGridLeft="6", scaleGridRight="14")]
+			 [Bindable]
+			 public var button_over : Class;
+			 
+			 [Embed(source="../../assets/botones/last_toggle2.png",  
+				scaleGridTop="6", scaleGridBottom="14", 
+                scaleGridLeft="6", scaleGridRight="14")]
+			 [Bindable]
+			 public var button_down : Class;
+			 
+			 [Embed(source="../../assets/botones/last_toggle3.png",  
+				 scaleGridTop="6", scaleGridBottom="14", 
+				 scaleGridLeft="6", scaleGridRight="14")]
+			 [Bindable]
+			 public var button_selected : Class;
+			
+		 ]]>
+	 </fx:Script>
+    <fx:Metadata>
+        <![CDATA[ 
+        [HostComponent("spark.components.ButtonBarButton")]
+        ]]>
+    </fx:Metadata>
+    
+	<s:states>
+		<s:State name="disabled" />
+		<s:State name="down" />
+		<s:State name="over" />
+		<s:State name="up" />
+		<s:State name="upAndSelected" stateGroups="selectedStates, selectedUpStates" />
+		<s:State name="overAndSelected" stateGroups="overStates, selectedStates" />
+		<s:State name="downAndSelected" stateGroups="downStates, selectedStates" />
+		<s:State name="disabledAndSelected" stateGroups="selectedUpStates, disabledStates, selectedStates" />
+	</s:states>
+
+	<s:Image source="{button_up}" includeIn="up, disabled" width="{width}" height="{height}"/>
+	<s:Image source="{button_over}" includeIn="over" width="{width}" height="{height}"/>
+	<s:Image source="{button_down}" includeIn="down" width="{width}" height="{height}"/>
+	<s:Image source="{button_selected}" includeIn="selectedStates" width="{width}" height="{height}" alpha="0.6"/>
+	
+    <s:Label id="labelDisplay"
+             textAlign="center"
+             maxDisplayedLines="1"
+             horizontalCenter="0" verticalCenter="1" verticalAlign="middle"
+             left="10" right="10" top="2" bottom="2"
+			 color.selectedStates="0xffffff"
+			 color="0x555555">
+    </s:Label>
+    
+</s:SparkButtonSkin>

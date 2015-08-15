@@ -1,0 +1,93 @@
+package ebayApp.services.dto
+{
+	public class ShoppingServiceRequestObject
+	{
+		 /*
+	
+  
+		ProductSort  ProductSortCodeType Optional Sorts the list of products returned. This is mostly only useful with QueryKeywords. (When you use ProductID, eBay usually only returns one product.) Also see SortOrder. If ProductSort and SortOrder are not specified, products are sorted by popularity in descending order.
+		Default: Popularity. 
+		
+		Applicable values: 
+		•   CustomCode
+		
+		(in) Reserved for values that are not available in the version of the schema you are using. If eBay adds a new value to this code type as of a newer version, we return CustomCode instead when you specify a lower request version.
+		
+		•   ItemCount
+		
+		(in) Sort by the number of active items listed with this product.
+		
+		•   Popularity
+		
+		(in) Sort by product popularity (as determined by eBay). (This is the default sort order.)
+		
+		•   Rating
+		
+		(in) Sort by average rating.
+		
+		•   ReviewCount
+		
+		(in) Sort by the number of reviews on eBay.
+		
+		•   Title
+		
+		(in) Sort by the product title.
+		
+		
+		QueryKeywords  string Conditional One or more keywords to search for. When you use a keyword search, eBay searches the product catalogs for matching words in the product title, description, and/or Item Specifics, and it returns a list of matching products, with no items. To retrieve items, use ProductID instead. (If you don't already have a product ID, you can get product IDs from the response after conducting a keyword search.)
+		
+		If specified, you must pass in at least 3 alphanumeric characters.
+		
+		The words "and" and "or" are treated like any other word. Only use "and", "or", or "the" if you are searching for products containing these words. To use AND or OR logic, use eBay's standard search string modifiers. Wildcards (+, -, or *) are also supported. Be careful when using spaces before or after modifiers and wildcards.
+		
+		Some keyword queries can result in response times of 30 seconds or longer. If more than 2000 matches are found, the call fails with an error. If this kind of error occurs, refine the search by passing in more keywords and/or by using DomainName to restrict the search to certain domains (such as DVDs). If you are searching for a particular book, DVD, CD, or video game and you already know its ISBN or EAN (for a book) or UPC, consider using ProductID instead to retrieve more precise results. 
+		
+		The request requires a single one of these three elements: QueryKeywords, ProductID, or CategoryID, and can only include one of the three.
+		Max length: 350.  
+		SortOrder  SortOrderCodeType Optional Sorts search results in ascending or descending order. Only applicable with ProductSort. If you specify ProductSort without SortOrder, the order defaults to Descending for all criteria except Title (which defaults to Ascending).
+		Default: Descending. 
+		
+		Applicable values: 
+		•   Ascending
+		
+		(in) Sorts results in ascending (low to high) order.
+		
+		•   CustomCode
+		
+		(in) Placeholder value. See token.
+		
+		•   Descending
+		
+		(in) Sorts results in descending (high to low) order.
+		
+		
+
+
+		*/
+		
+		public static const INCLUDE_SELECTOR_DETAILS : String = "Details";
+		public static const INCLUDE_SELECTOR_DOMAIN_HISTOGRAM : String = "DomainHistogram";
+		public static const INCLUDE_SELECTOR_ITEMS : String = "Items";
+		
+		public static const INCLUDE_SELECTORS : Array = 
+			[
+				INCLUDE_SELECTOR_DETAILS, INCLUDE_SELECTOR_DOMAIN_HISTOGRAM, INCLUDE_SELECTOR_ITEMS
+			];
+		
+		public var productId : String;
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array. QueryKeywords can be used in combination with CategoryID and IncludeChildCategories. 
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		public var pageNumber : int = 1;
+		public var availableItemsOnly : Boolean = false;
+		public var domainName:String;
+		public var hideDuplicateItems : Boolean;
+		public var includeSelector : String;
+		public var productSort : String = ProductSortCodeType.POPULARITY;
+	}
+}

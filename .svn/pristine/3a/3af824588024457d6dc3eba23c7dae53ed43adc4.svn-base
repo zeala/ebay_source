@@ -1,0 +1,13 @@
+package ebayApp.services.dto
+{
+	public class ShippingInfo
+	{
+		public var expeditedShipping:Boolean;
+		public var handlingTime: int;
+		intermediatedShipping
+		oneDayShippingAvailable ( boolean )
+		shippingServiceCost ( Amount (double) )
+		shippingType ( token )
+		shipToLocations ( string )
+	}
+}

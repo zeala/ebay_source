@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*" 
+		 xmlns:panels="com.ebayproject.components.panels.*" 
+		 xmlns:searchBuilder="com.ebayproject.components.searchBuilder.*" 
+		 xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*"
+		 xmlns:toolbars1="com.ebayproject.components.toolbars.*"
+		 currentState="{productManager.itemsSearchResult.searchResultItem.length > 0 ? 'results' : 'search'}"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.controllers.ISearchBuilderController;
+			import com.ebayproject.model.IEbayMainViewPM;
+			import com.ebayproject.model.ISearchManager;
+			
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			[Bindable]
+			public var searchBuilderController : ISearchBuilderController;
+			
+			[Bindable]
+			public var searchManager : ISearchManager;
+
+			[Bindable]
+			public var ebayMainViewPM : IEbayMainViewPM;
+			
+
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	<s:states>
+		<s:State name="search"/>
+		<s:State name="results"/>
+	</s:states>
+	
+	<toolbars1:CentralPanelToolbars 
+		resultsList="{resultsList}" width="100%"
+		productManager="{productManager}"
+		ebayMainViewPM="{ebayMainViewPM}"
+		searchBuilderController="{searchBuilderController}"
+		currentState="{currentState}"
+		/>
+	
+	<searchResultsView:SearchResultsViewer
+		id="resultsList"
+		productManager="{productManager}"
+		left="0" right="0" width="100%"  height="{height - 200}"
+		fetchMoreItems="ebayMainViewPM.fetchMoreItemsHandler(event)"
+		viewItemOnEbay="ebayMainViewPM.viewItemOnEbay(event)"
+		addToFavorites="ebayMainViewPM.addToFavorites(event)"
+		/>
+	
+	<s:Spacer height="50"/>
+</s:Group>

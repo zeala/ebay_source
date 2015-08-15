@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:model="model.*" 
+			   xmlns:view="view.*" 
+			   xmlns:panels="com.ebayproject.components.panels.*" 
+			   xmlns:book="com.pricope.miti.book.*"
+			   xmlns:scrollbars="com.ebayproject.style.skins.panels.scrollbars.*"
+			   xmlns:panels1="com.ebayproject.style.skins.panels.*"
+			   xmlns:imageScroll="com.ebayproject.components.imageScroll.*" 
+			   xmlns:searchBuilder="com.ebayproject.components.searchBuilder.*" 
+			   xmlns:skins="style.skins.*" 
+			   backgroundColor="0xe8e8e8"
+			   width="100%"
+			   height="100%"
+			   minWidth="500" minHeight="400" 
+	>			  
+
+	<fx:Declarations>
+		
+		<model:EbayServicesManager id="findingServicePM" />
+		<panels:CategoriesBrowserWindow 
+			id="categoriesBrowserWindow" close="PopUpManager.removePopUp(categoriesBrowserWindow)" 
+			requestChildCategories="ebayMainViewPM.requestCategoriesHandler( event )"
+			requestResultsForCategory="ebayMainViewPM.requestResultsForCategoryHandler(event)"
+			productManager="{ProductManager.getInstance()}"
+			/>
+		
+		<searchBuilder:SearchBuilder
+			id="searchBuilderWindow" close="PopUpManager.removePopUp(searchBuilderWindow)"
+			openCategoryPicker="launchCategoryBrowser(event, false)"
+			/>
+	</fx:Declarations>
+	<fx:Style source="style/defaults.css"/>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.events.CategoryEvent;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Application;
+			
+			import ebayApp.services.CommandManager;
+			import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+			import ebayApp.services.commands.merchandising.GetMostWatchedItemsCommand;
+			import ebayApp.services.commands.merchandising.GetSimilarItems;
+			import ebayApp.services.commands.shopping.FindPopularItemsCommand;
+			import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+			import ebayApp.services.dto.ShoppingServiceRequestObject;
+			import ebayApp.services.util.codeTypes.IncludeSelectors;
+			import ebayApp.services.util.codeTypes.SiteCodeType;
+			
+			import model.PopupController;
+			import model.ProductManager;
+			
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Script>
+		<![CDATA[
+			import model.EbayMainViewPM;
+			import com.ebayproject.events.CategoryPickerEvent;
+
+			private var ebayMainViewPM : EbayMainViewPM = new EbayMainViewPM();
+			
+
+			private function launchCategoryBrowser(event:CategoryPickerEvent, modal : Boolean = true):void
+			{
+				categoriesBrowserWindow.selectCategoryHandler = event.eventHandler;
+				PopUpManager.addPopUp(categoriesBrowserWindow, FlexGlobals.topLevelApplication as DisplayObject, modal );
+				PopUpManager.centerPopUp(categoriesBrowserWindow);
+				categoriesBrowserWindow.init();
+			}
+			
+			private function openSearchBuilder( event : Event ) : void
+			{
+				PopUpManager.addPopUp(searchBuilderWindow, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp(searchBuilderWindow);
+			}
+			
+			private function setResizeHandler():void
+			{
+				Application(FlexGlobals.topLevelApplication).addEventListener(
+					ResizeEvent.RESIZE, resizeHandler);
+			}
+			
+			private function resizeHandler( event : ResizeEvent ):void
+			{
+				bookContainer.scaleX = getBookScale();
+				bookContainer.scaleY = getBookScale();
+			}
+			
+			private var bookWidthToHeightRatio : Number = 1.5;
+			
+			private function getBookScale():Number
+			{
+				var yOffset : int = 140;
+				var xOffset  : int = 100;
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var h : Number = app.height - yOffset;
+				var w : Number = app.width - xOffset;
+				var scale : Number;
+				
+				var appWidthToHeightRatio : Number = w/h;
+				
+				if ( appWidthToHeightRatio >= 1.5 )
+				{
+					scale = h / bookContainer.height;
+				}
+				else
+				{
+					scale = w / bookContainer.width;
+				}	
+				return scale;
+			}
+			
+
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group width="{width}" height="{height}">
+		<panels1:TopControlPanelSkin width="100%" left="0" right="0" height="40"/>
+		<s:Group  width="{width}">
+			<s:layout>
+				<s:HorizontalLayout horizontalAlign="center" />
+			</s:layout>
+			
+			
+			<panels:SearchControls
+				id="searchControls"
+				productManager="{ProductManager.getInstance()}"
+				requestSearch="ebayMainViewPM.requestSearchHandler(event)"
+				requestChildCategories="ebayMainViewPM.requestCategoriesHandler(event)"
+				requestResultsForCategory="ebayMainViewPM.requestResultsForCategoryHandler(event)"
+				changeDomain="ebayMainViewPM.changeDomainHandler(event)"
+				horizontalCenter="0"
+				openCategoryPicker="launchCategoryBrowser(event)"
+				openSearchBuilder="openSearchBuilder(event)"
+				
+				testMerchandisingService="ebayMainViewPM.testMerchandisingService()"
+				testFindPopularItems="ebayMainViewPM.testFindPopularItems()"
+				/>
+		</s:Group>  
+		<s:Group width="{width}" y="40">		
+			
+			
+			<s:HGroup  width="{width}" horizontalAlign="center">
+				<s:HGroup horizontalAlign="center" >
+					<s:Spacer width="50"/>
+					<panels:BookContainer 
+						id="bookContainer"
+						productManager="{ProductManager.getInstance()}" 
+						width="900" height="600"
+						horizontalCenter="0"
+						scaleX="{getBookScale()}" scaleY="{getBookScale()}"
+						creationComplete="setResizeHandler()"
+						requestSimilarItemsForCategory="ebayMainViewPM.requestSimilarItemsForCategoryHandler(event)"
+						/>
+					<s:Spacer width="50"/>
+				</s:HGroup>
+			</s:HGroup>  
+			
+			
+		</s:Group>
+		<s:VGroup id="bottomGroup" bottom="9" width="{width}" height="80" horizontalAlign="center">
+			<s:HGroup id="imageScrollerContainerGroup" width="{width}" maxWidth="900" horizontalAlign="center" height="80">
+				<imageScroll:ImageScrollContainer
+					width="{imageScrollerContainerGroup.width}" maxWidth="900" height="80" 
+					searchItems="{ProductManager.getInstance().secondarySearchResult.searchResultItem}"
+					popupController="{PopupController.getInstance() as IPopupController}"
+					/>
+			</s:HGroup>
+			<s:Group width="{width}" left="0" >	
+				<panels1:TopControlPanelSkin width="100%" left="0" right="0" height="8"/>
+			</s:Group>
+		</s:VGroup>  
+	</s:Group>  
+	
+</s:Application>

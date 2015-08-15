@@ -1,0 +1,72 @@
+package ebayApp.services.commands.finding
+{
+	import flash.events.Event;
+	
+	import mx.events.PropertyChangeEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.FindingServiceGET;
+	import ebayApp.services.commands.EbayCommand;
+	import ebayApp.services.dto.PaginationInput;
+	import ebayApp.services.util.FindingServiceOperationName;
+
+	public class FindCompletedItemsCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_COMPLETED_ITEMS;
+		public static const RESPONSE_EVENT_NAME : String = "findCompletedItemsResponse";
+		
+		public function FindCompletedItemsCommand( service : HTTPService )
+		{
+			super(service);
+			this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, commandCallHandler );
+			this.service.addEventListener( RESPONSE_EVENT_NAME, serviceResultHandler );
+		}
+		
+		
+		override public function execute():void
+		{
+			FindingServiceGET.getInstance().callOperation( 
+				FindingServiceOperationName.FIND_COMPLETED_ITEMS );
+			
+		}
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		override protected function serviceResultHandler(event:PropertyChangeEvent):void
+		{
+			dispatchEvent( event );
+		}
+		
+		private function commandCallHandler ( event : Event ) : void
+		{
+			FindingServiceGET( this.service ).callService( getFullUrl());
+		}
+		
+		private function getFullUrl():String
+		{
+
+			var keywords : String = "mobile";
+			
+			var paginationInput:PaginationInput = new PaginationInput();
+			paginationInput.entriesPerPage = 4;
+			paginationInput.pageNumber = 1;
+			
+			var url:String = FindingServiceGET.SEARCH_URL + "/?";
+			url += "OPERATION-NAME=" + FindingServiceOperationName.FIND_COMPLETED_ITEMS;
+			url += "&SERVICE-VERSION=1.0.0";
+			url += "&SECURITY-APPNAME=" + FindingServiceGET.apiAppName;
+			url += "&keywords=" + keywords; 
+			if ( paginationInput )
+			{
+				url += "&paginationInput.entriesPerPage=" + paginationInput.entriesPerPage;
+				url += "&paginationInput.pageNumber=" + paginationInput.pageNumber;
+			}
+			
+			
+			return url;
+		}
+	}
+}

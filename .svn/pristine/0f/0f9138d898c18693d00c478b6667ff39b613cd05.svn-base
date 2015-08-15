@@ -1,0 +1,30 @@
+
+
+package dto.results
+{
+	import flash.events.EventDispatcher;
+
+	public class EBayResult extends EventDispatcher
+	{
+		public var ack:String;
+		public var build:String;
+		public var correlationID:String;
+		[ArrayElementType("EBayError")]
+		public var errors:Array;
+		public var hardExpirationWarning:String;
+		public var timestamp:Date;
+		public var version:String;
+		public var rawResult:String;
+
+
+		/**
+		 * Constructor for the EBayResult class.
+		 * 
+		 * <p>Creates a new EBayResult object.</p>
+		 */
+		public function EBayResult()
+		{
+			this.errors = new Array();
+		}  // EBayResult
+	}  // class declaration
+}  // package

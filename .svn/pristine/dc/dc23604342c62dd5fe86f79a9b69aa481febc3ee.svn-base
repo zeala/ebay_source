@@ -1,0 +1,27 @@
+
+package dto
+{
+
+	public class ContactDetails
+	{
+		public var cityName:String;
+		public var companyName:String;
+		public var country:String;
+		public var phone2AreaOrCityCode:String;
+		public var phone2CountryCode:String;
+		public var phone2CountryPrefix:String;
+		public var phone2LocalNumber:String;
+		public var phoneAreaOrCityCode:String;
+		public var phoneCountryCode:String;
+		public var phoneCountryPrefix:String;
+		public var phoneLocalNumber:String;
+		public var stateOrProvince:String;
+		public var street1:String;
+		public var street2:String;
+
+
+		public function ContactDetails()
+		{
+		}  // ContactDetails
+	}  // class declaration
+}  // package

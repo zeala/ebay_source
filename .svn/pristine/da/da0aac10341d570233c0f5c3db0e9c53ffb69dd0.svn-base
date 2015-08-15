@@ -1,0 +1,208 @@
+package model
+{
+	import com.ebayproject.events.CategoryEvent;
+	import com.ebayproject.model.IEbayMainViewPM;
+	
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	import flash.net.URLRequest;
+	import flash.net.navigateToURL;
+	
+	import mx.events.PropertyChangeEvent;
+	
+	import dto.EbayServiceRequestObject;
+	import dto.SearchResultItem;
+	import dto.codeTypes.IncludeSelectors;
+	import dto.codeTypes.SiteCodeType;
+	import dto.histograms.CategoryHistogram;
+	import dto.results.SearchResults;
+	
+	import ebayApp.services.CommandManager;
+	import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+	import ebayApp.services.commands.merchandising.GetMostWatchedItemsCommand;
+	import ebayApp.services.commands.merchandising.GetSimilarItems;
+	import ebayApp.services.commands.shopping.FindPopularItemsCommand;
+	import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+
+	public class EbayMainViewPM extends EventDispatcher implements IEbayMainViewPM
+	{
+		
+		private static var instance : EbayMainViewPM;
+		
+		public static function getInstance():EbayMainViewPM
+		{
+			if ( !instance ) 
+			{
+				instance = new EbayMainViewPM();
+			}
+			return instance;
+		}
+		
+		private var _siteId : String = SiteCodeType.EBAY_US;
+		[Bindable("siteIdChange")]
+		public function get siteId () : String
+		{
+			return _siteId;
+		}
+		public function set siteId(val:String):void
+		{
+			if (_siteId == val ) return;
+			_siteId = val;
+			dispatchEvent( new Event("siteIdChange"));
+		}
+		
+		
+		
+		//-------------------------------------------------------------------------------------
+		//
+		// PUBLIC METHODS
+		//
+		//-------------------------------------------------------------------------------------
+		
+		public function sendSearchRequest( event : PropertyChangeEvent ) : void
+		{
+			var requestObj : EbayServiceRequestObject = event.newValue as EbayServiceRequestObject;
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			ProductManager.getInstance().itemsSearchResult = null;
+			SearchManager.getInstance().storedSearchRequestObj = requestObj;
+		}
+		
+		public function requestSortBy ( event : PropertyChangeEvent ) : void
+		{
+			var requestObj : EbayServiceRequestObject 
+			= SearchManager.getInstance().storedSearchRequestObj;
+			requestObj.sortOrder = event.newValue.toString();
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			ProductManager.getInstance().itemsSearchResult = null;
+			SearchManager.getInstance().storedSearchRequestObj = requestObj;
+		}
+		
+		public function narrowResultsForCategory( event : PropertyChangeEvent ) : void
+		{
+			var requestObj : EbayServiceRequestObject 
+			= SearchManager.getInstance().storedSearchRequestObj;
+			
+			var catHistogram : CategoryHistogram = event.newValue as CategoryHistogram;
+			requestObj.categoryId = catHistogram.categoryId;
+			
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			ProductManager.getInstance().itemsSearchResult = null;
+			SearchManager.getInstance().storedSearchRequestObj = requestObj;
+		}
+		
+		public function addToFavorites( event : PropertyChangeEvent ) : void
+		{
+			var item : SearchResultItem = event.newValue as SearchResultItem;
+			SharedObjectController.getInstance().addToFavorites( item );
+		}
+		
+		public function viewItemOnEbay( event : PropertyChangeEvent ) : void
+		{
+			var item : SearchResultItem = event.newValue as SearchResultItem;
+			var requestURL : URLRequest = new URLRequest();
+			requestURL.url = item.viewItemURL;
+			navigateToURL( requestURL );
+			
+			SearchManager.getInstance().addToViewedItems( item );
+		}
+		
+		public function fetchMoreItemsHandler (event : Event ):void
+		{
+			var requestObj : EbayServiceRequestObject 
+				= SearchManager.getInstance().storedSearchRequestObj;
+				
+			var resultObj : SearchResults = ProductManager.getInstance().itemsSearchResult;
+			
+			var pageNum : int = resultObj.paginationOutput.pageNumber;
+			var totalPages : int = resultObj.paginationOutput.totalPages;
+			
+			if (pageNum < totalPages )
+			{
+				requestObj.pageNumber ++;
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			}
+		}
+		
+		public function requestSearchHandler(event:PropertyChangeEvent):void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			//requestObj.siteId = "0";
+			requestObj.queryKeywords = event.newValue.toString();
+			
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			ProductManager.getInstance().itemsSearchResult = null;
+			SearchManager.getInstance().storedSearchRequestObj = requestObj;
+			
+		}
+		
+		
+		public function requestCategoriesHandler(event:CategoryEvent):void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			//requestObj.siteId = "0";
+			requestObj.includeSelector = IncludeSelectors.CHILD_CATEGORIES;
+			requestObj.categoryId = event.categoryId;
+			
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[GetCategoryInfoCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function requestResultsForCategoryHandler( event : CategoryEvent ) : void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			requestObj.categoryId = event.categoryId;EbayServiceRequestObject
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function changeDomainHandler(event : PropertyChangeEvent ) : void
+		{	
+			if ( siteId != String(event.newValue))
+			{
+				siteId = event.newValue as String;
+				
+				if ( ProductManager.getInstance().categories )
+				{
+					ProductManager.getInstance().categories.removeAll();	
+					ProductManager.getInstance().categories = null;
+				}
+			}
+		}
+		
+		public function requestSimilarItemsForCategoryHandler(event:CategoryEvent):void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			requestObj.categoryId = event.categoryId;
+			requestObj.itemId = event.itemId;
+			if (siteId )
+			{
+				requestObj.siteId = siteId;
+			}
+			CommandManager.getInstance()[GetSimilarItems.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function testMerchandisingService():void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			CommandManager.getInstance()[GetMostWatchedItemsCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+		public function testFindPopularItems():void
+		{
+			var requestObj : EbayServiceRequestObject = new EbayServiceRequestObject();
+			CommandManager.getInstance()[FindPopularItemsCommand.OPERATION_NAME].execute(requestObj);
+		}
+		
+
+	}
+}

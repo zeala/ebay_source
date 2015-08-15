@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchResultsView:SearchResultsViewRendererAbstract 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/mx" 
+	xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*" 
+	
+	mouseUp="trace('\n mouseUp, this.currentstate : ' + this.currentState)"
+	click="clickHandler()"
+	>
+
+	<fx:Script>
+		<![CDATA[
+			import mx.core.UIComponent;
+
+			override public function getEffectTarget():Image
+			{
+				return img;
+			}
+			
+			override public function getOverlayTarget():UIComponent
+			{
+				return overlayGroup as UIComponent;
+			}
+			
+			private function clickHandler():void
+			{
+				trace('\n click, this.currenetstate : ' + this.currentState );
+				
+				
+			}
+		]]>
+	</fx:Script>
+	
+
+	<searchResultsView:states>
+		<s:State name="normal"/>
+		<s:State name="hover"/>
+		<s:State name="down"/>
+	</searchResultsView:states>
+
+	<s:Rect 
+		radiusX="2" radiusY="2" width="{this.width-2} "
+		height="{this.height - 2}"
+		x="1" y="1"
+		>
+		<s:stroke>
+			<s:SolidColorStroke color="0x999999"/>
+		</s:stroke>
+	</s:Rect>
+	<s:Group 
+		id="imgContainer" height="{height - 40}" 
+		width="100%" clipAndEnableScrolling="true" 
+		
+		>
+		<s:Image 
+			id="img"
+			source="{searchResultItem.galleryInfoContainer.largeThumbURL}"
+			width="{imgWidth}" height="{imgHeight}"
+			ready="imageCreationCompleteHandler(img, imgContainer)"  showEffect="{fade}" 
+			creationCompleteEffect="{fade}" smooth="true" smoothingQuality="high"
+				
+			/>
+	</s:Group>
+	<s:VGroup id="textContainer" paddingLeft="10" paddingRight="10" bottom="2" gap="2">
+		<s:Label text="{searchResultItem.title}" width="120" maxDisplayedLines="1" />
+		<s:Label text="{searchResultItem.sellingStatus.currentPrice + ' ' + searchResultItem.currency}"/>
+		<s:Label color="0x0000ff" text="View on Ebay" click="viewItem()" buttonMode="true"/>
+	</s:VGroup>
+	
+	<searchResultsView:SearchResultItemOverlayOptions
+		id="overlayGroup"
+		width="{width}" height="30"
+			excludeFrom="normal"
+			 x="0" y="0"
+			 zoomIn="zoomIn()"
+			 zoomOut="zoomOut()"
+			 addToFavorites="addToFavorites()"
+			 />
+
+	
+	<s:Rect width="{width }" height="{height}" alpha.hover="1" alpha.down="1" alpha="0">
+		<s:stroke>
+			<s:SolidColorStroke color="0x555555" weight="2" />
+		</s:stroke>
+		
+	</s:Rect>
+	
+</searchResultsView:SearchResultsViewRendererAbstract>

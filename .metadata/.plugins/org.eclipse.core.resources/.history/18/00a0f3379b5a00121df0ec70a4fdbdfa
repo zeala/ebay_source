@@ -1,0 +1,34 @@
+package ebayApp.services.commands
+{
+	import flash.events.EventDispatcher;
+	
+	import mx.events.PropertyChangeEvent;
+	import mx.rpc.http.HTTPService;
+
+	public class EbayCommand extends EventDispatcher
+	{
+		
+		public var service:HTTPService;
+		
+		public function EbayCommand( service:HTTPService )
+		{
+			this.service = service;
+			//this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, callServiceHandler );
+		}
+		
+		public function execute():void
+		{
+			throw new Error("abstrace method ");
+		}
+		
+		protected function serviceResultHandler(event:PropertyChangeEvent):void
+		{
+			throw new Error("abstract method ");
+		}
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

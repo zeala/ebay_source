@@ -1,0 +1,14 @@
+package ebayApp.services.dto
+{
+	public class BusinessSellerDetails
+	{
+		public var additionalContactInformation : String;
+		public var address : Address;
+		public var email : String;
+		public var fax : String;
+		public var legalInvoice : Boolean;
+		public var termsAndConditions : String;
+		public var tradeRegistrationNumber : String;
+		public var vatDetails : VATDetails;
+	}
+}

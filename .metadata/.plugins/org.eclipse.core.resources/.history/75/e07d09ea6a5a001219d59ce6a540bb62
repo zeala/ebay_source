@@ -1,0 +1,21 @@
+
+package ebayApp.services.dto
+{
+	public class LostList
+	{
+		[ArrayElementType("LostListItem")]
+		public var lostListItem:Array;
+		public var paginationResult:PaginationResult;
+
+
+		/**
+		 * Constructor for the LostList class.
+		 * 
+		 * <p>Creates a new LostList object.</p>
+		 */
+		public function LostList()
+		{
+			this.lostListItem = new Array();
+		}  // LostList
+	}  // class declaration
+}  // package

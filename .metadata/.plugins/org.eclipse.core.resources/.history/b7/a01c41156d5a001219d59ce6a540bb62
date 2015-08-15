@@ -1,0 +1,11 @@
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class SkypeContactOption
+	{
+		public static const CHAT:String = "Chat";
+		public static const VOICE:String = "Voice";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

@@ -1,0 +1,38 @@
+package ebayApp.services.dto
+{
+	public class ShoppingServiceRequestObject
+	{
+		 /*
+		CategoryID  string Conditional, 
+		repeatable: [0..*] Specify CategoryID to restrict your query to a specific category. Up to 10 categories may be specified. If you are using a URL, and you want to specify more than one CategoryID, separate the values with a comma. For example, to specify Fiction Books and Children's Books, specify CategoryID=377,279. 
+		
+		If the specified category ID doesn't match an existing category for the site, an invalid-category error message is returned. To determine valid categories:
+		Use findItemsAdvanced from the Finding API with CategoryHistogram value in the OutputSelector field to retrieve matching categories. Then make another findItemsAdvanced call with the ID of a matching category. 
+		
+		CategoryID can be used in combination with QueryKeywords and CategoryIDExclude. To retrieve the most popular items across all categorys, do not submit a CategoryID.
+		Max length: 10.  
+		CategoryIDExclude  string Optional, 
+		repeatable: [0..*] Specify this value if you want search results to be filtered so that the popular items returned do not include items that belong to a specific category. 
+		
+		CategoryIDExclude is an unbounded field. If you are using a URL, you can separate multiple values with a comma. For example, if you want to specify Records and SuperAudio CDs, specify CategoryIDExclude=306,46354. 
+		
+		If you use CategoryIDExclude, it must be used in with QueryKeywords or CategoryID. The CategoryIDExclude input field need not be used if you specified the CategoryID input field.  
+		MaxEntries  int Optional Specifies the maximum number of entries to return in a single call.
+		Min: 0. Max: 100.  
+		QueryKeywords  string Conditional A query that specifies a string for searching titles of items on eBay. If you are using a URL, then to search for multiple words, use "%20". For example, use Harry%20Potter to search for items containing those words in any order. You can incorporate wildcards into a multi-word search, as in the following: ap*%20ip*. The words "and" and "or" are treated like any other word. Only use "and", "or", or "the" if you are searching for listings containing these words. QueryKeywords can be used in combination with CategoryID and CategoryIDExclude.
+		Max length: 350 (characters).  
+		Standard Input Fields    
+		MessageID  string Optional If you pass a value in MessageID in a request, we'll return the same value in CorrelationID in the response. If you're making a lot of calls, you can use this for tracking that a response is returned for every request and to match particular responses to particular requests. (In this case, specify a different value for each request.) You can specify any value that is useful to you.  
+		
+		*/
+		
+		public var categoryId : String; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array
+		public var messageId:String;
+		
+
+		
+	}
+}

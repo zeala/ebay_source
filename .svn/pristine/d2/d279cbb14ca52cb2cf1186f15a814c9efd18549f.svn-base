@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx">
+	<fx:Script>
+		<![CDATA[
+			import ebayApp.services.CommandManager;
+			import ebayApp.services.commands.finding.FindItemsAdvancedCommand;
+			import ebayApp.services.commands.finding.FindItemsByImageCommand;
+			import ebayApp.services.commands.shopping.FindPopularSearchesCommand;
+			import ebayApp.services.commands.shopping.FindProductsCommand;
+			import ebayApp.services.commands.shopping.FindReviewsAndGuidesCommand;
+			import ebayApp.services.commands.shopping.GetCategoryInfoCommand;
+			import ebayApp.services.commands.shopping.GetSingleItemCommand;
+			import ebayApp.services.commands.shopping.GetUserProfileCommand;
+			import ebayApp.services.commands.trading.GetSessionIDCommand;
+			import ebayApp.services.dto.Category;
+			import ebayApp.services.dto.ShoppingServiceRequestObject;
+			import ebayApp.services.dto.SiteObj;
+			import ebayApp.services.commands.finding.FindingServiceOperationName;
+			
+			private function testFind( commandName : String ):void
+			{
+				CommandManager.getInstance()[commandName].execute();	
+			}
+			
+			private function testGetSingleItem () : void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0"; 
+				CommandManager.getInstance()[GetSingleItemCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function testFindProducts():void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				CommandManager.getInstance()[FindProductsCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function findItemsAdvanced():void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				CommandManager.getInstance()[FindItemsAdvancedCommand.OPERATION_NAME].execute(requestObj);
+			}
+			
+			private function testGetUserProfile():void
+			{
+				
+				var cm:CommandManager = CommandManager.getInstance();
+				trace("\n cm : " + cm );
+				trace(" cm[getUseProfile] " + cm['GetUserProfile']);
+				CommandManager.getInstance()[GetUserProfileCommand.OPERATION_NAME].execute();
+			}
+			
+			private function testFindPopularSearches():void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				requestObj.siteId = "0";
+				CommandManager.getInstance()[FindPopularSearchesCommand.OPERATION_NAME].execute( requestObj );
+			}
+			
+			private function findByImage():void
+			{
+				CommandManager.getInstance()[FindItemsByImageCommand.OPERATION_NAME].execute();
+			}
+			
+			private function testRequestObj():void
+			{
+				var obj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				
+				obj.getParamsForQueryString();
+			}
+			
+			public function getCategoryInfo( siteObj:SiteObj, category:Category):void
+			{
+				var requestObj : ShoppingServiceRequestObject = new ShoppingServiceRequestObject();
+				
+				requestObj.siteId = siteObj.siteId;
+				
+				if ( siteObj )
+				{
+					requestObj.siteId = siteObj.siteId;
+					
+				}
+				if ( category )
+				{
+					requestObj.categoryId = category.categoryID;
+				}
+				
+				CommandManager.getInstance()[GetCategoryInfoCommand.OPERATION_NAME].execute( requestObj );
+			}
+			
+			private function findReviewsAndGuides():void
+			{
+				CommandManager.getInstance()[FindReviewsAndGuidesCommand.OPERATION_NAME].execute();
+			}
+			
+			private function getSessionId():void
+			{
+				CommandManager.getInstance()[GetSessionIDCommand.OPERATION_NAME].execute();
+			}
+		]]>
+	</fx:Script>
+	
+		<s:layout>
+			<s:VerticalLayout gap="10" paddingTop="20" paddingLeft="20"/>
+		</s:layout>
+		
+		
+		<s:HGroup>
+			<s:DropDownList 
+				id="findOperationsDdl"
+				width="180"
+				dataProvider="{FindingServiceOperationName.FINDING_SERVICE_OPERATIONS_FIND}"	
+				requireSelection="false"
+				prompt="Select option"
+				/>
+			<s:DropDownList
+				id="getOperationsDdl"
+				width="180"
+				dataProvider="{FindingServiceOperationName.FINDING_SERVICE_OPERATIONS_GET}"
+				requireSelection="false"
+				prompt="Select option to get data"
+				/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:TextInput id="keywordTxt" width="180" />
+			<s:Button 
+				id="testFindBtn"
+				label="Test finding service - find" 
+				click="testFind( findOperationsDdl.selectedItem.value)"
+				enabled="{findOperationsDdl.selectedItem != null}"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="Get single item" width="180" />
+			<s:Button
+				width="100"
+				label="Get single item"
+				click="testGetSingleItem()"
+				/>
+		</s:HGroup>
+		<s:HGroup>
+			<s:Label text="Find products" width="180" />
+			<s:Button
+				label="Find products"
+				click="testFindProducts()"
+				/>
+		</s:HGroup>
+	
+		<s:HGroup>
+			<s:Label text="Find products ADVANCED" width="180" />
+			<s:Button
+				label="Find products ADVANCED"
+				click="findItemsAdvanced()"
+				/>
+		</s:HGroup>
+		
+	<!--	<s:HGroup>
+			<s:Label text="Get user profile" width="180" />
+			<s:Button
+				label="Get user profile"
+				click="testGetUserProfile()"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="Find popular searches" width="180" />
+			<s:Button
+				label="Find popular searches"
+				click="testFindPopularSearches()"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="Find items by image" width="180" />
+			<s:Button
+				label="Find items by image"
+				click="findByImage()"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="Find review and guides" width="180" />
+			<s:Button
+				label="Find reviews and guides"
+				click="findReviewsAndGuides()"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="Get category info" width="180" />
+			<s:Button
+				label="Get category info"
+				click="getCategoryInfo(null, null)"
+				/>
+		</s:HGroup>
+		
+		<s:HGroup>
+			<s:Label text="GET SESSION ID " width="180" />
+			<s:Button
+				label="Session Id "
+				click="getSessionId()"
+				/>
+		</s:HGroup> 
+		
+		<s:Button label="Test Shopping request object " click="testRequestObj()"/> -->
+</s:Group>

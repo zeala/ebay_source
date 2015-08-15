@@ -1,0 +1,30 @@
+
+
+package com.adobe.webapis.ebay.objects
+{
+	/**
+	 * Indicates the results of the pagination, including the total number of
+	 * pages of data that can be returned and the total number of items that
+	 * can be returned.
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 */
+	public class PaginationResult
+	{
+		public var totalNumberOfEntries:int;
+		public var totalNumberOfPages:int;
+		
+		/**
+		 * Constructor for the PaginationResult class.
+		 * 
+		 * <p>Creates a new PaginationResult object.</p>
+		 */
+		public function PaginationResult()
+		{
+		}  // PaginationResult
+	}  // class declaration
+}  // package

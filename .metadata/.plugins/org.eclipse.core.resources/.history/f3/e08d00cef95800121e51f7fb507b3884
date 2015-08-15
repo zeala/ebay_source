@@ -1,0 +1,74 @@
+package ebayApp.services
+{
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.dto.PaginationInput;
+	
+	public class ShoppingServiceGET extends HTTPService
+	{
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		public static var apiAuthToken:String = "";
+
+		//http://open.api.ebay.com/Shopping?
+		//callname=GetCategoryInfo
+		//&appid=EAMMedia-50ad-454a-96af-c15d6395d9b4
+		//&version=677&siteid=0
+		//&CategoryID=-1&IncludeSelector=ChildCategories
+		
+		public static const SHOPPING_URL:String = "http://open.api.ebay.com/Shopping?";
+
+		public static var version:String = "517";
+		
+		public function ShoppingServiceGET(rootURL:String=null, destination:String=null)
+		{
+			initService()
+		}
+
+		
+		protected function initService():void
+		{
+			this.method = "GET";
+			this.resultFormat = "e4x";
+			this.addEventListener( FaultEvent.FAULT, faultHandler );
+			this.addEventListener( ResultEvent.RESULT, resultHandler );
+		}
+		
+		public function callOperation(operationName:String ):void
+		{
+
+
+			var url:String = SHOPPING_URL + "/?";
+			url += "callname" + operationName;
+			url += "&version=1.0.0";
+			url += "&SECURITY-APPNAME=" + apiAppName;
+			
+			if ( words)
+			{
+				url += "&keywords=" + words.join(",");
+			}
+			if ( paginationInput )
+			{
+				url += "&paginationInput.entriesPerPage=" + paginationInput.entriesPerPage;
+				url += "&paginationInput.pageNumber=" + paginationInput.pageNumber;
+			}
+			
+			this.url = url;
+			this.send();
+		}
+		
+		
+		private function faultHandler(event:FaultEvent):void
+		{
+			
+		}
+		
+		private function resultHandler(event:ResultEvent):void
+		{
+			
+		}
+	}
+}

@@ -1,0 +1,132 @@
+package ebayApp.services.util.parsers
+{
+	import dto.Aspect;
+	import dto.histograms.AspectHistogramContainer;
+	import dto.histograms.AspectValueHistogram;
+	import dto.histograms.CategoryHistogram;
+	import dto.histograms.CategoryHistogramContainer;
+	import dto.histograms.ConditionHistogram;
+	import dto.histograms.ConditionHistogramContainer;
+
+	public class HistogramParser
+	{
+		default xml namespace = new Namespace( "http://www.ebay.com/marketplace/search/v1/services");
+		
+		public static function parseConditionHistogramContainer( xmlData : XMLList ) : ConditionHistogramContainer
+		{
+			var container : ConditionHistogramContainer = new ConditionHistogramContainer();
+			var histograms : XMLList = xmlData.conditionHistogram;
+			if (histograms.length() > 0 )
+			{
+				container.conditionHistograms = [];
+				for ( var i : int= 0; i < histograms.length(); i++ )
+				{
+					var histogram : ConditionHistogram = parseConditionHistogram( histograms[i]);
+					container.conditionHistograms.push( histogram );
+				}
+			}
+			
+			return container;
+		}
+		
+		public static function parseConditionHistogram( xmlData : XML ) : ConditionHistogram
+		{
+			var histogram : ConditionHistogram = new ConditionHistogram();
+			histogram.condition = EBayResultParser.parseCondition( xmlData.condition);
+			histogram.count = xmlData.count;
+			
+			return histogram;
+		}
+		
+		public static function parseCategoryHistogramContainer( xmlData : XMLList) : CategoryHistogramContainer
+		{
+			var container : CategoryHistogramContainer = new CategoryHistogramContainer();
+			
+			var histograms : XMLList = xmlData.categoryHistogram;
+			if ( histograms.length() > 0 )
+			{
+				container.categoryHistograms = [];
+				for ( var i:int = 0; i < histograms.length() ; i++)
+				{
+					var histogram : CategoryHistogram = parseCategoryHistogram( histograms[i]);
+					container.categoryHistograms.push(histogram);
+				}
+			}
+			
+			return container;
+		}
+		
+		public static function parseCategoryHistogram ( xmlData : XML ) : CategoryHistogram
+		{
+			var histogram : CategoryHistogram = new CategoryHistogram();
+			
+			histogram.categoryId = xmlData.categoryId;
+			histogram.categoryName = xmlData.categoryName;
+			histogram.count = xmlData.count;
+			var childList : XMLList = xmlData.childCategoryHistogram;
+			if ( childList.length() > 0 )
+			{
+				histogram.childCategoryHistograms = [];
+				
+				for ( var i:int= 0; i < childList.length(); i++)
+				{
+					var childH : CategoryHistogram = parseCategoryHistogram( childList[i] );
+					histogram.childCategoryHistograms.push( childH );
+				}	
+			}
+			
+			return histogram;
+		}
+		
+		public static function parseAspectHistogramContainer( itemData:XMLList) : AspectHistogramContainer
+		{
+
+			var aspectHC : AspectHistogramContainer = new AspectHistogramContainer();
+			
+			aspectHC.domainName = itemData.domainName;
+			aspectHC.domainDisplayName = itemData.domainDisplayName;
+			
+			var aspectsXMLList : XMLList = itemData.aspect;
+			
+			var i:int;
+			if ( aspectsXMLList.length() > 0 )
+			{
+				aspectHC.aspects = [];
+				for ( i = 0; i < aspectsXMLList.length(); i++)
+				{
+					var aspect : Aspect = new Aspect();
+					aspect = parseAspect( aspectsXMLList[i] );
+					
+					aspectHC.aspects.push( aspect );
+				}
+			}
+			
+			return aspectHC;
+		}
+		
+		public static function parseAspect( itemXML : XML ) : Aspect
+		{
+
+			var aspect : Aspect = new Aspect();
+			
+			aspect.name = itemXML.@name;
+			
+			var valueHistograms:XMLList = itemXML.valueHistogram;
+			if ( valueHistograms.length() > 0 )
+			{
+				aspect.valueHistogram = [];
+				for ( var i : int = 0; i < valueHistograms.length(); i++)
+				{
+					var vhXML:XML = valueHistograms[i];
+					var vh : AspectValueHistogram = new AspectValueHistogram();
+					vh.valueName = vhXML.@valueName;
+					vh.count = vhXML.count;
+					aspect.valueHistogram.push( vh );
+				}
+			}
+			
+			return aspect;
+		}
+		
+	}
+}

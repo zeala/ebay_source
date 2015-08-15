@@ -1,0 +1,11 @@
+package ebayApp.services.dto.histograms
+{
+	import ebayApp.services.dto.Condition;
+
+	public class ConditionHistogram
+	{
+		public var condition : Condition;
+		public var count : int;
+	
+	}
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<s:Graphic 
+	version="2.0"
+	viewHeight="22" viewWidth="224"
+	xmlns:s="http://ns.adobe.com/fxg/2008"
+
+	>
+	<s:Group>
+	<s:Path winding="nonZero"
+		data="M224 22
+		C224 22 215.693 22 205.771 22 
+		144.651 22 81.8379 22 20.3008 22 
+		9.96094 22 0 22 0 22 0 22 0 21.5898 0 
+		21.1748 0 20.9921 0 20.7764 0 20.5293 0 
+		15.8213 0 0 0 0 0 0 9.96094 
+		0 20.3008 0 81.8379 0 
+		144.651 0 205.771 0 
+		215.693 0 224 0 224 0 224 0  
+		224 15.8213 224 20.5293 224 
+		20.7764 224 20.9921 224 21.1748 
+		224 21.5898 224 22 224 22 Z">
+			<s:fill>
+				<s:LinearGradient x="112" y="22" scaleX="22" rotation="270">
+					<s:GradientEntry color="#e9e9e9" ratio="0" alpha="1"/>
+					<s:GradientEntry color="#f2f2f2" ratio="0.14" alpha="1"/>
+					<s:GradientEntry color="#f4f4f4" ratio="0.38" alpha="1"/>
+					<s:GradientEntry color="#ffffff" ratio="0.86" alpha="1"/>
+					<s:GradientEntry color="#fafafa" ratio="0.94" alpha="1"/>
+					<s:GradientEntry color="#e9e9e9" ratio="1" alpha="1"/>
+					
+				</s:LinearGradient>
+			</s:fill>
+	</s:Path>
+	</s:Group>
+</s:Graphic>

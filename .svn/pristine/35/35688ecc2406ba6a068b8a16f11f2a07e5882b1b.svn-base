@@ -1,0 +1,13 @@
+
+package dto.codeTypes
+{
+
+	public final class PromotionItemPriceType
+	{
+		public static const AUCTION_PRICE:String = "AuctionPrice";
+		public static const BUY_IT_NOW_PRICE:String = "BuyItNowPrice";
+		public static const BEST_OFFER_ONLY_PRICE:String = "BestOfferOnlyPrice";
+		public static const CLASSIFIED_AD_PRICE:String = "ClassifiedAdPrice";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

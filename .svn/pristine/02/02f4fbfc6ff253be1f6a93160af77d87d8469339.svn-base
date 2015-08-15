@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:panels="com.ebayproject.components.panels.*"
+		
+		 >
+	<fx:Metadata>
+		[Event(name="requestSearch", type="mx.events.PropertyChangeEvent")]
+		[Event(name="requestCategories", type="flash.events.Event")]
+	</fx:Metadata>
+	
+	<fx:Declarations>
+		<panels:CategoriesBrowserWindow 
+			id="categoriesBrowserWindow" close="closeWindowHandler()" 
+			requestCategories="requestCategoriesHandler( event )"
+			productManager="{productManager}"
+			/>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			import mx.managers.PopUpManager;
+			
+			import controllers.IProductManager;
+			
+			import ebayApp.services.util.SitesUtil;
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			
+			private function search():void
+			{
+				var searchEvent : PropertyChangeEvent = new  PropertyChangeEvent("requestSearch");
+				searchEvent.newValue = keywordTxt.text;
+				dispatchEvent(searchEvent);
+			}
+			
+			private function txtKeyDownHandler(event:KeyboardEvent):void
+			{
+				trace(" event.code : " + event.keyCode );
+			}
+			
+			private function launchCategoryBrowser():void
+			{
+				PopUpManager.addPopUp(categoriesBrowserWindow, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp(categoriesBrowserWindow);
+				categoriesBrowserWindow.init();
+
+			}
+			
+			//-------------------------------------------------------------------------------------------
+			//
+			// Event handlers 
+ 			//
+			//-------------------------------------------------------------------------------------------
+		
+			private function requestCategoriesHandler(event : Event):void
+			{
+				dispatchEvent(event);
+			}
+			
+			private function closeWindowHandler():void
+			{
+				PopUpManager.removePopUp( categoriesBrowserWindow );
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout paddingTop="10"/>
+	</s:layout>
+	
+	<s:Form defaultButton="{searchBtn}">
+		<s:layout>
+			<s:HorizontalLayout verticalAlign="top" paddingTop="0" />
+		</s:layout>
+		<s:TextInput
+			id="keywordTxt"
+			width="200"
+			keyDown="txtKeyDownHandler(event)"
+			/>
+		
+		<s:Button
+			id="searchBtn"
+			label="Search"
+			click="search()"
+			enabled="{keywordTxt.text.length > 0}"
+			/>
+	</s:Form>
+	
+	
+	<s:DropDownList
+		id="engSitesDdl"
+		width="200" 
+		labelField="siteName"
+		dataProvider="{SitesUtil.getAllSites()}"/>
+	<s:Button
+		id="launchCategoryBrowserBtn"
+		label="Launch Categories Browser"
+		click="launchCategoryBrowser()"
+		
+		/>
+</s:Group>

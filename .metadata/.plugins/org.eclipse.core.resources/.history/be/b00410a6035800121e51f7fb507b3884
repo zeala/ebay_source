@@ -1,0 +1,46 @@
+package ebayApp.services
+{
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+
+	public class FindingServiceGET extends HTTPService
+	{
+		public static const SEARCH_URL:String = "http://svcs.ebay.com/services/search/FindingService/v1";
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		
+		public function FindingServiceGET()
+		{
+			initService();
+		}
+		
+		private function initService():void
+		{
+			this.method = "GET";
+			this.addEventListener(FaultEvent.FAULT, faultHandler);
+			this.addEventListener( ResultEvent.RESULT, resultHandler );
+		}
+
+		
+		/*
+		var url:String = SEARCH_URL + "/?";
+		url += "OPERATION-NAME=findItemsByKeywords"
+		url += "&SERVICE-VERSION=1.0.0";
+		url += "&SECURITY-APPNAME=" + apiAppName;
+		url += "&keywords=" + "mobile";
+		url += "&paginationInput.entriesPerPage=" + 10;
+		url += "&paginationInput.pageNumber=" + 3;
+		
+		var service:HTTPService = new HTTPService();
+		service.url = url;
+		service.method = "GET";
+		
+		service.resultFormat = "e4x";
+		service.addEventListener(FaultEvent.FAULT, faultHandler );
+		service.addEventListener(ResultEvent.RESULT , resultHandler );
+		service.send();
+*/
+	}
+}

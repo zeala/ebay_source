@@ -1,0 +1,48 @@
+package ebayApp.services.commands.finding
+{
+	import dto.PaginationInput;
+	import dto.ShoppingServiceRequestObject;
+	import dto.codeTypes.OutputSelector;
+	
+	import ebayApp.services.EbayServiceAbstract;
+	import ebayApp.services.FindingServiceGET;
+	import ebayApp.services.IEbayService;
+	import ebayApp.services.commands.EbayCommand;
+	
+	public class FindItemsByImageCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_ITEMS_BY_IMAGE;
+		public static const RESPONSE_EVENT_NAME : String = "findItemsByImageResponse";
+		
+		
+		public function FindItemsByImageCommand(service:IEbayService)
+		{
+			super(service);
+		}
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		override protected function getFullUrl(requestObj : ShoppingServiceRequestObject = null ):String
+		{
+			var keywords : String = "mobile";
+			
+			var paginationInput:PaginationInput = new PaginationInput();
+			paginationInput.entriesPerPage = 4;
+			paginationInput.pageNumber = 1;
+			
+			var url:String = FindingServiceGET.SEARCH_URL + "/?";
+			url += "OPERATION-NAME=" + OPERATION_NAME;
+			url += "&SERVICE-VERSION=1.0.0";
+			url += "&SECURITY-APPNAME=" + EbayServiceAbstract.apiAppName;
+			url += "&itemId=" + "150973618891";
+			url += "&outputSelector=" + OutputSelector.CONDITION_HISTOGRAM;
+			url += "&paginationInput.entriesPerPage=2";
+			
+			
+			return url;
+		}
+	}
+}

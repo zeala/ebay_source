@@ -1,0 +1,36 @@
+package ebayApp.services.commands
+{
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.IEbayService;
+
+	public class EbayCommand
+	{
+		
+		public var service:HTTPService;
+		
+		public function EbayCommand( service:HTTPService )
+		{
+			this.service = service;
+			this.service.addEventListener( ResultEvent.RESULT, serviceResultHandler );
+			this.service.addEventListener( FaultEvent.FAULT, serviceFaultHandler );
+		}
+		
+		protected function serviceResultHandler(event:ResultEvent):void
+		{
+			
+		}
+		
+		protected function serviceFaultHandler(event:FaultEvent):void
+		{
+			
+		}
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

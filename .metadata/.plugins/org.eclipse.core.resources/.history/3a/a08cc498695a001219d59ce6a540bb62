@@ -1,0 +1,13 @@
+
+package ebayApp.services.dto
+{
+
+	public final class GalleryType
+	{
+		public static const NONE:String = "None";
+		public static const FEATURED:String = "Featured";
+		public static const GALLERY:String = "Gallery";
+		public static const PLUS:String = "Plus";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

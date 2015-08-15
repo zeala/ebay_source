@@ -1,0 +1,42 @@
+package ebayApp.services.dto
+{
+	public class ProductSortCodeType
+	{
+		
+		public static const POPULARITY : String = "Popularity";
+		public static const CUSTOM_CODE : String = "CustomCode";
+		public static const ITEM_COUNT : String = "ItemCount";
+		public static const RATING : String = "Rating";
+		public static const REVIEW_COUNT : String = "ReviewCount";
+		public static const TITLE : String = "Title";
+		/*
+		Default: Popularity. 
+		
+		Applicable values: 
+		•   CustomCode
+		
+		(in) Reserved for values that are not available in the version of the schema you are using. If eBay adds a new value to this code type as of a newer version, we return CustomCode instead when you specify a lower request version.
+		
+		•   ItemCount
+		
+		(in) Sort by the number of active items listed with this product.
+		
+		•   Popularity
+		
+		(in) Sort by product popularity (as determined by eBay). (This is the default sort order.)
+		
+		•   Rating
+		
+		(in) Sort by average rating.
+		
+		•   ReviewCount
+		
+		(in) Sort by the number of reviews on eBay.
+		
+		•   Title
+		
+		(in) Sort by the product title.
+		
+*/
+	}
+}

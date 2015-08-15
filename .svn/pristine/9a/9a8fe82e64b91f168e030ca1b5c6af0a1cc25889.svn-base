@@ -1,0 +1,46 @@
+package ebayApp.services.commands.trading
+{
+	import dto.ShoppingServiceRequestObject;
+	
+	import ebayApp.services.EbayServiceAbstract;
+	import ebayApp.services.IEbayService;
+	import ebayApp.services.ShoppingServiceGET;
+	import ebayApp.services.commands.EbayCommand;
+	
+	public class GetSessionIDCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = TradingServiceOperationName.GET_SESSION_ID;
+		public static const RESPONSE_EVENT_NAME : String = "GetSessionIdResponse";
+		
+		
+		public function GetSessionIDCommand(service:IEbayService)
+		{
+			super(service);
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// OVERRIDES
+		//
+		//--------------------------------------------------------------------------
+		
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		
+		override protected function getFullUrl(requestObj : ShoppingServiceRequestObject = null ):String
+		{
+			var url : String;
+			
+			url = ShoppingServiceGET.SHOPPING_URL;
+			url += "callname=" + OPERATION_NAME;
+			url += "&version=" + ShoppingServiceGET.version;
+			url += "&appid=" + EbayServiceAbstract.apiAppName;
+			url += "&RuName=" + "elena8229";
+			return url;
+		}
+	}
+}

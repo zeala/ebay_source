@@ -1,0 +1,16 @@
+package ebayApp.services.commands
+{
+	public class OperationName
+	{
+		
+		private var _operationName:String;
+		public function get operationName():String
+		{
+			return _operationName;
+		}
+		public function set operationName(val:String):void
+		{
+			_operationName = val;
+		}
+	}
+}

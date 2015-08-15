@@ -1,0 +1,9 @@
+package ebayApp.services.dto
+{
+	public class ProductIdType
+	{
+		public function ProductIdType()
+		{
+		}
+	}
+}

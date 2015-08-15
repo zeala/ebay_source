@@ -1,0 +1,47 @@
+package ebayApp.services.dto
+{
+	import flash.utils.Dictionary;
+
+	public class ConditionNamesAndIds
+	{
+
+		public static const CONDITIONS_NAMES_MAP : Dictionary = createMap();
+		public static const CONDITIONS_DESCRIPTION_MAP : Dictionary = createDescriptionMap();
+		
+		private static function createMap():Dictionary
+		{
+			var map:Dictionary = new Dictionary();
+			
+			map[ 1000 ] = "New";
+			map[ 1500 ] = "New other (see details)";
+			map[ 1750 ] = "New with defects";
+			map[ 2000 ] = "Manufacturer refurbished";
+			map[ 2500 ] = "Seller refurbished";
+			map[ 3000 ] = "Used";
+			map[ 4000 ] = "Very good";
+			map[ 5000 ] = "Good";
+			map[ 6000 ] = "Acceptable";
+			map[ 7000 ] = "For parts or not working";
+			
+			return map;
+		}
+		
+		private static function createDescriptionMap():Dictionary
+		{
+			var map:Dictionary = new Dictionary();
+			
+			map[ 1000 ] = "A brand-new, unused, unopened, unworn, undamaged item. Most categories support this condition (as long as condition is an applicable concept).";
+			map[ 1500 ] = "A brand-new new, unused item with no signs of wear. Packaging may be missing or opened. The item may be a factory second or have defects.";
+			map[ 1750 ] = "A brand-new, unused, and unworn item. The item may have cosmetic defects, and/or may contain mismarked tags (e.g., incorrect size tags from the manufacturer). Packaging may be missing or opened. The item may be a new factory second or irregular.";
+			map[ 2000 ] = "Manufacturer refurbished";
+			map[ 2500 ] = "Seller refurbished";
+			map[ 3000 ] = "Used";
+			map[ 4000 ] = "Very good";
+			map[ 5000 ] = "Good";
+			map[ 6000 ] = "Acceptable";
+			map[ 7000 ] = "For parts or not working";
+			
+			return map;
+		}
+	}
+}

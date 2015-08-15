@@ -1,0 +1,9 @@
+package ebayApp.services.dto
+{
+	public class PaginationOutput
+	{
+		public function PaginationOutput()
+		{
+		}
+	}
+}

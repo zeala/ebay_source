@@ -1,0 +1,39 @@
+
+
+package ebayApp.services.results
+{
+	import mx.collections.ArrayCollection;
+	
+	import ebayApp.services.dto.PaginationOutput;
+	import ebayApp.services.dto.SpellingSuggestion;
+	import ebayApp.services.dto.histograms.AspectHistogramContainer;
+
+
+	public class SearchResults extends EBayResult
+	{
+		/*public var hasMoreItems:Boolean;
+		public var itemsPerPage:int;
+		public var pageNumber:int;
+		public var paginationResult:PaginationResult;*/
+		
+		public var hasMoreResults : Boolean;
+		public var paginationOutput:PaginationOutput;
+		
+		[Bindable]
+		[ArrayElementType("SearchResultItem")]
+		public var searchResultItems:ArrayCollection;
+		
+		public var spellingSuggestion:SpellingSuggestion;
+
+		public var aspectHistogramContainer : AspectHistogramContainer;
+		
+		public var categoryHistogramContainer : * ;//CategoryHistogramContainer;
+		
+		public var conditionHistorgramContainer : * ;//ConditionHistogramContainer
+		
+		public function SearchResults()
+		{
+			this.searchResultItems = new ArrayCollection();
+		}  // SearchResults
+	}  // class declaration
+}  // package

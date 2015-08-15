@@ -1,0 +1,62 @@
+package ebayApp.services.commands.finding
+{
+	import flash.events.Event;
+	
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.FindingServiceGET;
+	import ebayApp.services.commands.EbayCommand;
+	import ebayApp.services.dto.PaginationInput;
+	import ebayApp.services.util.FindingServiceOperationName;
+
+	public class FindCompletedItems extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_COMPLETED_ITEMS;
+		
+		public function FindCompletedItems( service : HTTPService )
+		{
+			super(service);
+			this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, commandCallHandler );
+		}
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		private function commandCallHandler ( event : Event ) : void
+		{
+			FindingServiceGET( this.service ).callService( getFullUrl());
+		}
+		
+		private function getFullUrl():String
+		{
+			var url:String;
+			
+			this.operationName = val;
+			this.keywords = words;
+			
+			var paginationInput = new PaginationInput();
+			paginationInput.entriesPerPage = 4;
+			paginationInput.pageNumber = 1;
+			
+			var url:String = SEARCH_URL + "/?";
+			url += "OPERATION-NAME=" + operationName;
+			url += "&SERVICE-VERSION=1.0.0";
+			url += "&SECURITY-APPNAME=" + apiAppName;
+			
+			if ( words)
+			{
+				url += "&keywords=" + words.join(",");
+			}
+			if ( paginationInput )
+			{
+				url += "&paginationInput.entriesPerPage=" + paginationInput.entriesPerPage;
+				url += "&paginationInput.pageNumber=" + paginationInput.pageNumber;
+			}
+			
+			
+			return url;
+		}
+	}
+}

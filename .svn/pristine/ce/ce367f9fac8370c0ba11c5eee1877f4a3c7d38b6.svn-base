@@ -1,0 +1,23 @@
+package ebayApp.services
+{
+	import mx.rpc.http.HTTPService;
+
+	public class FindingServiceGET extends HTTPService
+	{
+		public static const SEARCH_URL:String = "http://svcs.ebay.com/services/search/FindingService/v1";
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		
+		public function FindingServiceGET()
+		{
+			initService();
+		}
+		
+		private function initService():void
+		{
+			this.method = "GET";
+			
+		}
+	}
+}

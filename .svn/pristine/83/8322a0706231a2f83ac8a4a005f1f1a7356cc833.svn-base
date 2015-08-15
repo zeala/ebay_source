@@ -1,0 +1,12 @@
+package ebayApp.services.util.codeTypes
+{
+
+	public final class SellerGuaranteeLevel
+	{
+		public static const NOT_ELIGIBLE:String = "NotEligible";
+		public static const REGULAR:String = "Regular";
+		public static const PREMIUM:String = "Premium";
+		public static const ULTRA:String = "Ultra";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

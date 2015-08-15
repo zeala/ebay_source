@@ -1,0 +1,47 @@
+package ebayApp.services.commands
+{
+	import flash.events.Event;
+	import flash.events.EventDispatcher;
+	
+	import ebayApp.services.IEbayService;
+	import ebayApp.services.dto.ShoppingServiceRequestObject;
+	import ebayApp.services.events.EbayServiceResultEvent;
+
+	public class EbayCommand extends EventDispatcher
+	{
+		
+		public var service:IEbayService;
+		
+		public function EbayCommand( service:IEbayService )
+		{
+			this.service = service;
+			//this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, callServiceHandler );
+		}
+		
+		public function execute( requestObj : ShoppingServiceRequestObject ):void
+		{
+			commandCallHandler( requestObj );
+		}
+		
+		protected function serviceResultHandler(event:EbayServiceResultEvent):void
+		{
+			dispatchEvent( event );
+		}
+		
+		protected function commandCallHandler ( requestObj : ShoppingServiceRequestObject, event : Event = null ) : void
+		{
+			service.callService( getFullUrl( requestObj ) );
+		}
+		
+		
+		protected function getFullUrl( requestObj : ShoppingServiceRequestObject = null):String
+		{
+			throw new Error("abstract method ");
+		}
+		
+		public function getOperationName():String
+		{
+			throw new Error("abstract method ");
+		}
+	}
+}

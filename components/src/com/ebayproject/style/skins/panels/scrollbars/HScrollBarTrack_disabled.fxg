@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Graphic version="2.0"
+		   xmlns:s="http://ns.adobe.com/fxg/2008" 
+		   viewHeight="13" viewWidth="159"
+		   scaleGridTop="4" scaleGridBottom="8"
+		   scaleGridLeft="20" scaleGridRight="130">
+	<s:Path winding="evenOdd"
+		data="M 6 12 C 4 12 3 11 2 10 
+		C 1 9 1 8 1 7 
+		C 1 6 1 5 1 4 
+		C 2 2 4 1 6 1 
+		C 6 1 
+		33 1 71 1 
+		C 75 1 81 1 85 1 
+		C 124 1 152 1 152 1 
+		C 154 1 156 2 157 4 
+		C 157 5 158 6 158 7 
+		C 158 8 157 9 156 10 
+		C 155 11 154 12 152 12 
+		C 152 12 124 12 85 12 
+		C 81 12 75 12 71 12 
+		C 33 12 6 12 6 12 Z " 
+		blendMode="normal" alpha="1"	
+		>
+		<s:fill>
+			<s:SolidColor color="#FFFFFF"/>
+		</s:fill>
+		
+	</s:Path>
+	<s:Path winding="nonZero"
+			data="M 152 1 154 1 156 2 157 4 
+				C 157 5 157 6 157 6 
+				C 157 8 156 9 155 10 
+				C 154 11 153 11 152 11 
+				C 152 11 124 11 85 11 
+				C 81 11 75 11 71 11 
+				C 33 11 6 11 6 11 
+				C 5 11 4 11 3 10 
+				C 2 9 1 8 1 6 
+				C 1 6 1 5 1 4 
+				C 2 2 4 1 6 1 
+				C 6 1 33 1 71 1 
+				C 75 1 81 1 85 1 
+				C 124 1 152 1 152 1 
+				C 152 1 152 1 152 1 Z 
+				M 152 0 C 152 0 124 0 85 0 
+				C 81 0 75 0 71 0 
+				C 33 0 6 0 6 0 
+				C 3 0 1 2 0 4 
+				C 0 5 0 6 0 6 
+				C 0 8 1 9 2 10 
+				C 3 11 4 12 6 12 
+				C 6 12 33 12 71 12 
+				C 75 12 81 12 85 12 
+				C 124 12 152 12 152 12 
+				C 154 12 155 11 156 10 
+				C 157 9 158 8 158 6 
+				C 158 6 158 5 158 4 
+				C 157 2 155 0 152 0 
+				C 152 0 152 0 152 0 Z "
+			blendMode="normal" alpha="1"
+			>
+			
+			<s:fill>
+				<s:SolidColor color="#d7d8d9"/>
+			</s:fill>
+		
+	</s:Path>
+	
+	<s:Path winding="nonZero"
+			data="M 6 10 C 4 10 3 9 3 7 
+				C 3 6 3 5 4 4 
+				C 4 4 5 3 6 3 
+				C 6 3 33 3 71 3 
+				C 75 3 81 3 85 3 
+				C 124 3 152 3 152 3 
+				C 153 3 154 4 154 4 
+				C 155 5 156 6 156 7 
+				C 156 9 154 10 152 10 
+				C 152 10 124 10 85 10 
+				C 81 10 75 10 71 10 
+				C 33 10 6 10 6 10 Z "
+			blendMode="normal" alpha="1"
+			>
+		
+		<s:fill>
+			<s:SolidColor color="#e5e5e5"/>
+		</s:fill>
+		
+	</s:Path>
+	
+	<s:Path winding="nonZero"
+		data="M 152 3 
+			C 153 3 154 4 154 4 
+			C 155 5 155 5 155 6 
+			C 155 8 154 9 152 9 
+			C 152 9 124 9 85 9 
+			C 81 9 75 9 71 9 
+			C 33 9 6 9 6 9 
+			C 4 9 3 8 3 6 
+			C 3 5 3 5 4 4 
+			C 4 4 5 3 6 3 
+			C 6 3 33 3 71 3 
+			C 75 3 81 3 85 3 
+			C 124 3 152 3 152 3 
+			C 152 3 152 3 152 3 Z 
+			M 152 2 C 152 2 124 2 85 2 
+			C 81 2 75 2 71 2 
+			C 33 2 6 2 6 2 
+			C 5 2 3 3 3 4 
+			C 2 5 2 6 2 6 
+			C 2 8 4 10 6 10 
+			C 6 10 33 10 71 10 
+			C 75 10 81 10 85 10 
+			C 124 10 152 10 152 10 
+			C 154 10 156 8 156 6 
+			C 156 6 156 5 155 4 
+			C 155 3 153 2 152 2 
+			C 152 2 152 2 152 2 Z "
+		blendMode="normal" alpha="0.5"
+			>
+		<s:fill>
+			<s:SolidColor color="#cbcbcb"/>
+		</s:fill>
+	</s:Path>
+</s:Graphic>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*" 
+		 xmlns:panels="com.ebayproject.components.panels.*" 
+		 xmlns:searchBuilder="com.ebayproject.components.searchBuilder.*" 
+		 xmlns:searchResultsView="com.ebayproject.components.searchResultsView.*"
+		 keyDown="itemDetailsPopup.keyDownEventHandler(event)" 
+		 xmlns:toolbars1="com.ebayproject.components.toolbars.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.controllers.ISearchBuilderController;
+			import com.ebayproject.events.CategoryPickerEvent;
+			import com.ebayproject.model.IEbayMainViewPM;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.PropertyChangeEvent;
+			import mx.managers.PopUpManager;
+			
+			import dto.SearchResultItem;
+			
+			[Bindable]
+			public var topBarHeight : int = 40;
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			[Bindable]
+			public var searchBuilderController : ISearchBuilderController;
+
+			[Bindable]
+			public var ebayMainViewPM : IEbayMainViewPM;
+			
+			
+			
+			private function launchCategoryBrowser(event:CategoryPickerEvent, modal : Boolean = true):void
+			{
+				categoriesBrowserWindow.selectCategoryHandler = event.eventHandler;
+				PopUpManager.addPopUp(categoriesBrowserWindow, FlexGlobals.topLevelApplication as DisplayObject, modal );
+				PopUpManager.centerPopUp(categoriesBrowserWindow);
+				categoriesBrowserWindow.init();
+			}
+			
+			private function openSearchBuilder( event : Event ) : void
+			{
+				PopUpManager.addPopUp(searchBuilderWindow, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp(searchBuilderWindow);
+			}
+			
+			private function openItemDetailsPopup(event:PropertyChangeEvent):void
+			{
+				PopUpManager.addPopUp( itemDetailsPopup, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp( itemDetailsPopup );
+				itemDetailsPopup.searchItem = event.newValue as SearchResultItem;
+				
+			}
+			
+			private function getPreviousItem():void
+			{
+				var currentItem:SearchResultItem = itemDetailsPopup.searchItem;
+				var newItem : SearchResultItem = productManager.getPreviousItem ( currentItem);
+				itemDetailsPopup.searchItem = newItem;
+			}
+			
+			private function getNextItem():void
+			{
+				var currentItem:SearchResultItem = itemDetailsPopup.searchItem;
+				var newItem : SearchResultItem = productManager.getNextItem ( currentItem );
+				itemDetailsPopup.searchItem = newItem;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<panels:CategoriesBrowserWindow 
+			id="categoriesBrowserWindow" close="PopUpManager.removePopUp(categoriesBrowserWindow)" 
+			requestChildCategories="ebayMainViewPM.requestCategoriesHandler( event )"
+			requestResultsForCategory="ebayMainViewPM.requestResultsForCategoryHandler(event)"
+			productManager="{productManager}"
+			/>
+		
+		<searchBuilder:SearchBuilder
+			id="searchBuilderWindow" 
+			close="PopUpManager.removePopUp(searchBuilderWindow)"
+			openCategoryPicker="launchCategoryBrowser(event, false)"
+			searchBuilderController="{searchBuilderController}"
+			sendSearchRequest=
+				"PopUpManager.removePopUp(searchBuilderWindow);
+				ebayMainViewPM.sendSearchRequest(event)"
+			productManager="{productManager}"
+			/>
+		
+		<panels:ItemDetailsPopup
+			id="itemDetailsPopup"
+			imageReady="PopUpManager.centerPopUp(itemDetailsPopup)"
+			closeWindow="PopUpManager.removePopUp(itemDetailsPopup)"
+			getPreviousItem="getPreviousItem()"
+			getNextItem="getNextItem()"
+			/>
+	</fx:Declarations>
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	
+	<s:Group width="100%">
+		
+		<toolbars1:ToolbarBackground id="cMenu" width="100%" height="{topBarHeight}"/>
+		<panels:SearchControls
+			id="searchControls"
+			productManager="{productManager}"
+			horizontalCenter="0"
+			requestSearch="ebayMainViewPM.requestSearchHandler(event)"
+			requestChildCategories="ebayMainViewPM.requestCategoriesHandler(event)"
+			requestResultsForCategory="ebayMainViewPM.requestResultsForCategoryHandler(event)"
+			changeDomain="ebayMainViewPM.changeDomainHandler(event)"
+			openCategoryPicker="launchCategoryBrowser(event)"
+			openSearchBuilder="openSearchBuilder(event)"
+			
+			testMerchandisingService="ebayMainViewPM.testMerchandisingService()"
+			testFindPopularItems="ebayMainViewPM.testFindPopularItems()"
+			/>
+	</s:Group>
+	
+	<toolbars1:SearchResultsLayoutOptionsToolbar
+		width="100%"
+		changeLayout="resultsList.currentState = event.newValue.toString()"
+		selectedState="{resultsList.currentState}"
+		/>
+	
+	
+	<toolbars1:Toolbar width="100%" height="20"
+					showBottomBorder="false"
+					>
+		<toolbars1:ResultsToolbarContainer 
+			width="{width}"
+			searchResults="{productManager.itemsSearchResult}"
+			getResultsForCategory="ebayMainViewPM.narrowResultsForCategory( event );"
+			resultsToDisplay="{productManager.itemsSearchResult.searchResultItem.length}"
+			/>
+	</toolbars1:Toolbar>
+	
+	<searchResultsView:SearchResultsViewer
+		id="resultsList"
+		productManager="{productManager}"
+		left="0" right="0" width="100%"  height="{height - 200}"
+		fetchMoreItems="ebayMainViewPM.fetchMoreItemsHandler(event)"
+		viewItemOnEbay="ebayMainViewPM.viewItemOnEbay(event)"
+		addToFavorites="ebayMainViewPM.addToFavorites(event)"
+		viewItemDetails="openItemDetailsPopup(event)"
+		/>
+	
+	<s:Spacer height="50"/>
+</s:Group>

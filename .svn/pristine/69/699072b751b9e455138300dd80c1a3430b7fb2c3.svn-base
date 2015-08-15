@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"
+				clipAndEnableScrolling="true"
+				currentState="normal"
+				mouseMove="mouseMoveHandler()"
+				mouseOver="mouseOverHandler()"
+				mouseOut="mouseOutHandler()"
+				>
+	<fx:Declarations>
+		<s:Fade id="fade" duration="500" target="{getEffectTarget()}"/>
+	</fx:Declarations>
+	<fx:Metadata>
+		[Event(name="viewItemOnEbay", type="mx.events.PropertyChangeEvent")]
+		[Event(name="addToFavorites", type="mx.events.PropertyChangeEvent")]
+		[Event(name="viewItemDetails", type="mx.events.PropertyChangeEvent ")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.components.panels.ZoomImagePopup;
+			
+			import mx.core.FlexGlobals;
+			import mx.core.IFlexDisplayObject;
+			import mx.core.UIComponent;
+			import mx.events.PropertyChangeEvent;
+			import mx.events.ResizeEvent;
+			import mx.managers.PopUpManager;
+			
+			import spark.components.Application;
+			import spark.components.Group;
+			import spark.components.Image;
+			
+			import dto.SearchResultItem;
+			
+			//-------------------------------------------------------------------------------------
+			//
+			// PROPERTIES
+			//
+			//-------------------------------------------------------------------------------------
+			
+			[Bindable]
+			public var searchResultItem : SearchResultItem;
+			
+			[Bindable]
+			public var imgWidth : Number;
+			
+			[Bindable]
+			public var imgHeight : Number;
+			
+			
+			private var popup:ZoomImagePopup;
+			
+			override public function set data( val:Object):void
+			{
+				super.data = val;
+				this.searchResultItem = val as SearchResultItem;
+			}
+			
+			//-------------------------------------------------------------------------------------
+			//
+			// PROTECTED METHODS
+			//
+			//-------------------------------------------------------------------------------------
+			
+			protected function zoomIn():void
+			{
+				popup = new ZoomImagePopup();
+				popup.searchItem = this.searchResultItem;
+				PopUpManager.addPopUp( popup as IFlexDisplayObject, this );
+				positionPopup();
+				popup.addEventListener(ResizeEvent.RESIZE, popupResizeHandler, false, 0, true );
+			}
+			
+			protected function popupResizeHandler(event:ResizeEvent):void
+			{
+				positionPopup();
+			}
+			
+			
+			protected function zoomOut():void
+			{
+				if (popup)
+				{
+					PopUpManager.removePopUp( popup as IFlexDisplayObject );
+				}
+			}
+			
+			
+			[Bindable("noEvent")]
+			public function getEffectTarget():Image
+			{
+				return null;
+			}
+			
+			public function getOverlayTarget():UIComponent
+			{
+				return null;
+			}
+			
+
+			protected function viewItem():void
+			{
+				var event : PropertyChangeEvent = new PropertyChangeEvent("viewItemOnEbay", true);
+				event.newValue = searchResultItem;
+				dispatchEvent( event );
+			}
+			
+			protected function addToFavorites():void
+			{
+				var event : PropertyChangeEvent = new PropertyChangeEvent("addToFavorites", true );
+				event.newValue = searchResultItem;
+				dispatchEvent( event );
+			}
+			
+			protected function viewItemDetails():void
+			{
+				var event : PropertyChangeEvent = new PropertyChangeEvent("viewItemDetails", true );
+				event.newValue = searchResultItem;
+				dispatchEvent( event );
+			}
+			
+			//-------------------------------------------------------------------------------------
+			//
+			// PRIVATE METHODS
+			//
+			//-------------------------------------------------------------------------------------
+			private function positionPopup():void
+			{
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var point : Point = new Point( 0, 0);
+				var globalPoint : Point = this.localToGlobal( point );
+				
+				var xPos : Number = globalPoint.x + this.width ;
+				var yPos : Number = globalPoint.y - ( popup.height - this.height)/2;
+				
+				if ( xPos < 10 ) xPos = 10;
+				if ( yPos < 10 ) yPos = 10;
+				
+				var stageWidth:Number = this.stage.width;
+				var stageHeight : Number = this.stage.height;
+				
+				if ( ( xPos + popup.width ) > stageWidth )
+				{
+					xPos = globalPoint.x - popup.width;
+				}
+				if ( ( yPos + popup.height ) > stageHeight )
+				{
+					var delta : Number = stageHeight - (yPos + popup.height);
+					//yPos -= delta;
+					yPos = stageHeight - popup.height;
+				}
+				
+				popup.x = xPos;
+				popup.y = yPos;
+			}
+			
+			//-------------------------------------------------------------------------------------
+			//
+			// EVENT HANDLES
+			//
+			//-------------------------------------------------------------------------------------
+			
+			protected function mouseOverHandler():void
+			{
+				this.currentState = "hover";
+			}
+			
+			protected function mouseOutHandler():void
+			{
+				if ( this.mouseX > this.width || this.mouseY > this.height )
+				{
+					this.currentState = "normal";	
+					trace("\n this.currentstate is switched to normal ");
+				}
+				
+			}
+			
+			protected function mouseMoveHandler():void
+			{
+				if ( this.currentState != "hover")
+				{
+					this.currentState = "hover";
+				}
+			}
+			
+			protected function imageCreationCompleteHandler( img : Image, imgContainer : Group):void
+			{
+				
+				var ratio : Number;
+				imgWidth = img.sourceWidth;
+				imgHeight = img.sourceHeight;
+				
+				if ( imgContainer.width > imgWidth)
+				{
+					ratio = imgContainer.width/imgWidth;
+					imgWidth *= ratio;
+					imgHeight *= ratio;
+				}
+				if ( imgContainer.height > imgHeight)
+				{
+					ratio = imgContainer.height / imgHeight;
+					imgWidth *= ratio;
+					imgHeight *= ratio;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<s:transitions>
+		<s:Transition fromState="normal" toState="hover" autoReverse="true">
+			<s:Move duration="500" target="{getOverlayTarget()}" yFrom="{-getOverlayTarget().height}" yTo="0"/>
+		</s:Transition>
+	</s:transitions>
+	
+	<s:states>
+		<s:State name="normal"/>
+		<s:State name="hover"/>
+		<s:State name="down"/>
+	</s:states>
+</s:ItemRenderer>

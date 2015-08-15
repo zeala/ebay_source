@@ -1,0 +1,9 @@
+package ebayApp.services
+{
+	public class FindingServiceGET extends 
+	{
+		public function FindingServiceGET()
+		{
+		}
+	}
+}

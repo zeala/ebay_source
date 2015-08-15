@@ -1,0 +1,111 @@
+package ebayApp.services.dto
+{
+	import com.ebayproject.dto.IShoppingServiceRequestObject;
+	
+	import flash.utils.Dictionary;
+	
+	import ebayApp.services.util.codeTypes.ProductSortCodeType;
+	import ebayApp.services.util.codeTypes.SortOrderCodeType;
+
+	public class ShoppingServiceRequestObject implements IShoppingServiceRequestObject
+	{
+
+		public var siteId : String = "0";// US by default
+		public var userId : String;
+		public var itemId : String;
+		public var productId : String;
+		public var categoryId : String = "-1"; // a comma separated array
+		public var categoryIdExclude : String;  // a comma separated array
+		public var maxEntries : int;
+		public var queryKeywords:String;  // a comma separated array. QueryKeywords can be used in combination with CategoryID and IncludeChildCategories. 
+		public var messageId:String;
+		public var includeChildCategories : Boolean;
+		public var maxKeywords : int = 20; // min: 1, max: 100, default: 20;
+		public var maxResultperPage : int = 20; //
+		
+		// page number
+		private var _pageNumber : int = 1;
+		public function get pageNumber (): int
+		{
+			return _pageNumber;
+		}
+		public function set pageNumber(val:int):void
+		{
+			_pageNumber = val;
+		}
+		
+		public var availableItemsOnly : Boolean = false;
+		public var domainName:String;
+		public var hideDuplicateItems : Boolean;
+		public var includeSelector : String;
+		public var productSort : String = ProductSortCodeType.POPULARITY;
+		public var sortOrder : String = SortOrderCodeType.DESCENDING;
+		
+		//shipping
+		public var destinationCountryCode : String;
+		public var destinationPostalCode : String;
+		public var includeDetails : Boolean = false;
+		public var quantitySold : int = 1;
+		
+		
+		public var requestObjectMap : Dictionary = createMap();
+		
+		private function createMap():Dictionary
+		{
+			var map : Dictionary = new Dictionary();
+			
+			map["userId"] = "UserId";
+			map["itemId"] = "ItemId";
+			map["productId"] = "ProductId";
+			map["categoryId"] = "CategoryId";
+			map["categoryIdExclude"] = "CategoryIdExclude";
+			map["maxEntries"] = "MaxEntries";
+			map["queryKeywords"] = "QueryKeywords";
+			map["messageId"] = "MessageId";
+			map["includeChildCategories"] = "IncludeChildCategories";
+			map["maxKeywords"] = "MaxKeywords";
+			map["maxResultperPage"] = "MaxResultPerPage";
+			map["pageNumber"] = "PageNumber";
+			map["availableItemsOnly"] = "AvailableItemsOnly";
+			map["domainName"] = "DomainName";
+			map["hideDuplicateItems"] = "HideDuplicateItems";
+			map["includeSelector"] = "IncludeSelector";
+			map["productSort"] = "ProductSort";
+			map["sortOrder"] = "SortOrder";
+			map["destinationCountryCode"] = "DestinationCountryCode";
+			map["destinationPostalCode"] = "DestinationPostalCode";
+			map["includeDetails"] = "IncludeDetails";
+			map["quantitySold"] = "QuantitySold";
+	
+			return map;
+		}
+		
+		public function getParamsForQueryString():String
+		{
+			var str:String = "";
+			
+			for ( var key : * in requestObjectMap )
+			{
+				if ( this[key] is Boolean )
+				{
+					trace ( "\n is Boolean : " + key + " this[key] = "  + this[key]);
+				}
+				if ( this[key] is String )
+				{
+					trace ( "\n is String : " + key + " this[key] = " + this[key ] );
+				}
+				if ( this[ key ] is Number && !( this[key] is int ) )
+				{
+					trace("\n Number : " + key + " this[key] = " + this[key]);
+				}
+				if ( this[key ] is int )
+				{
+					trace("\n int : " + key + " this [key] = " + this [key ] );
+				}
+			}
+			
+			return str;
+		}
+		
+	}
+}

@@ -1,0 +1,10 @@
+package com.ebayproject.util
+{
+	public class LayoutKind
+	{
+		public static const LARGE_THUMBNAIL_VIEW : String = "largeThumbnailView";
+		public static const SMALL_THUMBNAIL_VIEW : String = "smallThumbnailView";
+		public static const LIST_VIEW : String = "listView";
+		public static const BOOK_VIEW : String = "bookView";
+	}
+}

@@ -1,0 +1,25 @@
+package ebayApp.services.dto
+{
+	public class Product
+	{
+		public var detailsURL:String;
+		
+		public var displayStockPhotos:Boolean;
+		
+		public var domainName : String;
+		
+		public var itemCount : int;
+		
+		public var itemSpecifics:ItemSpecific;
+		
+		public var productID : String;
+		
+		public var productState : String; //ProductStateCodeType  
+		
+		public var reviewCount:int;
+		
+		public var stockPhotoURL:String;
+		
+		public var title : String;
+	}
+}

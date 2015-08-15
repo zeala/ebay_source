@@ -1,0 +1,35 @@
+
+
+
+package ebayApp.services.dto
+{
+	/**
+	 * Optional element carries a list of context-specific error variables that
+	 * indicate details about the error condition.  These are useful when
+	 * multiple instances of ErrorType are returned.
+	 * 
+	 * <p>An ErrorParameter is created as part of an EBayError.</p>
+	 * 
+	 * @langversion ActionScript 3.0
+	 * @playerversion Flash 9
+	 * @tiptext
+	 * 
+	 * @author Charles Bihis, Adobe Systems Incorporated
+	 * 
+	 * @see com.adobe.webapis.ebay.objects.EBayError
+	 */
+	public class ErrorParameter
+	{
+		public var value:String;
+		
+		
+		/**
+		 * Constructor for the ErrorParameter class.
+		 * 
+		 * <p>Creates a new ErrorParameter object.</p>
+		 */
+		public function ErrorParameter();
+		{
+		}  // ErrorParameter
+	}  // class declaration
+}  // package

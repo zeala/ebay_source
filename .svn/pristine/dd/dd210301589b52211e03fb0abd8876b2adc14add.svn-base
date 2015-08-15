@@ -1,0 +1,60 @@
+package ebayApp.services.commands.merchandising
+{
+	import dto.EbayServiceRequestObject;
+	
+	import ebayApp.services.EbayServiceAbstract;
+	import ebayApp.services.MerchandisingServiceGet;
+	import ebayApp.services.commands.EbayCommand;
+	
+	public class GetMostWatchedItemsCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = MerchandisingServiceOperationName.GET_MOST_WATCHED_ITEMS;
+		public static const RESPONSE_EVENT_NAME : String = "getMostWatchedItemsResponse";
+		
+		
+		public function GetMostWatchedItemsCommand()
+		{
+			this.service = MerchandisingServiceGet.getInstance();
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// OVERRIDES
+		//
+		//--------------------------------------------------------------------------
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		/*
+		/*
+		http://svcs.ebay.com/MerchandisingService?
+		OPERATION-NAME=getMostWatchedItems&
+		SERVICE-NAME=MerchandisingService&
+		SERVICE-VERSION=1.1.0&
+		CONSUMER-ID=YourAppID&
+		RESPONSE-DATA-FORMAT=XML&
+		REST-PAYLOAD&
+		maxResults=3
+		*/
+		
+		override protected function getFullUrl(requestObj : EbayServiceRequestObject = null ):String
+		{
+			var url : String;
+			
+			url = MerchandisingServiceGet.ROOT_URL;
+			url += "OPERATION-NAME=" + OPERATION_NAME;
+			url += "&SERVICE-NAME=" + "MerchandisingService";
+			url += "SERVICE-VERSION=" + "1.1.0";
+			url += "&CONSUMER-ID=" + EbayServiceAbstract.apiAppName;
+			url += "&RESPONSE-DATA-FORMAT=" + "XML";
+			url += "&REST-PAYLOAD";
+			url += "&maxResults=" + 10;
+			
+			return url;
+		}
+		
+	}
+}

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 clipAndEnableScrolling="true"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.utils.getTimer;
+			
+			import mx.collections.ArrayCollection;
+			import mx.events.ResizeEvent;
+			
+			//--------------------------
+			// menuItems
+			//--------------------------
+			private var _menuItems : ArrayCollection
+			[Bindable("menuItemsChange")]
+			public function get menuItems() : ArrayCollection
+			{
+				return _menuItems;
+			}
+			public function set menuItem (val:ArrayCollection ):void
+			{
+				_menuItems = val;
+				dispatchEvent( new Event("menuItemsChange"));
+			}
+			
+			//--------------------------
+			// collapsedMenuItems
+			//--------------------------
+			private var _collapsedMenuItems : ArrayCollection;
+			[Bindable("collapsedMenuItemsChange")]
+			public function get collapsedMenuItems():ArrayCollection
+			{
+				return _collapsedMenuItems;
+			}
+			public function set collapsedMenuItems(val:ArrayCollection):void
+			{
+				_collapsedMenuItems = val;
+				dispatchEvent( new Event("collapsedMenuItemsChange"));
+			}
+			//--------------------------
+			// totalWidth
+			//--------------------------
+			private var totalWidth : Number = 0;	
+			
+			//--------------------------
+			// collapsedMenuItems
+			//--------------------------
+			[Bindable]
+			public var collapsedItemsDdlWidth : int = 60;
+			
+			//--------------------------
+			// gap
+			//--------------------------
+			[Bindable]
+			private var gap : int = 4;
+			
+			private var lastResizeRequestTimer : Number = 0;
+			private var resizeAllowed : Boolean = true;
+			private var numDisplayedItems : int = 0;
+			private var storedNuDisplayedItems : int = 0;
+			private var lastOffset : int = 0;
+			private var widthDiff : int = 0;
+			
+			//---------------------------------------------------------------------------------
+			//
+			// METHODS
+			//
+			//---------------------------------------------------------------------------------
+			
+			public function toolbarResizeHandler( event : ResizeEvent ) : void
+			{
+				widthDiff += this.width -( event.oldWidth - 10 );
+				if (( getTimer() - lastResizeRequestTimer ) > 700 )
+				{
+					populateMenu();
+					lastResizeRequestTimer = getTimer();
+				}
+			}
+			
+			private function populateMenu():void
+			{
+				this.menuItemContainer.removeAllElements();
+				widthDiff = 0;
+				
+				for ( var i:int = 0; i < _menuItems.length; i++)
+				{
+					var item : ToolbarMenuItem = new ToolbarMenuItem();
+					item.histogram = _menuItems[i];
+					if ( i >= numDisplayedItems )
+					{
+						item.visible = false;
+					}
+					menuItemContainer.addElementAt( item , i );
+				}
+			}
+			
+			private function positionElements():void
+			{
+				totalWidth = 0;
+				collapsedMenuItems.removeAll();
+				var i :int;
+				var indexToRemoveFrom : int = -1;
+				
+				for ( i = 0; i < _menuItems.length; i++)
+				{
+					var menuElement : ToolbarMenuItem = 
+						menuItemContainer.getElementAt(i) as ToolbarMenuItem;
+					
+					if ( menuElement )
+					{
+						totalWidth += menuElement.width + this.gap;
+						
+						if ( totalWidth > ( this.width - collapsedItemsDdl.width ))
+						{
+							numDisplayedItems = i;
+							indexToRemoveFrom = i;
+							
+							break;
+						}
+						else
+						{
+							menuElement.visible = true;
+						}
+					}
+				}
+				if (indexToRemoveFrom == -1 ) return;
+				
+				var elementsToRemove : Array = [];
+				for (i = indexToRemoveFrom; i<_menuItems.length ; i++)
+				{
+					elementsToRemove[i].visible = false;
+				}
+				dispatchEvent( new Event("collapsedMenuItemsChange"));
+			}
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:HorizontalLayout gap="3"/>
+	</s:layout>
+	
+	<s:Group id="menuItemContainer"
+			 width="{ width - collapsedItemsDdl.width - 15}"
+			 height="100%"
+			 >
+		<s:layout>
+			<s:HorizontalLayout gap="3"/>
+		</s:layout>
+	</s:Group>
+	
+	<s:DropDownList
+		id="collapsedItemsDdl"
+		width="{collapsedItemsDdlWidth}"
+		dataProvider="{collapsedMenuItems}"
+		prompt="More"
+		requireSelection="false"
+		labelField="categoryName"
+		visible="{collapsedMenuItems.length > 0}"
+		includeInLayout="{collapsedMenuItems.length > 0}"
+		/>
+</s:Group>

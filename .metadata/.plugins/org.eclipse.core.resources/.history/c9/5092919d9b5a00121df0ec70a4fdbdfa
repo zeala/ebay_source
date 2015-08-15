@@ -1,0 +1,18 @@
+package ebayApp.services.commands.finding
+{
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.commands.EbayCommand;
+	import ebayApp.services.util.FindingServiceOperationName;
+	
+	public class FindItemsAdvancedCommand extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_ITEMS_ADVANCED;
+		public static const RESPONSE_EVENT_NAME : String = "findItemsAdvancedResponse";
+		
+		public function FindItemsAdvancedCommand(service:HTTPService)
+		{
+			super(service);
+		}
+	}
+}

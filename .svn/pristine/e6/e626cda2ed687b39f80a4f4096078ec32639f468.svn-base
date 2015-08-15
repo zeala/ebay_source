@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 >
+	<fx:Script>
+		<![CDATA[
+			
+			
+			[Bindable]
+			public var sourceURL : String;
+			
+			[Bindable]
+			public var pageIndex:int;
+			
+			[Bindable]
+			public var isLeftPage : Boolean;
+			
+			private function progressHandler( event:ProgressEvent ) : void
+			{
+				//trace("\n progress ; " + event.bytesLoaded + " total : " + event.bytesTotal );
+				drawProgressBar( event );
+			}
+			
+			private function drawProgressBar( event:ProgressEvent ):void
+			{
+				var g:Graphics = progressBar.graphics;
+				g.clear();
+				
+				//if ( event.bytesLoaded < event.bytesTotal )
+				//{
+					g.moveTo( 0, 0 );
+					g.beginFill( 0xccff00, 1 );
+					g.drawRect( 0, 0, 200, 14 );
+					g.endFill();
+				
+					var barWidth : Number = 196 * (event.bytesLoaded/ event.bytesTotal );
+					//trace(" bar width : " + barWidth);
+					g.moveTo(2, 2 );
+					g.beginFill( 0x0000ff, 1);
+					g.drawRect( 2, 2, barWidth, 10 );
+					g.endFill()
+				//}
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<s:Image 
+		id="img"
+		source="{sourceURL}"
+		maxWidth="{maxWidth}" maxHeight="{maxHeight}"
+		visible="{img.source != null &amp;&amp; img.source.toString().length > 0}" 
+		verticalCenter="0" horizontalCenter="0"
+		progress="progressHandler(event)"
+		/>
+	
+	<mx:UIComponent id="progressBar" horizontalCenter="0" verticalCenter="0" visible="false"/>
+</s:Group>

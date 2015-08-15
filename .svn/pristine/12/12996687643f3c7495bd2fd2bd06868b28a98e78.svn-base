@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width.normal="140"
+		 width.minimised="50"
+		 height="100%"
+		 currentState="normal" 
+		 xmlns:panels="com.ebayproject.style.skins.panels.*" 
+		 xmlns:toolbars="com.ebayproject.components.panels.toolbars.*"
+		 >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			[Bindable]
+			public var normalWidth : Number = 140;
+			
+			[Bindable]
+			public var topBarHeight : Number = 40;
+			
+			[Bindable]
+			public var viewedItems : ArrayCollection;
+				
+			private function toggleState():void
+			{
+				this.currentState = this.currentState == "normal" ? "minimised" : "normal";
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="normal" />
+		<s:State name="minimised" />
+	</s:states>
+	
+	<s:transitions>
+		<s:Transition fromState="minimised" toState="normal" autoReverse="true">
+			<s:Resize duration="700" target="{this}"/>
+		</s:Transition>
+	</s:transitions>
+	
+	<!--<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>-->
+	
+	<s:Group id="panelGroup" >
+		<toolbars:ToolbarBackground id="cMenu" width="{width}" height="{topBarHeight}"/>
+		<panels:ToolbarSeparator left="0" top="1" height="40"
+		mouseOver="trace('\n panelGroup.height : ' + panelGroup.height)"						 
+		/>
+	</s:Group>
+	<panels:Shadow_right bottom="0" top="45" rotation="180" left="0"/>
+	<s:Group 
+		id="contentGroup"
+		width="{width}"
+		y="50"
+		mouseOver="trace('\n panelGroup.height : ' + panelGroup.height + ' contentGroup.y : ' + contentGroup.y)"
+		>
+		
+		<s:layout>
+			<s:VerticalLayout paddingLeft="10" paddingRight="10" />
+		</s:layout>
+		<s:List 
+			height="100%"
+			dataProvider="{viewedItems}"
+			itemRenderer="com.ebayproject.components.searchResultsView.SearchResultViewSmallRenderer"
+			contentBackgroundAlpha="0"
+			>
+			<s:layout>
+				<s:TileLayout rowHeight="90" columnWidth="90" requestedColumnCount="1"/>
+			</s:layout>
+		</s:List>
+	</s:Group>
+	
+</s:Group>

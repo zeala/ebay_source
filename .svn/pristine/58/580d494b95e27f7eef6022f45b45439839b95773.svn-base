@@ -1,0 +1,13 @@
+package dto
+{
+	public class ShippingInfo
+	{
+		public var expeditedShipping:Boolean;
+		public var handlingTime: int;
+		//public var intermediatedShipping // not used
+		public var oneDayShippingAvailable:Boolean;
+		public var shippingServiceCost: Number;
+		public var shippingType : String ;// ShippingType
+		public var shipToLocations : String;
+	}
+}

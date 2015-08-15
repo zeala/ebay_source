@@ -1,0 +1,26 @@
+package ebayApp.services
+{
+	import flash.events.EventDispatcher;
+	
+	import ebayApp.services.commands.finding.FindCompletedItemsCommand;
+	
+	
+	public class CommandManager extends EventDispatcher
+	{
+		public var findCompletedItems:FindCompletedItemsCommand 
+			= new FindCompletedItemsCommand ( FindingServiceGET.getInstance() );
+		
+		private static var instance:CommandManager
+		
+		public static function getInstance():CommandManager
+		{
+			if ( !instance )
+			{
+				instance = new CommandManager();
+			}
+			return instance;
+		}
+		
+	}
+	
+}

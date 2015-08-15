@@ -1,0 +1,15 @@
+package ebayApp.services
+{
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
+	
+	[Event(name="findCompletedItems", type="mx.events.PropertyChangeEvent")]
+	
+	public class ServiceManager extends EventDispatcher
+	{
+		public function ServiceManager(target:IEventDispatcher=null)
+		{
+			super(target);
+		}
+	}
+}

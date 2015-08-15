@@ -1,0 +1,31 @@
+
+
+package ebayApp.services.dto
+{
+
+	public class ExpressSellerRequirements
+	{
+		public var businessSeller:Boolean;
+		public var combinedPaymentsAccepted:Boolean;
+		public var eligiblePayPalAccount:Boolean;
+		public var expressApproved:Boolean;
+		public var expressSellingPreference:Boolean;
+		public var feedbackAsSellerScore:Boolean;
+		public var feedbackPublic:Boolean;
+		public var feedbackScore:Boolean;
+		public var goodStanding:Boolean;
+		public var payPalAccountAcceptsUnconfirmedAddress:Boolean;
+		public var positiveFeedbackAsSellerPercent:Boolean;
+		public var positiveFeedbackPercent:Boolean;
+
+
+		/**
+		 * Constructor for the ExpressSellerRequirements class.
+		 * 
+		 * <p>Creates a new ExpressSellerRequirements object.</p>
+		 */
+		public function ExpressSellerRequirements()
+		{
+		}  // ExpressSellerRequirements
+	}  // class declaration
+}  // package

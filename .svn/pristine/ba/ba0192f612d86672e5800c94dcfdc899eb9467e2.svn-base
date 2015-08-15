@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:panels="com.ebayproject.components.panels.*"
+		 buttonMode="true"
+		 buttonMode.disabled="false"
+		 mouseOver="mouseOverHandler()"
+		 mouseOut="mouseOutHandler()"
+		 click="clickHandler()"
+		 width="115"
+		 height="100"
+		 >
+	<fx:Declarations>
+		<panels:ImagePreviewPopup 
+			id="popup"
+			searchItem="{searchItem}"
+			>
+			<panels:filters>
+				<s:DropShadowFilter color="666666"/>
+			</panels:filters>
+		</panels:ImagePreviewPopup>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.components.imageScroll.tween.TweenLite;
+			import com.ebayproject.style.assets.icons.Icons;
+			
+			import mx.managers.PopUpManager;
+			
+			import dto.SearchResultItem;
+			
+			
+			
+			public static const EVENT_CLICKED : String = "NavItem_Event_Clicked";
+			[Bindable]
+			public var searchItem : SearchResultItem;
+			
+			[Bindable]
+			public var title : String;
+			
+			public var index : int;
+			
+			private var fade : Number = 0.3;
+			
+			public function disable():void
+			{
+				tweenAlpha( 0.8, 1 );
+				this.currentState = "disabled";
+			}
+			
+			public function enable():void
+			{
+				tweenAlpha( 0.8, fade );
+				this.currentState = "enabled";
+			}
+			
+			private function mouseOutHandler ( event : MouseEvent = null ) : void
+			{
+				if ( this.currentState == "enabled")
+				{
+					tweenAlpha( 0.8, fade );
+				}
+			}
+			
+			private function mouseOverHandler ( event : MouseEvent = null ) : void
+			{
+				if ( this.currentState == "enabled")
+				{
+					tweenAlpha( 0.8, 1 );
+				}
+			}
+			
+			private function clickHandler( event : MouseEvent = null ) : void
+			{
+				dispatchEvent( new Event (EVENT_CLICKED ));
+			}
+			
+			private function tweenAlpha( duration:Number, alpha:Number ) : void
+			{
+				TweenLite.to( this, duration, {alpha : alpha });
+			}
+			
+			private function showPopup():void
+			{
+				
+				PopUpManager.addPopUp( popup, this );
+				popup.width = 200;
+				popup.height = 200;
+				
+				var point : Point = this.parent.localToGlobal( new Point( this.x, this.y));
+				popup.x = point.x;
+				popup.y = point.y - 200;
+				
+			}
+			
+			private function removePopup():void
+			{
+				PopUpManager.removePopUp( popup );
+			}
+		]]>
+	</fx:Script>
+	<s:states>
+		<s:State name="enabled"/>
+		<s:State name="disabled"/>
+	</s:states>
+	<s:Rect width="{width}" height="100">
+		<s:fill>
+			<s:SolidColor color="0xffffff"/>
+		</s:fill>
+	</s:Rect>
+	
+	<s:Image id="img" maxWidth="{width}" x="0" source="{searchItem.imageURL}"/>
+
+	<s:HGroup verticalAlign="middle" width="110"
+			  y="14" horizontalAlign="right"
+			  right="15" gap="12"
+			  >
+		<s:Group
+				 
+				 >
+			<s:Image
+				source="{Icons.GREEN_BUBBLE}" rotation="0"
+				/>
+			<s:Label
+				id="watchTxt"
+				textAlign="right"
+				fontSize="14"
+				fontFamily="ArialBold"
+				horizontalCenter="0" verticalCenter="-6"
+				rotation="-20"
+				color="0xffffff"
+				text="{searchItem.watchCount} "
+				/>
+		</s:Group>  
+		
+	</s:HGroup>
+	
+</s:Group>
+

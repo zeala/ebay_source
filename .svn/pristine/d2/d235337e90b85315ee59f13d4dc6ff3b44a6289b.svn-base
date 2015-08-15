@@ -1,0 +1,246 @@
+package ebayApp.services.util.parsers
+{
+	import mx.collections.ArrayCollection;
+	
+	import ebayApp.services.dto.BestOfferDetails;
+	import ebayApp.services.dto.Charity;
+	import ebayApp.services.dto.Product;
+	import ebayApp.services.results.CatalogSearchResults;
+	import ebayApp.services.results.EBayItem;
+	import ebayApp.services.results.EBayResult;
+	
+	import utils.DateUtil;
+
+	public class ShoppingServiceParser
+	{
+		default xml namespace = new Namespace("urn:ebay:apis:eBLBaseComponents");
+		
+		
+		public static function parseProductSearchResult( xml : XML ) : CatalogSearchResults
+		{
+			var result : CatalogSearchResults = new CatalogSearchResults();
+			
+			result.moreResults = xml.MoreResults == "true";
+			result.approximatePages = int( xml.ApproximatePages );
+			result.pageNumber = int( xml.PageNumber );
+			result.totalProducts = int( xml.TotalProducts );
+			
+			result.products = new ArrayCollection();
+			
+			var productsXMLList : XMLList = xml..Product;
+			for each (var  productXML : XML in productsXMLList )
+			{ 
+				var item :Product = parseProduct( productXML );
+				result.products.addItem( item );
+			}
+			
+			return result;
+		}
+		
+		public static function parseProduct( xml : XML ) : Product
+		{
+			var product : Product = new Product();
+			
+			product.domainName = xml.DomainName;
+			product.detailsURL = xml.DetailsURL;
+			product.displayStockPhotos = xml.DisplayStockPhotos == "true";
+			product.productID = xml.ProductID;
+			product.reviewCount = xml.ReviewCount;
+			product.stockPhotoURL = xml.StockPhotoURL;
+			product.title = xml.Title;
+			
+			return product
+		}
+		
+		/**
+		 * Creates an EBayItem object.
+		 * 
+		 * @param itemData The XML relevant to the EBayItem object
+		 * @return A new EBayItem object
+		 */
+		public static function parseEBayItem(itemData:XML):EBayItem
+		{
+			namespace shoppingNs = "urn:ebay:apis:eBLBaseComponents";
+			use namespace shoppingNs;
+			
+			var ebayItem:EBayItem = new EBayItem();
+			
+			parseStandardFieldsShoppingAPI(itemData, ebayItem);
+			
+			if (ebayItem.ack != "Success" && ebayItem.ack != "Warning")
+				return ebayItem;
+			
+			ebayItem.autoPay = itemData.Item.AutoPay == "true" ? true : false;
+			ebayItem.bestOfferDetails = parseBestOfferDetails(itemData.Item.BestOfferDetails);
+			ebayItem.bidCount = int (itemData.Item.BidCount );
+			ebayItem.buyItNowPrice = Number(itemData.Item.BuyItNowPrice);
+			ebayItem.charity = parseCharity(itemData.Item.Charity);
+			ebayItem.convertedCurrentPrice = Number(itemData.Item.ConvertedCurrentPrice);
+			ebayItem.country = itemData.Item.Country;
+			ebayItem.conditionId = itemData.Item.ConditionID;
+			ebayItem.conditionDisplayName = itemData.Item.ConditionDisplayName;
+			
+			ebayItem.description = itemData.Item.Description;
+			
+			if ( itemData.Item.EndTime.length() > 0 )
+			{
+				ebayItem.endTime = DateUtil.parseW3CDTF(itemData.Item.EndTime);
+			}
+			ebayItem.galleryURL = itemData.Item.GalleryURL;
+			ebayItem.hitCount = Number(itemData.Item.HitCount);
+			ebayItem.itemID = itemData.Item.ItemID;
+			ebayItem.listingType = itemData.Item.ListingType;
+			ebayItem.listingStatus = itemData.Item.ListingStatus;
+			ebayItem.location = itemData.Item.Location;
+			ebayItem.lotSize = int(itemData.Item.LotSize);
+			
+			ebayItem.pictureURLs = [];
+			for each ( var pictureURLNode : XML in itemData.Item.PictureURL )
+			ebayItem.pictureURLs.push( pictureURLNode.text() );
+			
+			for each (var paymentMethodNode:XML in itemData.Item.PaymentMethods)
+			ebayItem.paymentMethods.push(paymentMethodNode);
+			ebayItem.postalCode = itemData.Item.PostalCode;
+			
+			ebayItem.primaryCategoryId = itemData.Item.PrimaryCategoryID;
+			ebayItem.primaryCategoryName = itemData.Item.PrimaryCategoryName;
+			ebayItem.primaryCategoryIdPath = itemData.Item.PrimaryCategoryIdPath;
+			
+			ebayItem.quantity = int(itemData.Item.Quantity);
+			ebayItem.quantityAvailableHint = itemData.Item.QuantityAvailableHint;
+			ebayItem.quantityThreshold = itemData.Item.QuantityThreshold;
+			//ebayItem.seller = parseEBayUser(XML(itemData.Item.Seller));
+			for each (var locationNode:XML in itemData.Item.ShipToLocations)
+			ebayItem.shipToLocations.push(locationNode.toString());
+			ebayItem.site = itemData.Item.Site;
+			
+			if ( itemData.Item.StartTime.length() > 0 )
+			{
+				ebayItem.startTime = DateUtil.parseW3CDTF( itemData.Item.StartTime);
+			}
+			//ebayItem.storeFront = parseStoreFront(itemData.Item.StoreFront);
+			ebayItem.subtitle = itemData.Item.SubTitle;
+			ebayItem.timeLeft = itemData.Item.TimeLeft;
+			ebayItem.title = itemData.Item.Title;
+			ebayItem.watchCount = Number(itemData.Item.WatchCount);
+			
+			return ebayItem;
+		}  // parseEBayItem		
+		
+		/**
+		 * Parses the standard output fields in an eBay result and sets the member variables of
+		 * the passed in object, ebayResult.
+		 * 
+		 * SHOPPING API ONLY
+		 */
+		public static function parseStandardFieldsShoppingAPI(resultData:XML, ebayResult:EBayResult):void
+		{
+			namespace shoppingNs = "urn:ebay:apis:eBLBaseComponents";
+			use namespace shoppingNs;
+			
+			//resultData.addNamespace(ns);
+			ebayResult.ack = resultData..Ack;
+			ebayResult.build = resultData.Build
+			
+			ebayResult.correlationID = resultData.correlationID;
+			
+			//TODO : parse error nodes
+			/*for each (var ebayErrorNode:XML in resultData.Errors)
+			{
+			ebayResult.errors.push(parseEBayError(XMLList(ebayErrorNode)));
+			}*/
+			ebayResult.hardExpirationWarning = resultData.HardExpirationWarning;
+			ebayResult.timestamp = DateUtil.parseDateString(resultData.Timestamp);
+			ebayResult.version = resultData.Version;			
+			ebayResult.rawResult = resultData.toString();
+		}  // parseStandardFields
+
+		
+		/**
+		 * Creates a BestOfferDetails object.
+		 * 
+		 * @param detailsData The XML relevant to the BestOfferDetails object
+		 * @return A new BestOfferDetails object
+		 */
+		public static function parseBestOfferDetails(detailsData:XMLList):BestOfferDetails
+		{
+			var bestOfferDetails:BestOfferDetails = new BestOfferDetails();
+			
+			bestOfferDetails.bestOfferCount = int(detailsData.BestOfferCount);
+			bestOfferDetails.bestOfferEnabled = detailsData.BestOfferEnabled == "true" ? true : false;
+			
+			return bestOfferDetails;
+		}  // parseBestOfferDetails
+
+		/**
+		 * Creates a Charity object.
+		 * 
+		 * @param charityData The XML relevant to the Charity object
+		 * @return A new Charity object
+		 */
+		public static function parseCharity(charityData:XMLList):Charity
+		{
+			var charity:Charity = new Charity();
+			
+			charity.charityID = charityData.CharityID;
+			charity.charityName = charityData.CharityName;
+			charity.charityNumber = int(charityData.CharityNumber);
+			charity.donationPercent = Number(charityData.DonationPercent);
+			charity.logoURL = charityData.LogoURL;
+			charity.status = charityData.Status;
+			
+			return charity;
+		}  // parseCharity
+
+		
+		//---------------------------------------------------
+		//
+		// REVIEW USAGE
+		//
+		//---------------------------------------------------
+		
+		/**
+		 * Creates an Item object.
+		 * 
+		 * @param itemData The XML relevant to the Item object
+		 * @return A new Item object
+		 */
+		/*
+		public static function parseItem(itemData:XMLList):Item
+		{
+			var item:Item = new Item();
+			
+			item.bestOfferEnabled = itemData.BestOfferEnabled;
+			item.buyerProtection = itemData.BuyerProtection;
+			item.buyItNowPrice = Number(itemData.BuyItNowPrice);
+			item.country = itemData.Country;
+			item.currency = itemData.Currency;
+			item.digitalDeliveryDetails = parseDigitalDeliveryDetails(itemData.DigitalDeliveryDetails);
+			item.distance = parseDistance(itemData.Distance);
+			item.itemID = itemData.ItemID;
+			item.listingDetails = parseListingDetails(itemData.ListingDetails);
+			item.listingDuration = itemData.ListingDuration;
+			for each (var listingEnhancementNode:XML in itemData.ListingEnhancement)
+			item.listingEnhancement.push(listingEnhancementNode);
+			item.listingType = itemData.ListingType;
+			item.localListing = itemData.LocalListing == "true" ? true : false;
+			item.motorsGermanySearchable = itemData.MotorsGermanySearchable == "true" ? true : false;
+			for each (var paymentMethodsNode:XML in itemData.PaymentMethods)
+			item.paymentMethods.push(paymentMethodsNode);
+			item.pictureDetails = parsePictureDetails(itemData.PictureDetails);
+			item.postalCode = itemData.PostalCode;
+			item.primaryCategory = parseCategory(itemData.PrimaryCategory);
+			item.searchDetails = parseSearchDetails(itemData.SearchDetails);
+			item.secondaryCategory = parseCategory(itemData.SecondaryCategory);
+			item.seller = itemData.Seller;
+			item.sellingStatus = parseSellingStatus(itemData.SellingStatus);
+			item.shippingDetails = parseShippingDetails(itemData.ShippingDetails);
+			item.storeFront = parseStoreFront(itemData.StoreFront);
+			item.title = itemData.Title;
+			
+			return item;
+		}  // parseItem
+		*/
+		
+	}
+}

@@ -1,0 +1,14 @@
+
+
+package ebayApp.services.util.codeTypes
+{
+
+	public final class ListingStatus
+	{
+		public static const ACTIVE:String = "Active";
+		public static const ENDED:String = "Ended";
+		public static const COMPLETED:String = "Completed";
+		public static const CUSTOM_CODE:String = "CustomCode";
+		public static const CUSTOM:String = "Custom";
+	}  // class declaration
+}  // package

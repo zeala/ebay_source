@@ -1,0 +1,12 @@
+package ebayApp.services.commands.finding
+{
+	import ebayApp.services.commands.EbayOperation;
+	import ebayApp.services.util.FindingServiceOperationName;
+
+	public class FindiCompletedItems extends EbayOperation
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_COMPLETED_ITEMS;
+		
+		
+	}
+}

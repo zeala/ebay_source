@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="620" height="360">
+
+	<fx:Metadata>
+		[Event(name="requestChildCategories", type="com.ebayproject.events.CategoryEvent")]
+		[Event(name="requestResultsForCategory", type="com.ebayproject.events.CategoryEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.events.CategoryEvent;
+			
+			import mx.collections.ArrayCollection;
+			
+			import spark.events.IndexChangeEvent;
+			
+			import ebayApp.services.dto.Category;
+			
+			[Bindable]
+			private var currentSelectedCategory : Category;
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			private var defaultCategory : Category = createDefaultCategory();
+			
+			private function createDefaultCategory():Category
+			{
+				var cat : Category = new Category();
+				cat.categoryName = "All Categories";
+				cat.categoryID = "-1";
+				return cat;
+			}
+			
+			public function init():void
+			{
+				if ( !productManager )
+				{
+					throw new Error(" No product manager ");
+				}
+				if ( productManager.categories == null || productManager.categories.length == 0)
+				{
+					var catEvent : CategoryEvent = new CategoryEvent(
+						CategoryEvent.REQUEST_CHILD_CATEGORIES, "-1");
+					dispatchEvent( catEvent );
+				}
+			}
+			
+			private function requestCategory( event : IndexChangeEvent): void
+			{
+				var list : List = List (event.target );
+				var selectedCategory : Category = list.selectedItem as Category;
+				if ( !selectedCategory ) return;
+				
+				switch ( event.target )
+				{
+					case this.topCategoriesList :
+						if ( selectedCategory == defaultCategory )
+						{
+							selectedCategory.categoryID = "-1";
+							
+						}
+						currentSelectedCategory = selectedCategory;
+						
+						break;
+					
+					case this.secondLevelCategoriesList : 
+						
+						if ( selectedCategory == defaultCategory )
+						{
+							selectedCategory.categoryID = topCategoriesList.selectedItem.categoryID;
+							currentSelectedCategory = topCategoriesList.selectedItem;
+						}
+						else
+						{
+							currentSelectedCategory = selectedCategory;
+						}
+						
+						break;
+					
+					case this.thirdLevelCategoriesList:
+						
+						if ( selectedCategory == defaultCategory )
+						{
+							selectedCategory.categoryID = secondLevelCategoriesList.selectedItem.categoryID;
+							currentSelectedCategory = secondLevelCategoriesList.selectedItem
+						}
+						else
+						{
+							currentSelectedCategory = selectedCategory;
+						}
+						
+						break;
+				}
+				
+				
+				var catEvent : CategoryEvent = new CategoryEvent(
+					CategoryEvent.REQUEST_CHILD_CATEGORIES, selectedCategory.categoryID);
+				dispatchEvent( catEvent );
+			}
+			
+			private function selectCategory():void
+			{
+				if (!currentSelectedCategory ) return;
+				
+				var catEvent : CategoryEvent = new CategoryEvent(
+					CategoryEvent.REQUEST_RESULTS_FOR_CATEGORY, currentSelectedCategory.categoryID);
+				dispatchEvent( catEvent );
+			}
+			
+			private function addDefaultSelection( collection : ArrayCollection ) : ArrayCollection
+			{
+				
+				if ( ! collection.contains( defaultCategory ))
+				{
+					collection.addItemAt( defaultCategory, 0 );
+				}
+				
+				return collection;
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Group top="10" bottom="10">
+		<s:layout >
+			<s:VerticalLayout />
+		</s:layout>
+		<s:Group height="100%">
+			<s:layout>
+				<s:HorizontalLayout  />
+			</s:layout>
+			<s:List 
+				id="topCategoriesList"
+				width="200" 
+				height="100%"
+				dataProvider="{addDefaultSelection(productManager.categories)}" 
+				labelField="categoryName"
+				change="requestCategory( event )"
+				requireSelection="true"
+				itemRenderer="com.ebayproject.components.panels.renderers.TopLevenCategoriesListItemRenderer"
+				/>
+			
+			<s:List
+				id="secondLevelCategoriesList"
+				height="100%"
+				bottom="10" top="10" width="200" 
+				dataProvider="{addDefaultSelection(Category(topCategoriesList.selectedItem).children)}"
+				labelField="categoryName"
+				change="requestCategory(event)"
+				requireSelection="true"
+				/>
+			
+			<s:List
+				id="thirdLevelCategoriesList"
+				height="100%"
+				bottom="10" top="10" width="200" 
+				dataProvider="{addDefaultSelection(Category(secondLevelCategoriesList.selectedItem).children)}"
+				labelField="categoryName"
+				change="requestCategory(event)"
+				/>
+			
+		</s:Group>
+		
+		<s:HGroup bottom="10" width="100%" horizontalAlign="right">
+			<s:Label text="Selected category : { currentSelectedCategory.categoryName }"/>
+			<s:Button label="Get results" click="selectCategory()"/>
+		</s:HGroup>
+	</s:Group>
+	
+</s:TitleWindow>

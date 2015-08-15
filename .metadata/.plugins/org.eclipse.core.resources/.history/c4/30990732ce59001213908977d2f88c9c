@@ -1,0 +1,38 @@
+package ebayApp.services.commands.finding
+{
+	import flash.events.Event;
+	
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.FindingServiceGET;
+	import ebayApp.services.commands.EbayCommand;
+	import ebayApp.services.util.FindingServiceOperationName;
+
+	public class FindCompletedItems extends EbayCommand
+	{
+		public static const OPERATION_NAME : String = FindingServiceOperationName.FIND_COMPLETED_ITEMS;
+		
+		public function FindCompletedItems( service : HTTPService )
+		{
+			super(service);
+			this.service.addEventListener( FindingServiceOperationName.FIND_COMPLETED_ITEMS, commandCallHandler );
+		}
+		
+		override public function getOperationName():String
+		{
+			return OPERATION_NAME;
+		}
+		
+		private function commandCallHandler ( event : Event ) : void
+		{
+			FindingServiceGET( this.service ).callService( getFullUrl());
+		}
+		
+		private function getFullUrl():String
+		{
+			var url:String;
+			
+			return url;
+		}
+	}
+}

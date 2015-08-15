@@ -1,0 +1,13 @@
+package model
+{
+	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
+	
+	public class FindingServicePM extends EventDispatcher
+	{
+		public function FindingServicePM(target:IEventDispatcher=null)
+		{
+			super(target);
+		}
+	}
+}

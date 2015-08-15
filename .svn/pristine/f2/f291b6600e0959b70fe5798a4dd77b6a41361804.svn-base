@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				  xmlns:s="library://ns.adobe.com/flex/spark" 
+				  xmlns:mx="library://ns.adobe.com/flex/mx" 
+				  xmlns:toolbars="com.ebayproject.components.toolbars.*"
+				  width="100%" verticalAlign="middle"
+				  >
+	
+	<fx:Metadata>
+		[Event(name="changeLayout", type="mx.events.PropertyChangeEvent")]
+	</fx:Metadata>
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.style.assets.icons.Icons;
+			import com.ebayproject.util.LayoutKind;
+			
+			import mx.events.PropertyChangeEvent;
+			
+			[Bindable]
+			public var selectedState : String;
+			
+			private function changeView(viewStyle : String ) : void
+			{
+				
+				var event : PropertyChangeEvent = new PropertyChangeEvent("changeLayout", true );
+				event.newValue = viewStyle;
+				dispatchEvent( event );
+			}
+		]]>
+	</fx:Script>
+	<s:ToggleButton
+		icon="{Icons.LARGE_THUMBNAIL_VIEW}"
+		label="Large&#10;thumbnails"
+		skinClass="com.ebayproject.style.skins.buttons.ToggleIconButtonSkin"
+		click="changeView(LayoutKind.LARGE_THUMBNAIL_VIEW)"
+		selected="{selectedState == 'tileViewLarge'}"
+		/>
+	
+	
+	<s:ToggleButton
+		icon="{Icons.SMALL_THUMBNAIL_VIEW}"
+		label="Small&#10;thumbnails" 
+		skinClass="com.ebayproject.style.skins.buttons.ToggleIconButtonSkin"
+		click="changeView(LayoutKind.SMALL_THUMBNAIL_VIEW)"
+		selected="{selectedState == 'tileViewSmall'}"
+		/>
+	
+	<s:ToggleButton
+		icon="{Icons.LIST_VIEW}"
+		label="List&#10;view" 
+		skinClass="com.ebayproject.style.skins.buttons.ToggleIconButtonSkin"
+		click="changeView(LayoutKind.LIST_VIEW)"
+		selected="{selectedState == 'listView'}"
+		/>
+
+	<!-- separator -->
+	<s:Image source="{Icons.SEPARATOR}" height="{height - 4}" width="10" verticalCenter="0" />
+</s:HGroup>

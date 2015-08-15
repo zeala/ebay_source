@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.http.HTTPService;
+			
+			/*
+			X-EBAY-SOA-SERVICE-NAME: FindingService
+			X-EBAY-SOA-OPERATION-NAME: getHistograms
+			X-EBAY-SOA-SERVICE-VERSION: 1.0.0
+			X-EBAY-SOA-GLOBAL-ID: EBAY-US
+			X-EBAY-SOA-SECURITY-APPNAME: MyAppID
+			X-EBAY-SOA-REQUEST-DATA-FORMAT: XML
+			*/
+			
+			public static const SEARCH_URL:String = "http://svcs.ebay.com/services/search/FindingService/v1";
+			public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+			public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+			public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+			
+			private var headerDevName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-DEV-NAME", apiDevName);
+			private var headerAppName:URLRequestHeader = new URLRequestHeader("X-EBAY-API-APP-NAME", apiAppName);
+			private var headerCertName:URLRequestHeader =  new URLRequestHeader("X-EBAY-API-CERT-NAME", apiCertName);
+			private var headerServiceName:URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-SERVICE-NAME", serviceName );
+			private var headerOperationName:URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-OPERATION-NAME", operationName );
+			private var headerServiceVersion : URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-SERVICE-VERSION", "1.0.0" );
+			private var headerGlobalId: URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-GLOBAL-ID", globalId );
+			private var headerApplicationId: URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-SECURITY-APPNAME", apiAppName );
+			private var headerRequestFormat: URLRequestHeader = new URLRequestHeader("X-EBAY-SOA-REQUEST-DATA-FORMAT", "XML" );
+			
+			
+			
+			private var serviceName : String = "FindingService";
+			
+			private var operationName:String = "findItemsByKeywords";
+			
+			private var globalId:String = "EBAY-US";
+				
+			
+			private function testPOST():void
+			{
+				var url:String = SEARCH_URL;
+				var service:HTTPService = new HTTPService();
+				var urlRequest:URLRequest = new URLRequest();
+				var headers:Array = [];
+				headers.push( headerServiceName );
+				headers.push( headerServiceVersion );
+				headers.push( headerOperationName );
+				headers.push( headerGlobalId );
+				headers.push( headerApplicationId );
+				headers.push( headerRequestFormat );
+				urlRequest.requestHeaders = headers;
+				
+				var data:Object = {};
+				data.keywords = "mobile";
+				data.paginationInput = {};
+				data.paginationInput.entriesPerPage = 10;
+				data.paginationInput.pageNumber = 3;
+				
+				service.request = urlRequest;
+				service.addEventListener( FaultEvent.FAULT, faultHandler );
+				service.addEventListener(ResultEvent.RESULT, resultHandler );
+				
+			}
+			
+			private function testGet():void
+			{
+				var url:String = SEARCH_URL + "/?";
+				url += "OPERATION-NAME=findItemsByKeywords"
+				url += "&SERVICE-VERSION=1.0.0";
+				url += "&SECURITY-APPNAME=" + apiAppName;
+				url += "&keywords=" + "mobile";
+
+				var service:HTTPService = new HTTPService();
+				service.url = url;
+				service.method = "GET";
+				
+				service.resultFormat = "e4x";
+				service.addEventListener(FaultEvent.FAULT, faultHandler );
+				service.addEventListener(ResultEvent.RESULT , resultHandler );
+				service.send();
+			}
+			
+			private function faultHandler(event:FaultEvent):void
+			{
+				
+			}
+			
+			private function resultHandler(event:ResultEvent ): void
+			{
+				trace(" \n event.result  : " + event.result );
+			}
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="10" paddingLeft="20" paddingTop="20"/>
+	</s:layout>
+	<s:Button label="test" click="testGet()"/>
+	<s:Button label="testPOst" click="testPOST()"/>
+</s:Application>

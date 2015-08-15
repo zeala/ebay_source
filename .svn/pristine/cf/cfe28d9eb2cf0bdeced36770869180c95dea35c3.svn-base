@@ -1,0 +1,145 @@
+package ebayApp.services
+{
+	import flash.events.Event;
+	
+	import mx.events.PropertyChangeEvent;
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+	import mx.rpc.http.HTTPService;
+	
+	import ebayApp.services.dto.PaginationInput;
+
+	public class FindingServiceGET extends HTTPService implements IEbayService
+	{
+		public static const SEARCH_URL:String = "http://svcs.ebay.com/services/search/FindingService/v1";
+		public static var apiDevName:String = "8341cd1a-abcf-4db1-869c-edb61c16f0be";
+		public static var apiAppName:String = "EAMMedia-50ad-454a-96af-c15d6395d9b4";
+		public static var apiCertName:String = "812c84d2-011a-4bab-8ea4-c8b743de4e1f";
+		
+		private static var instance : FindingServiceGET;
+		
+		public static function getInstance():FindingServiceGET
+		{
+			if (! instance )
+			{
+				instance = new  FindingServiceGET();
+			}
+			return instance
+		}
+		
+		public function FindingServiceGET()
+		{
+			initService();
+		}
+		
+		protected function initService():void
+		{
+			this.method = "GET";
+			this.resultFormat = "e4x";
+			this.addEventListener( FaultEvent.FAULT, faultHandler );
+			this.addEventListener( ResultEvent.RESULT, resultHandler );
+			
+		}
+
+		
+		public function callOperation( operationName : String ):void
+		{
+			dispatchEvent( new Event(operationName ));
+			/*this.operationName = val;
+			this.keywords = words;
+			
+			this.paginationInput = new PaginationInput();
+			paginationInput.entriesPerPage = 4;
+			paginationInput.pageNumber = 1;
+			
+			var url:String = SEARCH_URL + "/?";
+			url += "OPERATION-NAME=" + operationName;
+			url += "&SERVICE-VERSION=1.0.0";
+			url += "&SECURITY-APPNAME=" + apiAppName;
+			
+			if ( words)
+			{
+				url += "&keywords=" + words.join(",");
+			}
+			if ( paginationInput )
+			{
+				url += "&paginationInput.entriesPerPage=" + paginationInput.entriesPerPage;
+				url += "&paginationInput.pageNumber=" + paginationInput.pageNumber;
+			}
+			
+			this.url = url;
+			this.send();*/
+		}
+		
+		public function callService( urlWithParam:String ) : void
+		{
+			this.url = urlWithParam;
+			this.send();
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// Properties
+		//
+		//--------------------------------------------------------------------------
+		
+		//----------------------------------
+		// operation name
+		//---------------------------------- 
+		private var _operationName:String;
+		public function get operationName():String
+		{
+			return _operationName;
+		}
+		public function set operationName(val:String):void
+		{
+			_operationName = val;
+		}
+		
+		//----------------------------------
+		// keywords
+		//---------------------------------- 
+		private var _keywords:Array;
+		public function get keywords():Array
+		{
+			return _keywords;
+		}
+		public function set keywords(val:Array):void
+		{
+			_keywords = val;
+		}
+		
+		//----------------------------------
+		// pagination input
+		//---------------------------------- 
+		private var _paginationInput : PaginationInput;
+		public function get paginationInput():PaginationInput
+		{
+			return _paginationInput;
+		}
+		public function set paginationInput(val:PaginationInput):void
+		{
+			_paginationInput = val;
+		}
+		
+		//--------------------------------------------------------------------------
+		//
+		// EVENT HANDLERS
+		//
+		//--------------------------------------------------------------------------
+		private function faultHandler(event:FaultEvent):void
+		{
+			trace("\n event.fault : " + event.fault );
+		}
+		
+		private function resultHandler(event:ResultEvent):void
+		{
+			trace("\n event.result : " + event.result);
+			var result:XML = event.result as XML;
+			var commandResultEvent:PropertyChangeEvent = new PropertyChangeEvent( result.localName());
+			commandResultEvent.newValue = event.result;
+			dispatchEvent( commandResultEvent );
+		}
+		
+	}
+}

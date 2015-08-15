@@ -1,0 +1,23 @@
+
+
+
+package dto.results
+{
+	import dto.SellingStatus;
+
+
+	public class PlaceOfferResult extends EBayResult
+	{
+		public var sellingStatus:SellingStatus;
+
+
+		/**
+		 * Constructor for the PlaceOffer class.
+		 * 
+		 * <p>Creates a new PlaceOffer object.</p>
+		 */
+		public function PlaceOfferResult()
+		{
+		}  // PlaceOfferResult
+	}  // class declaration
+}  // package

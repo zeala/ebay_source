@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 currentState="tileViewLarge" 
+		 xmlns:panels="com.ebayproject.components.panels.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.util.LayoutKind;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.Application;
+			
+			
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			
+			private function setResizeHandler():void
+			{
+				Application(FlexGlobals.topLevelApplication).addEventListener(
+					ResizeEvent.RESIZE, resizeHandler);
+			}
+			
+			private function resizeHandler( event : ResizeEvent ):void
+			{
+				bookContainer.scaleX = getBookScale();
+				bookContainer.scaleY = getBookScale();
+			}
+			
+			private var bookWidthToHeightRatio : Number = 1.5;
+			
+			private function getBookScale():Number
+			{
+				var yOffset : int = 140;
+				var xOffset  : int = 100;
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var h : Number = app.height - yOffset;
+				var w : Number = app.width - xOffset;
+				var scale : Number;
+				
+				var appWidthToHeightRatio : Number = w/h;
+				
+				if ( appWidthToHeightRatio >= 1.5 )
+				{
+					scale = h / bookContainer.height;
+				}
+				else
+				{
+					scale = w / bookContainer.width;
+				}	
+				return scale;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="tileViewLarge"/>
+		<s:State name="tileViewSmall"/>
+		<s:State name="listView"/>
+		<s:State name="bookView"/>
+	</s:states>
+	
+	<s:layout>
+		<s:VerticalLayout paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"/>
+	</s:layout>
+	
+	<s:List 
+		id="resultsList"
+		left="0" right="0" width="100%" height="{height}"
+		dataProvider="{productManager.itemsSearchResult.searchResultItem}"	
+		itemRenderer.tileViewLarge="com.ebayproject.components.searchResultsView.SearchResultViewLargeRenderer"
+		itemRenderer.tileViewSmall="com.ebayproject.components.searchResultsView.SearchResultViewSmallRenderer"
+		itemRenderer.listView="com.ebayproject.components.searchResultsView.SearchResultDetailsViewRenderer"
+		excludeFrom="bookView"
+		
+		>
+		<s:layout.tileViewLarge>
+			<s:TileLayout 
+				columnWidth.tileViewLarge="150" 
+				rowHeight.tileViewLarge="150"
+				horizontalGap="14" verticalGap="14"
+				horizontalAlign="center"
+				/>
+		</s:layout.tileViewLarge>
+			
+		<s:layout.tileViewSmall>
+			<s:TileLayout 
+				columnWidth.tileViewSmall="90" 
+				rowHeight.tileViewSmall="90"
+				rowHeight.listView="50"
+				columnWidth.listView="{resultsList.width - 10}"
+				horizontalGap="14" verticalGap="14"
+				horizontalAlign="center"
+				/>
+		</s:layout.tileViewSmall>
+		<s:layout.listView >
+			<s:VerticalLayout gap="4" />
+		</s:layout.listView>
+	</s:List>
+	
+	<panels:BookContainer
+		id="bookContainer"
+		productManager="{productManager}" 
+		width="900" height="600"
+		horizontalCenter="0"
+		scaleX="{getBookScale()}" scaleY="{getBookScale()}"
+		creationComplete="setResizeHandler()"
+		includeIn="bookView"
+		/>
+</s:Group>

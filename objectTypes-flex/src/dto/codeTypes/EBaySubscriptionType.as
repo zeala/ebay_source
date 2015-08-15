@@ -1,0 +1,29 @@
+
+package dto.codeTypes
+{
+
+	public final class EBaySubscriptionType
+	{
+		public static const SELLER_ASSISTANT:String = "SellerAssistant";
+		public static const SELLER_ASSISTANT_PRO:String = "SellerAssistantPro";
+		public static const EBAY_STORE_BASIC:String = "EBayStoreBasic";
+		public static const EBAY_STORE_FEATURED:String = "EBayStoreFeatured";
+		public static const EBAY_STORE_ANCHOR:String = "EBayStoreAnchor";
+		public static const SELLING_MANAGER:String = "SellingManager";
+		public static const SELLING_MANAGER_PRO:String = "SellingManagerPro";
+		public static const PICTURE_MANAGER_LEVEL1:String = "PictureManagerLevel1";
+		public static const PICTURE_MANAGER_LEVEL2:String = "PictureManagerLevel2";
+		public static const PICTURE_MANAGER_LEVEL3:String = "PictureManagerLevel3";
+		public static const PICTURE_MANAGER_LEVEL4:String = "PictureManagerLevel4";
+		public static const PICTURE_MANAGER_LEVEL5:String = "PictureManagerLevel5";
+		public static const PICTURE_MANAGER_LEVEL6:String = "PictureManagerLevel6";
+		public static const PICTURE_MANAGER_LEVEL7:String = "PictureManagerLevel7";
+		public static const SELLER_REPORTS_BASIC:String = "SellerReportsBasic";
+		public static const SELLER_REPORTS_PLUS:String = "SellerReportsPlus";
+		public static const FILE_EXCHANGE:String = "FileExchange";
+		public static const LOCAL_MARKET_SPECIALTY:String = "LocalMarketSpecialty";
+		public static const LOCAL_MARKET_REGULAR:String = "LocalMarketRegular";
+		public static const LOCAL_MARKET_PREMIUM:String = "LocalMarketPremium";
+		public static const CUSTOM_CODE:String = "CustomCode";
+	}  // class declaration
+}  // package

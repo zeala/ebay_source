@@ -1,0 +1,32 @@
+package ebayApp.services.util
+{
+	import mx.rpc.events.FaultEvent;
+	import mx.rpc.events.ResultEvent;
+
+	public class ShoppingServiceOperationName
+	{
+		
+		public function ShoppingServiceOperationName()
+		{
+			initService();
+		}
+		
+		private function initService():void
+		{
+			this.method = "GET";
+			this.resultFormat = "e4x";
+			this.addEventListener( FaultEvent.FAULT, faultHandler );
+			this.addEventListener( ResultEvent.RESULT, resultHandler );
+		}
+		
+		private function faultHandler(event:FaultEvent):void
+		{
+			
+		}
+		
+		private function resultHandler(event:ResultEvent):void
+		{
+			
+		}
+	}
+}

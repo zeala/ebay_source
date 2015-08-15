@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 currentState="tileViewLarge" 
+		 xmlns:panels="com.ebayproject.components.panels.*"
+		 >
+	<fx:Script>
+		<![CDATA[
+			import com.ebayproject.controllers.IProductManager;
+			import com.ebayproject.style.assets.icons.Icons;
+			import com.ebayproject.util.LayoutKind;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.ResizeEvent;
+			
+			import spark.components.Application;
+			
+			
+			
+			[Bindable]
+			public var productManager : IProductManager;
+			
+			private function changeView(viewStyle : String ) : void
+			{
+				switch ( viewStyle )
+				{
+					case LayoutKind.BOOK_VIEW :
+						this.currentState = "bookView";
+						break;
+					
+					case LayoutKind.LARGE_THUMBNAIL_VIEW:
+						
+						this.currentState = "tileViewLarge";
+						break;
+					case LayoutKind.SMALL_THUMBNAIL_VIEW:
+						this.currentState = "tileViewSmall";
+						break;
+					
+					case LayoutKind.LIST_VIEW:
+						
+						this.currentState = "tileViewLarge";
+						break;
+				}
+				
+				
+			}
+			
+			private function setResizeHandler():void
+			{
+				Application(FlexGlobals.topLevelApplication).addEventListener(
+					ResizeEvent.RESIZE, resizeHandler);
+			}
+			
+			private function resizeHandler( event : ResizeEvent ):void
+			{
+				bookContainer.scaleX = getBookScale();
+				bookContainer.scaleY = getBookScale();
+			}
+			
+			private var bookWidthToHeightRatio : Number = 1.5;
+			
+			private function getBookScale():Number
+			{
+				var yOffset : int = 140;
+				var xOffset  : int = 100;
+				var app : Application = FlexGlobals.topLevelApplication as Application;
+				var h : Number = app.height - yOffset;
+				var w : Number = app.width - xOffset;
+				var scale : Number;
+				
+				var appWidthToHeightRatio : Number = w/h;
+				
+				if ( appWidthToHeightRatio >= 1.5 )
+				{
+					scale = h / bookContainer.height;
+				}
+				else
+				{
+					scale = w / bookContainer.width;
+				}	
+				return scale;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:states>
+		<s:State name="tileViewLarge"/>
+		<s:State name="tileViewSmall"/>
+		<s:State name="bookView"/>
+	</s:states>
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+	
+	<!--<s:HGroup verticalAlign="middle" enabled="{resultsList.dataProvider.length > 0}" width="100%">
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  click="changeView(LayoutKind.LARGE_THUMBNAIL_VIEW)">
+			<s:Image source="{Icons.LARGE_THUMBNAIL_VIEW}" />
+			<s:Label text="Large&#10;thumbnails"/>
+		</s:HGroup>  
+
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  click="changeView(LayoutKind.SMALL_THUMBNAIL_VIEW)">
+			<s:Image source="{Icons.SMALL_THUMBNAIL_VIEW}"
+					 />
+			<s:Label text="Small&#10;thumbnails"/>
+		</s:HGroup>
+		
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  click="changeView(LayoutKind.LIST_VIEW)">
+			<s:Image source="{Icons.LIST_VIEW}"/>
+			<s:Label text="List&#10;view"/>
+		</s:HGroup>
+		<s:HGroup paddingRight="10" buttonMode="true"
+				  click="changeView(LayoutKind.BOOK_VIEW)">
+			<s:Image source="{Icons.BOOK_VIEW}"/>
+			<s:Label text="Book&#10;view"/>
+		</s:HGroup>
+	</s:HGroup>-->
+	<s:List 
+		id="resultsList"
+		left="0" right="0" width="100%" height="{height}"
+		dataProvider="{productManager.itemsSearchResult.searchResultItem}"	
+		itemRenderer.tileViewLarge="com.ebayproject.components.searchResultsView.SearchResultViewLargeRenderer"
+		itemRenderer.tileViewSmall="com.ebayproject.components.searchResultsView.SearchResultViewSmallRenderer"
+		excludeFrom="bookView"
+		
+		>
+		<s:layout>
+			<s:TileLayout 
+				columnWidth.tileViewLarge="{resultsList.width / 4 - 10}" 
+				rowHeight.tileViewLarge="{resultsList.width /4}"
+				columnWidth.tileViewSmall="{resultsList.width / 8 - 6}" 
+				rowHeight.tileViewSmall="{resultsList.width /8}"
+				/>
+		</s:layout>
+	</s:List>
+	
+	<panels:BookContainer
+		id="bookContainer"
+		productManager="{productManager}" 
+		width="900" height="600"
+		horizontalCenter="0"
+		scaleX="{getBookScale()}" scaleY="{getBookScale()}"
+		creationComplete="setResizeHandler()"
+		includeIn="bookView"
+		/>
+</s:Group>

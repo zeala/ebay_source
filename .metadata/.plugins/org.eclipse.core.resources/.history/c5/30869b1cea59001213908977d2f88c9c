@@ -1,0 +1,26 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ItemFilterType
+	{
+		public static const AUTHORIZED_SELLERS_ONLY:String = "AuthorizedSellerOnly"; 
+		public static const AVAILABLE_TO : String = "AvailableTo";
+		public static const BEST_OFFER_ONLY:String = "BestOfferOnly";
+		public static const CHARITY_ONLY:String = "CharityOnly";
+		public static const CONDITION : String = "Condition";
+		public static const CURRENCY : String = "Currency";
+		public static const END_TIME_FROM : String = "EndTimeFrom";
+		public static const END_TIME_TO:String = "EndTimeTo";
+		public static const EXCLUDE_AUTOPAY : String = "ExcludeAutoPay";
+		public static const EXCLUDE_CATEGORY:String = "ExcludeCategory";
+		public static const EXCLUDE_SELLER : String = "ExcludeSeller";
+		public static const EXPEDITED_SHIPPING_TYPE : String = "ExpeditedShippingType";
+		public static const FEATURED_ONLY:String = "FeaturedOnly";
+		public static const FEEDBACK_SCORE_MAX:String = "FeedbackScoreMax";
+		public static const FEEDBACK_SCORE_MIN:String = "FeedbackScoreMin";
+		public static const FREE_SHIPPING_ONLY : String = "FreeShippingOnly";
+		public static const GET_IT_FAST_ONLY : String = "GetItFastOnly";
+		public static const HIDE_DUPLICATE_ITEMS : String = "HideDuplicateItems";
+		public static const LISTED_IN : String = "ListedIn";
+		public static const LISTING_TYPE:String = "ListingType";
+	}
+}

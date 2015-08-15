@@ -1,0 +1,20 @@
+package ebayApp.services.util.codeTypes
+{
+	public class ListingType
+	{
+		/*
+		Auction
+		Retrieve matching auction listings (i.e., listings eligible for competitive bidding at auction) only. Excludes auction items with Buy It Now.
+		AuctionWithBIN
+		Retrieve all matching auction listings with Buy It Now available. Excludes auction listings without Buy It Now. An auction listed with Buy It Now will not be returned if a valid bid has been placed on the auction.
+		Classified
+		Retrieves Classified Ad format (i.e., Classified and AdFormat listing type) listings only.
+		FixedPrice
+		Retrieve matching fixed price items only. Excludes Store Inventory format items.
+		StoreInventory
+		Retrieve Store Inventory format items only.
+		All
+		Retrieve matching items for any listing type.
+		*/
+	}
+}

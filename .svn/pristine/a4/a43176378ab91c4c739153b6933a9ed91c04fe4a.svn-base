@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 minWidth="200" minHeight="200" 
+		 xmlns:panels="com.ebayproject.components.panels.*" >
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			import mx.managers.PopUpManager;
+			
+			[Bindable]
+			public var title : String;
+			
+			[Bindable]
+			public var message : String;
+			
+			[Bindable]
+			public var callback : Function;
+			
+			private var _optionalContent : DisplayObject;
+			public function get optionalContent():DisplayObject
+			{
+				return _optionalContent;
+			}
+			public function set optionalContent ( val : DisplayObject ) : void
+			{
+				_optionalContent = val;
+				optionalContentContainer.addElement( val as IVisualElement );
+			}
+			
+			public function open():void
+			{
+				PopUpManager.addPopUp(this, FlexGlobals.topLevelApplication as DisplayObject, true );
+				PopUpManager.centerPopUp(this);
+			}
+			
+			private function cancel():void
+			{
+				optionalContentContainer.removeAllElements();
+				PopUpManager.removePopUp( this );
+			}
+			
+			private function okHandler():void
+			{
+				if ( callback != null)
+				{
+					callback.call();
+				}
+			}
+		]]>
+	</fx:Script>
+	
+	<panels:PanelBg width="{width}" height="{height}"/>
+	
+	<s:Group width="{width}" height="{height}">
+		<s:layout>
+			<s:VerticalLayout
+				paddingLeft="30" paddingTop="30"
+				paddingBottom="30" paddingRight="30"
+				/>
+		</s:layout>
+		
+		<s:Label
+			id="titleLbl"
+			width="100%"
+			text="{title}"/>
+		
+		<s:Label
+			id="messageLbl"
+			width="{width - 60}"
+			height="100%"
+			/>
+		<s:Group id="optionalContentContainer"
+			width="100%" height="100%"	 
+			/>
+		
+		<s:HGroup width="100%" 
+				  horizontalCenter="0" 
+				  horizontalAlign="center">
+			<s:Button 
+				id="okBtn"
+				label="OK"
+				click="okHandler();"
+				/>
+			<s:Button
+				id="cancelBtn"
+				label="Cancel"
+				click="cancel()"
+				/>
+		</s:HGroup>
+	</s:Group>
+
+</s:Group>
